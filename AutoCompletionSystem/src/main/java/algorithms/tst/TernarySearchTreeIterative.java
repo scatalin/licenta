@@ -43,25 +43,35 @@ public class TernarySearchTreeIterative extends AbstractTernarySearchTree {
     @Override
     public void insert(String s) {
 
-        String s1 = s;
+        String string = s;
+        if(root == null){
+            root = new TstNode();
+        }
         TstNode node = root;
 
         while (true) {
-            if (s1.length() == 0) {
+            if (string.length() == 0) {
                 break;
             }
 
-            int comparisonResult = node.getCharacter().compareTo(s.charAt(0));
+            if(node.isEmpty()){
+                insertRemainingWord(node,string);
+                break;
+            }
+
+            int comparisonResult = node.getCharacter().compareTo(string.charAt(0));
             if (comparisonResult < 0) {
                 if (node.getLeftChild() == null) {
-                    node.setLeftChild(new TstNode(s1.charAt(0)));
+                    node.setLeftChild(new TstNode(string.charAt(0)));
+                    string = string.substring(1);
                 }
                 node = node.getLeftChild();
                 continue;
             }
             if (comparisonResult > 0) {
                 if (node.getRightChild() == null) {
-                    node.setRightChild(new TstNode(s1.charAt(0)));
+                    node.setRightChild(new TstNode(string.charAt(0)));
+                    string = string.substring(1);
                 }
                 node = node.getRightChild();
                 continue;
@@ -69,11 +79,20 @@ public class TernarySearchTreeIterative extends AbstractTernarySearchTree {
 
             if (comparisonResult == 0) {
                 if (node.getMiddleChild() == null) {
-                    node.setMiddleChild(new TstNode(s1.charAt(0)));
+                    node.setMiddleChild(new TstNode());
                 }
                 node = node.getMiddleChild();
-                s1 = s1.substring(1);
+                string = string.substring(1);
             }
+        }
+    }
+
+    private void insertRemainingWord(TstNode node, String string) {
+        while(string.length()>0){
+            node.setCharacter(string.charAt(0));
+            node.setMiddleChild(new TstNode());
+            node = node.getMiddleChild();
+            string = string.substring(1);
         }
     }
 }

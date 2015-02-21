@@ -12,7 +12,7 @@ public class TstNode {
     private TstNode rightChild;
 
     TstNode(){
-        this('\0',"");
+        this(' ',"");
     }
 
     TstNode(Character character){
@@ -76,5 +76,13 @@ public class TstNode {
 
     public void setRightChild(TstNode rightChild) {
         this.rightChild = rightChild;
+    }
+
+    public boolean isEmpty() {
+        return character.equals(' ');
+    }
+
+    public void setCharacter(char character) {
+        this.character = character;
     }
 }
