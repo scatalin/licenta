@@ -1,6 +1,7 @@
 import input.FileProperties;
 import input.InputFilesProcessor;
 import input.Properties;
+import model.Dictionary;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,8 +43,9 @@ public class Main {
             if (command.equals(DISPLAY)) {
                 continue;
             }
-            if(command.equals(TEST)){
-                InputFilesProcessor ifp = new InputFilesProcessor();
+            if (command.equals(TEST)) {
+                Dictionary dictionary = new Dictionary();
+                InputFilesProcessor ifp = new InputFilesProcessor(dictionary);
                 ifp.processInputFiles();
                 continue;
             }
