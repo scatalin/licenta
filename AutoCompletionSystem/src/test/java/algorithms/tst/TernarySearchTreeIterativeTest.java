@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TernarySearchTreeTest {
+public class TernarySearchTreeIterativeTest {
 
     private TernarySearchTree tst;
     private static String word1 = "asd";
@@ -34,7 +34,7 @@ public class TernarySearchTreeTest {
 
     @Before
     public void setUp() throws Exception {
-        tst = new TernarySearchTree();
+        tst = new TernarySearchTreeIterative();
     }
 
     @Test
@@ -67,7 +67,16 @@ public class TernarySearchTreeTest {
     @Test
     public void testSearchNotFound() throws Exception {
         tst.load(words);
-        Assert.assertFalse(tst.search(word1+"s"));
+        Assert.assertFalse(tst.search(word1 + "s"));
+    }
+
+
+    @Test
+    public void testInsert() throws Exception {
+        tst.load(words);
+        String tst1 = tst.print();
+        tst.insert(word1);
+        Assert.assertEquals(tst1,tst.print());
     }
 
 }
