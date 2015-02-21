@@ -16,13 +16,13 @@ public class TernarySearchTree {
     public void load(String[] strings) {
         root = null;
         for (String string : strings) {
-            root = recursiveInsert(root, string);
+            insert(string);
         }
     }
 
     public void additionalLoad(String[] strings) {
         for (String string : strings) {
-            root = recursiveInsert(root, string);
+            insert(string);
         }
     }
 
@@ -48,7 +48,7 @@ public class TernarySearchTree {
     }
 
     public void insert(String s) {
-        recursiveInsert(root, s);
+        root = recursiveInsert(root, s);
     }
 
     private TstNode recursiveInsert(TstNode node, String s) {
