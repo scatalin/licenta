@@ -1,5 +1,7 @@
 package algorithms.tst;
 
+import algorithms.tst.intern.TstNode;
+
 /**
  * Created by Catalin on 2/21/2015.
  */
