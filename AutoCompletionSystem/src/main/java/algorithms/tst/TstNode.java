@@ -28,10 +28,6 @@ public class TstNode {
         return character;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
-    }
-
     public TstNode getLeftChild() {
         return leftChild;
     }
@@ -51,22 +47,12 @@ public class TstNode {
 
         TstNode tstNode = (TstNode) o;
 
-        if (!character.equals(tstNode.character)) return false;
-
-        return true;
+        return character.equals(tstNode.character);
     }
 
     @Override
     public int hashCode() {
         return character.hashCode();
-    }
-
-    public boolean isLeaf(){
-        return leftChild == null && middleChild == null && rightChild == null;
-    }
-
-    public boolean isEmpty(){
-        return character.equals('\0');
     }
 
     @Override
