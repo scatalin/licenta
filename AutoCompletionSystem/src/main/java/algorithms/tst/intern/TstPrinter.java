@@ -7,7 +7,7 @@ public class TstPrinter {
 
     private StringBuilder stringBuilder;
 
-    TstPrinter(){
+    public TstPrinter(){
     }
 
     public String prettyPrint(TstNode root){

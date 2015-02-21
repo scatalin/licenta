@@ -11,15 +11,15 @@ public class TstNode {
     private TstNode middleChild;
     private TstNode rightChild;
 
-    TstNode(){
+    public TstNode(){
         this(' ',"");
     }
 
-    TstNode(Character character){
+    public TstNode(Character character){
         this(character,"");
     }
 
-    TstNode(Character character, String info){
+    public TstNode(Character character, String info){
         this.character = character;
         additionalInfo = info;
     }
