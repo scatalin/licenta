@@ -70,7 +70,6 @@ public class TernarySearchTreeIterativeTest {
         Assert.assertFalse(tst.search(word1 + "s"));
     }
 
-
     @Test
     public void testInsert() throws Exception {
         tst.load(words);
