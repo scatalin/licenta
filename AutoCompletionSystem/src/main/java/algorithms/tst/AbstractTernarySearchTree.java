@@ -9,6 +9,7 @@ import algorithms.tst.intern.TstPrinter;
 public abstract class AbstractTernarySearchTree implements TernarySearchTree {
 
     protected TstNode root;
+    protected int k;
     private TstPrinter printer;
 
     public AbstractTernarySearchTree() {
@@ -31,5 +32,10 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
 
     public String print(){
         return printer.prettyPrint(root);
+    }
+
+    @Override
+    public void setK(int k) {
+        this.k = k;
     }
 }

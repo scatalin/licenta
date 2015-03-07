@@ -2,6 +2,8 @@ package algorithms.tst;
 
 import algorithms.tst.intern.TstNode;
 
+import java.util.List;
+
 /**
  * Created by Catalin on 2/21/2015.
  */
@@ -9,6 +11,11 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
 
     public boolean search(String s) {
         return recursiveSearch(root, s);
+    }
+
+    @Override
+    public List<String> getTopK(String prefix) {
+        return null;
     }
 
     private boolean recursiveSearch(TstNode node, String s) {
