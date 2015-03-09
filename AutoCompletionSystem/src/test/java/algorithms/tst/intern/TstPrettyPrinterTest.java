@@ -1,13 +1,12 @@
-package algorithms.tst;
+package algorithms.tst.intern;
 
-import junit.framework.Assert;
+import algorithms.tst.TernarySearchTree;
+import algorithms.tst.TernarySearchTreeRecursive;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.List;
-
-public class TernarySearchTreeRecursiveTest {
+public class TstPrettyPrinterTest {
 
     private TernarySearchTree tst;
     private static String word1 = "asd";
@@ -42,6 +41,7 @@ public class TernarySearchTreeRecursiveTest {
         words2 = new String[2];
         words2[0] = word3;
         words2[1] = word4;
+
     }
 
     @Before
@@ -51,45 +51,10 @@ public class TernarySearchTreeRecursiveTest {
 
     @Test
     public void testLoad() throws Exception {
-        tst.load(words1);
-
-    }
-
-    @Test
-    public void testAdditionalLoad() throws Exception {
         tst.load(words);
-        String tst1 = tst.print();
-        tst.load(words1);
-        tst.additionalLoad(words2);
-        Assert.assertEquals(tst1, tst.print());
-    }
-
-    @Test
-    public void testSearchFound() throws Exception {
-        tst.load(words);
-        Assert.assertTrue(tst.search(word1));
-    }
-
-    @Test
-    public void testSearchNotFound() throws Exception {
-        tst.load(words);
-        Assert.assertFalse(tst.search(word1 + "s"));
-    }
-
-
-    @Test
-    public void testInsert() throws Exception {
-        tst.load(words);
-        String tst1 = tst.print();
-        tst.insert(word1);
-        Assert.assertEquals(tst1,tst.print());
-    }
-
-    @Test
-    public void testTopK(){
-        tst.load(words);
-        tst.setK(2);
-        List<String> completions = tst.getTopK("a");
+        TstPrettyPrinter tstpp = new TstPrettyPrinter(tst.getRoot());
+        System.out.println(tstpp.prettyPrint());
     }
 
 }
+

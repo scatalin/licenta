@@ -48,7 +48,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
             return node;
         }
-        int comparisonResult = node.getCharacter().compareTo(s.charAt(0));
+        int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
         if (comparisonResult < 0) {
             node.setLeftChild(recursiveInsert(node.getLeftChild(), s));
         }
