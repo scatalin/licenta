@@ -17,6 +17,8 @@ import java.util.Scanner;
  */
 public class Main {
 
+    public static final String AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION = "src\\main\\resources\\autocompletionsystem.properties";
+
     private static String RESET = "reset";
     private static String IMPORT = "import";
     private static String DISPLAY = "display d";
@@ -50,7 +52,7 @@ public class Main {
 //            System.out.println(fileName);
 //        }
 
-        File propertiesFile = new File("src\\main\\resources\\autocompletionsystem.properties");
+        File propertiesFile = new File(AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION);
         FileReader fReader = new FileReader(propertiesFile);
         BufferedReader reader = new BufferedReader(fReader);
         System.out.println("Initialize properties file");
