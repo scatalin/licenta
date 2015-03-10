@@ -13,21 +13,23 @@ public class TstPrettyPrinter {
     private int x;
     private int y;
     private TstNode root;
+    private TreeParser parser;
 
     public TstPrettyPrinter() {
+        parser = new TreeParser();
     }
 
-    public void setRootNode(TstNode root) {
+    public void setTree(TstNode root) {
         this.root = root;
-        calculateDimensions();
+        initMatrix();
         matrix = new Character[x][y];
         System.out.println("depth of the tst is " + rootInfo.depth);
         System.out.println("left dimension of the tst is " + rootInfo.leftDimension);
         System.out.println("right dimension of the tst is " + rootInfo.rightDimension);
     }
 
-    private void calculateDimensions() {
-        rootInfo = recursiveCalculateDimensions(root);
+    private void initMatrix() {
+        rootInfo = parser.calculateDimensions(root);
         if (rootInfo != null) {
             y = rootInfo.depth * 2;
             x = (rootInfo.leftDimension + rootInfo.rightDimension + 1);
@@ -36,49 +38,6 @@ public class TstPrettyPrinter {
             y = 0;
         }
     }
-
-    private DimensionsInfo recursiveCalculateDimensions(TstNode node) {
-        if (node == null) {
-            return null;
-        }
-        DimensionsInfo leftInfo = recursiveCalculateDimensions(node.getLeftChild());
-        DimensionsInfo rightInfo = recursiveCalculateDimensions(node.getRightChild());
-        DimensionsInfo middleInfo = recursiveCalculateDimensions(node.getMiddleChild());
-
-        DimensionsInfo toReturn = new DimensionsInfo();
-        int maxDepth = 0;
-
-        if (leftInfo == null) {
-            toReturn.leftDimension = 0;
-        } else {
-            toReturn.leftDimension = leftInfo.leftDimension + leftInfo.rightDimension + 1;
-            if (maxDepth < leftInfo.depth) {
-                maxDepth = leftInfo.depth;
-            }
-        }
-
-        if (rightInfo == null) {
-            toReturn.rightDimension = 0;
-        } else {
-            toReturn.rightDimension = rightInfo.leftDimension + rightInfo.rightDimension + 1;
-            if (maxDepth < rightInfo.depth) {
-                maxDepth = rightInfo.depth;
-            }
-        }
-
-        if (middleInfo != null) {
-            toReturn.leftDimension += middleInfo.leftDimension;
-            toReturn.rightDimension += middleInfo.rightDimension;
-            if (maxDepth < middleInfo.depth) {
-                maxDepth = middleInfo.depth;
-            }
-        }
-        toReturn.depth = maxDepth + 1;
-
-        return toReturn;
-    }
-
-
 
     public String prettyPrint() {
         populateMatrix(root, rootInfo.rightDimension, 0);
@@ -124,7 +83,7 @@ public class TstPrettyPrinter {
             if (node == null) {
                 return;
             }
-            middle = recursiveCalculateDimensions(node.getMiddleChild());
+            middle = parser.calculateDimensions(node.getMiddleChild());
             if(middle == null){
                 middle = new DimensionsInfo();
             }
@@ -134,12 +93,12 @@ public class TstPrettyPrinter {
                 populateMatrix(node.getMiddleChild(), line, column + 2);
             }
             if (node.getRightChild() != null) {
-                right = recursiveCalculateDimensions(node.getRightChild());
+                right = parser.calculateDimensions(node.getRightChild());
                 matrix[line - middle.rightDimension - right.leftDimension - 1][column + 1] = '\\';
                 populateMatrix(node.getRightChild(), line - middle.rightDimension - right.leftDimension - 1, column + 2);
             }
             if (node.getLeftChild() != null) {
-                left = recursiveCalculateDimensions(node.getLeftChild());
+                left = parser.calculateDimensions(node.getLeftChild());
                 matrix[line + middle.leftDimension + left.rightDimension + 1][column + 1] = '/';
                 populateMatrix(node.getLeftChild(), line + middle.leftDimension + left.rightDimension + 1, column + 2);
             }

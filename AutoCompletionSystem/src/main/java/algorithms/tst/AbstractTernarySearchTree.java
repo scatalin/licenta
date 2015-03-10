@@ -31,7 +31,7 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
     }
 
     public String print(){
-        printer.setRootNode(root);
+        printer.setTree(root);
         return printer.prettyPrint();
     }
 
