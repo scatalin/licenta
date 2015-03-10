@@ -9,19 +9,19 @@ import java.util.List;
  */
 public interface TernarySearchTree {
 
-    public void load(String[] strings);
+    void load(String[] strings);
 
-    public void additionalLoad(String[] strings);
+    void additionalLoad(String[] strings);
 
-    public boolean search(String s);
+    boolean search(String s);
 
-    public List<String> getTopK(String prefix);
+    List<String> getTopK(String prefix);
 
-    public void setK(int k);
+    void setK(int k);
 
-    public void insert(String s);
+    void insert(String s);
 
-    public String print();
+    String print();
 
-    public TstNode getRoot();
+    TstNode getRoot();
 }

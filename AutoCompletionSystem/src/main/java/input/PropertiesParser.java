@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class PropertiesParser {
 
-    public static final String AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION = "src/main/resources/autocompletionsystem.properties";
+    public static final String AUTOCOMPLETION_SYSTEM_PROPERTIES_LOCATION = "src/main/resources/autocompletionsystem.properties";
 
     public static void propertiesFileRead() throws IOException {
         System.out.println("Hello world");
@@ -25,7 +25,7 @@ public class PropertiesParser {
 //            System.out.println(fileName);
 //        }
 
-        File propertiesFile = new File(AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION);
+        File propertiesFile = new File(AUTOCOMPLETION_SYSTEM_PROPERTIES_LOCATION);
         FileReader fReader = new FileReader(propertiesFile);
         BufferedReader reader = new BufferedReader(fReader);
         System.out.println("Initialize properties file");
@@ -74,13 +74,13 @@ public class PropertiesParser {
 
     public static boolean isWindows(String OS) {
 
-        return (OS.indexOf("win") >= 0);
+        return (OS.contains("win"));
 
     }
 
     public static boolean isUnix(String OS) {
 
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+        return (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
 
     }
 }

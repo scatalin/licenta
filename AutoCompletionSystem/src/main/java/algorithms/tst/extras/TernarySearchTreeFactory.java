@@ -31,6 +31,7 @@ public class TernarySearchTreeFactory {
         Random random = new Random();
         while (words.size()>0){
             int position = random.nextInt(words.size());
+            System.out.println("word inserted is :"+words.get(position));
             tst.insert(words.remove(position).getWord());
         }
         return tst;
