@@ -1,6 +1,6 @@
 package input;
 
-import model.Dictionary;
+import model.dictionary.Dictionary;
 
 import java.io.*;
 
@@ -9,7 +9,7 @@ import java.io.*;
  */
 public class InputFilesProcessor {
 
-    private static final String WORD_SEPARATION_REGEX = " ";
+    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private String inputDirectory;
     private String processedDirectory;
     private File inputDir;
@@ -37,17 +37,18 @@ public class InputFilesProcessor {
         String[] listFileNames = inputDir.list();
         for (String fileName : listFileNames) {
             System.out.println(fileName);
-            File file = new File(inputDir+"\\"+fileName);
+            File file = new File(inputDir + "\\" + fileName);
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();
-                while(line != null){
+                while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
-                    for(String word: words){
+                    for (String word : words) {
                         dictionary.addWord(word);
                     }
                     line = reader.readLine();
                 }
+                reader.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -55,6 +56,7 @@ public class InputFilesProcessor {
             }
         }
         dictionary.sortDictionary();
+        dictionary.removeNonWords();
         dictionary.saveDictionary();
     }
 
