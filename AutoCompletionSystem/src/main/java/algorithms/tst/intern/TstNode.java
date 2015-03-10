@@ -24,20 +24,8 @@ public class TstNode {
         additionalInfo = info;
     }
 
-    public Character getCharacter() {
-        return character;
-    }
-
-    public TstNode getLeftChild() {
-        return leftChild;
-    }
-
-    public TstNode getMiddleChild() {
-        return middleChild;
-    }
-
-    public TstNode getRightChild() {
-        return rightChild;
+    public boolean isEmpty() {
+        return character.equals(' ');
     }
 
     @Override
@@ -66,23 +54,35 @@ public class TstNode {
                 "}";
     }
 
+    public void setCharacter(char character) {
+        this.character = character;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public TstNode getLeftChild() {
+        return leftChild;
+    }
+
     public void setLeftChild(TstNode leftChild) {
         this.leftChild = leftChild;
+    }
+
+    public TstNode getMiddleChild() {
+        return middleChild;
     }
 
     public void setMiddleChild(TstNode middleChild) {
         this.middleChild = middleChild;
     }
 
+    public TstNode getRightChild() {
+        return rightChild;
+    }
+
     public void setRightChild(TstNode rightChild) {
         this.rightChild = rightChild;
-    }
-
-    public boolean isEmpty() {
-        return character.equals(' ');
-    }
-
-    public void setCharacter(char character) {
-        this.character = character;
     }
 }
