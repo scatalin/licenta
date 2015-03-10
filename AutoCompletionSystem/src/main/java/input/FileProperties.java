@@ -7,7 +7,8 @@ public enum FileProperties {
     INPUT_FILES_DIRECTORY("file.directory.input"),
     PROCESSED_FILES_DIRECTORY("file.directory.processed"),
     DICTIONARY_DIRECTORY("dictionary.directory"),
-    DICTIONARY_NAME("dictionary.name");
+    DICTIONARY_NAME("dictionary.name"),
+    TST_OUTPUT_NAME("tst.file.output.name");
 
     private final String value;
 
