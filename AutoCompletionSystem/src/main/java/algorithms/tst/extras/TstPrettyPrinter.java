@@ -49,34 +49,6 @@ public class TstPrettyPrinter {
         return stringBuilder.toString();
     }
 
-    private void constructString(StringBuilder stringBuilder) {
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                if (matrix[i][j] == null) {
-                    stringBuilder.append(" ");
-                } else {
-                    stringBuilder.append(matrix[i][j]);
-                }
-            }
-            stringBuilder.append("\n");
-        }
-    }
-
-    private void revertMatrix() {
-        Character[][] revertedMatrix = new Character[y][x];
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                revertedMatrix[i][j] = matrix[j][i];
-            }
-        }
-        matrix = new Character[y][x];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                matrix[j][i] = revertedMatrix[j][x - i - 1];
-            }
-        }
-    }
-
     private void populateMatrix(TstNode node, int line, int column) {
         DimensionsInfo middle, right, left;
         try {
@@ -104,6 +76,34 @@ public class TstPrettyPrinter {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void revertMatrix() {
+        Character[][] revertedMatrix = new Character[y][x];
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                revertedMatrix[i][j] = matrix[j][i];
+            }
+        }
+        matrix = new Character[y][x];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                matrix[j][i] = revertedMatrix[j][x - i - 1];
+            }
+        }
+    }
+
+    private void constructString(StringBuilder stringBuilder) {
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if (matrix[i][j] == null) {
+                    stringBuilder.append(" ");
+                } else {
+                    stringBuilder.append(matrix[i][j]);
+                }
+            }
+            stringBuilder.append("\n");
         }
     }
 
