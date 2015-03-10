@@ -1,7 +1,5 @@
 package algorithms.tst;
 
-import algorithms.tst.intern.TstNode;
-
 import java.util.List;
 
 /**
@@ -22,6 +20,4 @@ public interface TernarySearchTree {
     void insert(String s);
 
     String print();
-
-    TstNode getRoot();
 }
