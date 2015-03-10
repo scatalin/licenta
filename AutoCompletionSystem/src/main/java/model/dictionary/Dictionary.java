@@ -1,4 +1,4 @@
-package model;
+package model.dictionary;
 
 import input.Properties;
 
@@ -16,7 +16,7 @@ public class Dictionary {
     private final String fileName;
     private final File directory;
     private final File dictionaryFile;
-    private List<String> words;
+    private List<Word> words;
 
     public Dictionary() {
         directoryPath = Properties.DICTIONARY_DIRECTORY;
@@ -29,17 +29,17 @@ public class Dictionary {
         if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
             System.out.println("dictionary file does not exist " + dictionaryFile + ";");
         }
-        words = new ArrayList<String>();
+        words = new ArrayList<Word>();
     }
 
     public void readDictionary() {
         try {
             words.clear();
-            BufferedReader reader = null;
-            reader = new BufferedReader(new FileReader(dictionaryFile));
+            BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile));
             String line = reader.readLine();
             while (line != null) {
-                words.add(line);
+                String[] tokens = line.split("=");
+                words.add(new Word(tokens[0],Integer.parseInt(tokens[1])));
                 line = reader.readLine();
             }
             reader.close();
@@ -50,12 +50,14 @@ public class Dictionary {
         }
     }
 
-    public void print() {
-        System.out.println(words);
-    }
-
     public void addWord(String word){
-        words.add(word);
+        int index = words.lastIndexOf(new Word(word));
+        if (index == -1){
+            words.add(new Word(word));
+            return;
+        }
+        Word word1 = words.get(index);
+        word1.increaseFrequency();
     }
 
     public void sortDictionary(){
@@ -67,13 +69,27 @@ public class Dictionary {
             dictionaryFile.delete();
             dictionaryFile.createNewFile();
             PrintWriter writer = new PrintWriter(dictionaryFile);
-            for (String word : words) {
+            for (Word word : words) {
                 writer.println(word);
             }
             writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<Word> getWords() {
+        return words;
+    }
+
+    public void removeNonWords(){
+        for(int i = 0; i< words.size(); i++){
+            Word word = words.get(i);
+            if (word.getWord().equals("") || word.getWord().equals(" ")){
+                words.remove(word);
+                i--;
+            }
         }
     }
 }
