@@ -37,7 +37,7 @@ public class InputFilesProcessor {
         String[] listFileNames = inputDir.list();
         for (String fileName : listFileNames) {
             System.out.println(fileName);
-            File file = new File(inputDir + "\\" + fileName);
+            File file = new File(inputDir + Properties.SYSTEM_PATH_SEPARATOR + fileName);
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();

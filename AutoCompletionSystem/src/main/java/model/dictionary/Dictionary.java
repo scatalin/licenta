@@ -25,7 +25,7 @@ public class Dictionary {
         if (!directory.exists() && !directory.isDirectory()) {
             System.out.println("dictionary directory does not exist: " + directory + ";");
         }
-        dictionaryFile = new File(directoryPath + "\\" + fileName);
+        dictionaryFile = new File(directoryPath + Properties.SYSTEM_PATH_SEPARATOR + fileName);
         if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
             System.out.println("dictionary file does not exist " + dictionaryFile + ";");
         }

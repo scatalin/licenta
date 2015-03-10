@@ -1,14 +1,13 @@
 import algorithms.tst.TernarySearchTree;
+import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.extras.FilePrinter;
 import algorithms.tst.extras.TernarySearchTreeFactory;
-import input.FileProperties;
 import input.InputFilesProcessor;
 import input.Properties;
+import input.PropertiesParser;
 import model.dictionary.Dictionary;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,8 +15,6 @@ import java.util.Scanner;
  * Created by Catalin on 2/21/2015 .
  */
 public class Main {
-
-    public static final String AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION = "src\\main\\resources\\autocompletionsystem.properties";
 
     private static String RESET = "reset";
     private static String IMPORT = "import";
@@ -29,7 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            propertiesFileRead();
+            PropertiesParser.propertiesFileRead();
+            PropertiesParser.validateOS();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
@@ -39,49 +37,8 @@ public class Main {
         main.start();
     }
 
-    private static void propertiesFileRead() throws IOException {
-        System.out.println("Hello world");
-//        File file = new File("Main.class");
-//        System.out.println(file.exists());
-//        System.out.println(file.getAbsoluteFile());
-//        System.out.println(fteile.getAbsolutePath());
-//        System.out.println(file.getAbsoluteFile().getParentFile());
-//        file = file.getAbsoluteFile().getParentFile();
-//        String[] listFileNames = file.list();
-//        for (String fileName : listFileNames) {
-//            System.out.println(fileName);
-//        }
-
-        File propertiesFile = new File(AUTOCOMPLETIONSYSTEM_PROPERTIES_LOCATION);
-        FileReader fReader = new FileReader(propertiesFile);
-        BufferedReader reader = new BufferedReader(fReader);
-        System.out.println("Initialize properties file");
-        String line = reader.readLine();
-        while (line != null) {
-            String[] tokens = line.split("=");
-            if (tokens.length == 2) {
-                if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY.getValue())) {
-                    Properties.INPUT_FILES_DIRECTORY = tokens[1];
-                }
-                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY.getValue())) {
-                    Properties.PROCESSED_FILES_DIRECTORY = tokens[1];
-                }
-                if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY.getValue())) {
-                    Properties.DICTIONARY_DIRECTORY = tokens[1];
-                }
-                if (tokens[0].equals(FileProperties.DICTIONARY_NAME.getValue())) {
-                    Properties.DICTIONARY_FILE_NAME = tokens[1];
-                }
-                if (tokens[0].equals(FileProperties.TST_OUTPUT_NAME.getValue())) {
-                    Properties.TST_OUTPUT_FILE_NAME = tokens[1];
-                }
-            }
-            line = reader.readLine();
-        }
-    }
-
     public void start() {
-        TernarySearchTree tst = null;
+        TernarySearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
 
         Scanner scanner = new Scanner(System.in);
@@ -110,7 +67,7 @@ public class Main {
             }
             if (command.equals(PRINT_BUILD_TST)) {
                 FilePrinter filePrinter = new FilePrinter();
-                File file = new File(Properties.DICTIONARY_DIRECTORY + "\\" + Properties.TST_OUTPUT_FILE_NAME);
+                File file = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.TST_OUTPUT_FILE_NAME);
                 filePrinter.printTstToFile(file, tst.print());
                 continue;
             }

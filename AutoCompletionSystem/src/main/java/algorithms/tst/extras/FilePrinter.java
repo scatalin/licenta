@@ -1,5 +1,7 @@
 package algorithms.tst.extras;
 
+import input.Properties;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +11,7 @@ import java.io.PrintWriter;
  */
 public class FilePrinter {
 
-    private static final File file = new File("D:\\licenta\\dictionary\\tstoutput.txt");
+    private static final File file = new File(Properties.DICTIONARY_DIRECTORY+ Properties.SYSTEM_PATH_SEPARATOR + Properties.TST_OUTPUT_FILE_NAME);
 
     public void printTstToFile(File file, String string){
         try {
