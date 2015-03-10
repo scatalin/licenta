@@ -6,6 +6,7 @@ package algorithms.tst.intern;
 public class TstPrettyPrinter {
 
     private Character[][] matrix;
+    private Character[][] dummyMatrix;
     private ReturnInfo rootInfo;
     private int x;
     private int y;
@@ -17,8 +18,8 @@ public class TstPrettyPrinter {
 
     private void calculateDimensions() {
         rootInfo = recursiveCalculateDimensions(root);
-        y = (rootInfo.depth) * 2;
-        x = (rootInfo.leftDimension + rootInfo.rightDimension + 1) * 2 + 1;
+        y = rootInfo.depth * 2;
+        x = (rootInfo.leftDimension + rootInfo.rightDimension + 1);
     }
 
     private ReturnInfo recursiveCalculateDimensions(TstNode node) {
@@ -66,6 +67,9 @@ public class TstPrettyPrinter {
         this.root = root;
         calculateDimensions();
         matrix = new Character[x][y];
+        System.out.println("depth of the tst is "+rootInfo.depth);
+        System.out.println("left dimension of the tst is "+rootInfo.leftDimension);
+        System.out.println("right dimension of the tst is "+rootInfo.rightDimension);
     }
 
     private class ReturnInfo {
@@ -75,7 +79,7 @@ public class TstPrettyPrinter {
     }
 
     public String prettyPrint() {
-        populateMatrix(root, (rootInfo.rightDimension) * 2 + 1, 0);
+        populateMatrix(root, rootInfo.rightDimension, 0);
         revertMatrix();
         StringBuilder stringBuilder = new StringBuilder();
         constructString(stringBuilder);
@@ -111,32 +115,62 @@ public class TstPrettyPrinter {
     }
 
     private void populateMatrix(TstNode node, int line, int column) {
-        if (node == null) {
-            return;
+        try {
+            if (node == null) {
+                return;
+            }
+            ReturnInfo thisInfo = recursiveCalculateDimensions(node);
+            matrix[line][column] = node.getCharacter();
+            if (node.getMiddleChild() != null) {
+                matrix[line][column + 1] = '|';
+                populateMatrix(node.getMiddleChild(), line, column + 2);
+            }
+            if (node.getRightChild() != null) {
+                ReturnInfo right = recursiveCalculateDimensions(node.getRightChild());
+                matrix[line - thisInfo.rightDimension - right.leftDimension - 1][column + 1] = '\\';
+                populateMatrix(node.getRightChild(), line - thisInfo.rightDimension - right.leftDimension - 1, column + 2);
+            }
+            if (node.getLeftChild() != null) {
+                ReturnInfo left = recursiveCalculateDimensions(node.getLeftChild());
+                matrix[line + thisInfo.leftDimension + left.rightDimension + 1][column + 1] = '/';
+                populateMatrix(node.getLeftChild(), line + thisInfo.leftDimension + left.rightDimension + 1, column + 2);
+            }
         }
-        matrix[line][column] = node.getCharacter();
-        if (node.getMiddleChild() != null) {
-            matrix[line][column + 1] = '|';
-            populateMatrix(node.getMiddleChild(), line, column + 2);
-        }
-        if (node.getRightChild() != null) {
-            ReturnInfo right = recursiveCalculateDimensions(node.getRightChild());
-            matrix[line - right.leftDimension - 1][column + 1] = '\\';
-            populateMatrix(node.getRightChild(), line - ((right.leftDimension + 1) * 2), column + 2);
-        }
-        if (node.getLeftChild() != null) {
-            ReturnInfo left = recursiveCalculateDimensions(node.getLeftChild());
-            matrix[left.rightDimension + line + 1][column + 1] = '/';
-            populateMatrix(node.getLeftChild(), (left.rightDimension + 1) * 2 + line, column + 2);
+        catch (Exception e){
+            int i = 0;
         }
     }
 
-    public int getX() {
-        return x;
+    private String constructDummyString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        revertDummyMatrix();
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if (dummyMatrix[i][j] == null) {
+                    stringBuilder.append(" ");
+                } else {
+                    stringBuilder.append(dummyMatrix[i][j]);
+                }
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
-    public int getY() {
-        return y;
+    private void revertDummyMatrix() {
+        Character[][] revertedMatrix = new Character[y][x];
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                revertedMatrix[i][j] = matrix[j][i];
+            }
+        }
+        dummyMatrix = new Character[y][x];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                dummyMatrix[j][i] = revertedMatrix[j][x - i - 1];
+            }
+        }
     }
+
 }
 
