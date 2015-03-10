@@ -3,6 +3,7 @@ package algorithms.tst;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TernarySearchTreeIterativeTest {
@@ -37,6 +38,7 @@ public class TernarySearchTreeIterativeTest {
         tst = new TernarySearchTreeIterative();
     }
 
+    @Ignore
     @Test
     public void testLoad() throws Exception {
         tst.load(words);
@@ -49,6 +51,7 @@ public class TernarySearchTreeIterativeTest {
                 "         m d\n");
     }
 
+    @Ignore
     @Test
     public void testAdditionalLoad() throws Exception {
         tst.load(words);
@@ -58,18 +61,21 @@ public class TernarySearchTreeIterativeTest {
         Assert.assertEquals(tst1, tst.print());
     }
 
+    @Ignore
     @Test
     public void testSearchFound() throws Exception {
         tst.load(words);
         Assert.assertTrue(tst.search(word1));
     }
 
+    @Ignore
     @Test
     public void testSearchNotFound() throws Exception {
         tst.load(words);
         Assert.assertFalse(tst.search(word1 + "s"));
     }
 
+    @Ignore
     @Test
     public void testInsert() throws Exception {
         tst.load(words);

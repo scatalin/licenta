@@ -3,6 +3,7 @@ package algorithms.tst;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -49,12 +50,13 @@ public class TernarySearchTreeRecursiveTest {
         tst = new TernarySearchTreeRecursive();
     }
 
+    @Ignore
     @Test
     public void testLoad() throws Exception {
         tst.load(words1);
-
     }
 
+    @Ignore
     @Test
     public void testAdditionalLoad() throws Exception {
         tst.load(words);
@@ -64,6 +66,7 @@ public class TernarySearchTreeRecursiveTest {
         Assert.assertEquals(tst1, tst.print());
     }
 
+    @Ignore
     @Test
     public void testSearchFound() throws Exception {
         tst.load(words);

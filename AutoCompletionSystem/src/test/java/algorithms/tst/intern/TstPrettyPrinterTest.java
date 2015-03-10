@@ -4,6 +4,7 @@ import algorithms.tst.TernarySearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TstPrettyPrinterTest {
@@ -12,18 +13,21 @@ public class TstPrettyPrinterTest {
     private static String word1 = "asd";
     private static String word2 = "as";
     private static String word3 = "fr";
-    private static String word4 = "frtasda";
+    private static String word4 = "frta";
     private static String word5 = "bbr";
     private static String word6 = "bar";
-    private static String word7 = "gz";
+    private static String word7 = "jz";
     private static String word8 = "chr";
+    private static String word9 = "ht";
+    private static String word10 = "ij";
+    private static String word11 = "gz";
     private static String[] words;
     private static String[] words1;
     private static String[] words2;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        words = new String[8];
+        words = new String[11];
         words[0] = word3;
         words[1] = word4;
         words[2] = word1;
@@ -32,6 +36,9 @@ public class TstPrettyPrinterTest {
         words[5] = word6;
         words[6] = word7;
         words[7] = word8;
+        words[8] = word9;
+        words[9] = word10;
+        words[10] = word11;
         words1 = new String[5];
         words1[0] = word3;
         words1[1] = word4;
@@ -49,11 +56,11 @@ public class TstPrettyPrinterTest {
         tst = new TernarySearchTreeRecursive();
     }
 
+    @Ignore
     @Test
     public void testLoad() throws Exception {
         tst.load(words);
-        TstPrettyPrinter tstpp = new TstPrettyPrinter(tst.getRoot());
-        System.out.println(tstpp.prettyPrint());
+        System.out.println(tst.print());
     }
 
 }
