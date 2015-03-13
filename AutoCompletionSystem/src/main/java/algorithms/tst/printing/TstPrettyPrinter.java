@@ -1,6 +1,8 @@
 package algorithms.tst.printing;
 
 import algorithms.tst.intern.TstNode;
+import algorithms.tst.parsing.DimensionsInfo;
+import algorithms.tst.parsing.TreeParser;
 
 /**
  * Created by Catalin on 3/9/2015 .
