@@ -3,11 +3,12 @@ package algorithms.tst.printing;
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.parsing.DimensionsInfo;
 import algorithms.tst.parsing.TreeParser;
+import algorithms.utils.PrettyPrinter;
 
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class TstPrettyPrinter {
+public class TstPrettyPrinter implements PrettyPrinter{
 
     private Character[][] matrix;
 //    private Character[][] dummyMatrix;

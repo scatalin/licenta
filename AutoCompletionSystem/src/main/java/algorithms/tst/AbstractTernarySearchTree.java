@@ -2,6 +2,7 @@ package algorithms.tst;
 
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
+import algorithms.utils.PrettyPrinter;
 
 /**
  * Created by Catalin on 2/21/2015 .
@@ -10,7 +11,7 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
 
     protected TstNode root;
     protected int k;
-    private TstPrettyPrinter printer;
+    private PrettyPrinter printer;
 
     public AbstractTernarySearchTree() {
         root = null;
