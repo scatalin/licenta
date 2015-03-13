@@ -1,3 +1,4 @@
+import algorithms.segmenttree.SegmentNode;
 import algorithms.tst.TernarySearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.extras.FilePrinter;
@@ -18,11 +19,12 @@ public class Main {
 
     private static String RESET = "reset";
     private static String IMPORT = "import";
-    private static String DISPLAY = "display d";
+    private static String DISPLAY = "d d";
     private static String BUILD_TST = "tst b";
     private static String RANDOM_BUILD_TST = "tst rb";
     private static String PRINT_BUILD_TST = "tst p";
     private static String TEST = "test";
+    private static String BUILD_SEGMENT = "sgm b";
 
     public static void main(String[] args) {
         try {
@@ -39,6 +41,7 @@ public class Main {
 
     public void start() {
         TernarySearchTree tst = new TernarySearchTreeRecursive();
+        SegmentNode segmentNode;
         Dictionary dictionary = new Dictionary();
 
         Scanner scanner = new Scanner(System.in);
@@ -69,6 +72,12 @@ public class Main {
                 FilePrinter filePrinter = new FilePrinter();
                 File file = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.TST_OUTPUT_FILE_NAME);
                 filePrinter.printTstToFile(file, tst.print());
+                continue;
+            }
+            if (command.equals(BUILD_SEGMENT)) {
+                segmentNode = new SegmentNode();
+                segmentNode.setSize(Properties.SEGMENT_SIZE);
+                segmentNode.buildSegmentTree();
                 continue;
             }
             if (command.equals(TEST)) {
