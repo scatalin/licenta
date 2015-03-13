@@ -1,7 +1,7 @@
 package algorithms.tst;
 
 import algorithms.tst.intern.TstNode;
-import algorithms.tst.extras.TstPrettyPrinter;
+import algorithms.tst.printing.TstPrettyPrinter;
 
 /**
  * Created by Catalin on 2/21/2015 .

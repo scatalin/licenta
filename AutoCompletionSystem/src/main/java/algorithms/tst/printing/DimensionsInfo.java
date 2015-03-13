@@ -1,4 +1,4 @@
-package algorithms.tst.extras;
+package algorithms.tst.printing;
 
 /**
  * Created by gstan on 10.03.2015.

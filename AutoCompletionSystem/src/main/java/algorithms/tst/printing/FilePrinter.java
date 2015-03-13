@@ -1,4 +1,4 @@
-package algorithms.tst.extras;
+package algorithms.tst.printing;
 
 import input.Properties;
 
