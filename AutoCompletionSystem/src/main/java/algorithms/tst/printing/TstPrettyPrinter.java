@@ -24,7 +24,6 @@ public class TstPrettyPrinter {
     public void setTree(TstNode root) {
         this.root = root;
         initMatrix();
-        matrix = new Character[x][y];
         System.out.println("depth of the tst is " + rootInfo.depth);
         System.out.println("left dimension of the tst is " + rootInfo.leftDimension);
         System.out.println("right dimension of the tst is " + rootInfo.rightDimension);
@@ -39,6 +38,7 @@ public class TstPrettyPrinter {
             x = 0;
             y = 0;
         }
+        matrix = new Character[x][y];
     }
 
     public String prettyPrint() {
