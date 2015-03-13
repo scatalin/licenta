@@ -4,6 +4,7 @@ package input;
  * Created by Catalin on 2/21/2015 .
  */
 public class Properties {
+    public static int SEGMENT_SIZE;
     public static String SYSTEM_PATH_SEPARATOR;
     public static String DICTIONARY_DIRECTORY;
     public static String DICTIONARY_FILE_NAME;

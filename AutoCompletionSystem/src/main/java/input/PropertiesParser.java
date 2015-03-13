@@ -54,6 +54,9 @@ public class PropertiesParser {
                 if (tokens[0].equals(FileProperties.FORCE_SYSTEM_PATH_SEPARATOR.getValue())) {
                     Properties.FORCED_SYSTEM_PATH_SEPARATOR = tokens[1];
                 }
+                if (tokens[0].equals(FileProperties.SEGMENT_SIZE.getValue())) {
+                    Properties.SEGMENT_SIZE = Integer.parseInt(tokens[1]);
+                }
             }
             line = reader.readLine();
         }
