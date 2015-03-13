@@ -18,16 +18,24 @@ public class TstPrettyPrinter implements PrettyPrinter{
     private TstNode root;
     private TreeParser parser;
 
-    public TstPrettyPrinter() {
+    public TstPrettyPrinter(TstNode root) {
+        this.root = root;
         parser = new TreeParser();
     }
 
-    public void setTree(TstNode root) {
-        this.root = root;
+    public String prettyPrint() {
         initMatrix();
         System.out.println("depth of the tst is " + rootInfo.depth);
         System.out.println("left dimension of the tst is " + rootInfo.leftDimension);
         System.out.println("right dimension of the tst is " + rootInfo.rightDimension);
+
+        populateMatrix(root, rootInfo.rightDimension, 0);
+        //todo remove debugging
+//        printMatrix(matrix, x, y);
+        revertMatrix();
+        StringBuilder stringBuilder = new StringBuilder();
+        constructString(stringBuilder);
+        return stringBuilder.toString();
     }
 
     private void initMatrix() {
@@ -40,16 +48,6 @@ public class TstPrettyPrinter implements PrettyPrinter{
             y = 0;
         }
         matrix = new Character[x][y];
-    }
-
-    public String prettyPrint() {
-        populateMatrix(root, rootInfo.rightDimension, 0);
-        //todo remove debugging
-//        printMatrix(matrix, x, y);
-        revertMatrix();
-        StringBuilder stringBuilder = new StringBuilder();
-        constructString(stringBuilder);
-        return stringBuilder.toString();
     }
 
     private void populateMatrix(TstNode node, int line, int column) {

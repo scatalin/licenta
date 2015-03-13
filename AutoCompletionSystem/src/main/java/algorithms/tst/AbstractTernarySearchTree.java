@@ -15,7 +15,6 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
 
     public AbstractTernarySearchTree() {
         root = null;
-        printer = new TstPrettyPrinter();
     }
 
     public void load(String[] strings) {
@@ -31,8 +30,8 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
         }
     }
 
-    public String print(){
-        printer.setTree(root);
+    public String print() {
+        printer = new TstPrettyPrinter(root);
         return printer.prettyPrint();
     }
 
