@@ -55,12 +55,12 @@ public class TstNode {
                 "}";
     }
 
-    public void setCharacter(char character) {
-        this.character = character;
-    }
-
     public Character getCharacter() {
         return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
     public TstNode getLeftChild() {
@@ -85,5 +85,21 @@ public class TstNode {
 
     public void setRightChild(TstNode rightChild) {
         this.rightChild = rightChild;
+    }
+
+    public boolean isEndWord() {
+        return endWord;
+    }
+
+    public void setEndWord(boolean endWord) {
+        this.endWord = endWord;
+    }
+
+    public int getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(int maxWeight) {
+        this.maxWeight = maxWeight;
     }
 }
