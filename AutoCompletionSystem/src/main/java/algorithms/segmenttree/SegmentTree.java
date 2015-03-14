@@ -11,12 +11,10 @@ import algorithms.utils.PrettyPrinter;
 public class SegmentTree {
 
     private SegmentNode root;
-    private PrettyPrinter printer;
     private int size;
 
     public SegmentTree() {
         this.root = new SegmentNode();
-        printer = new SegmentTreePrettyPrinter(root);
     }
 
     public void setMaximumSize(int size) {
@@ -61,6 +59,7 @@ public class SegmentTree {
     }
 
     public String print() {
+        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
         return printer.prettyPrint();
     }
 }
