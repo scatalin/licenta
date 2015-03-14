@@ -10,7 +10,11 @@ import algorithms.utils.AbstractPrettyPrinter;
  */
 public class TstPrettyPrinter extends AbstractPrettyPrinter{
 
-    private Character[][] matrix;
+    private static final TstNode LEFT_SON = new TstNode('/');
+    private static final TstNode MIDDLE_SON = new TstNode('|');
+    private static final TstNode RIGHT_SON = new TstNode('\\');
+
+    private TstNode[][] matrix;
 //    private Character[][] dummyMatrix;
     private DimensionsInfo rootInfo;
     private int x;
@@ -45,7 +49,7 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
             x = 0;
             y = 0;
         }
-        matrix = new Character[x][y];
+        matrix = new TstNode[x][y];
     }
 
     private void populateMatrix(TstNode node, int line, int column) {
@@ -58,19 +62,19 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
             if(middle == null){
                 middle = new DimensionsInfo();
             }
-            matrix[line][column] = node.getCharacter();
+            matrix[line][column] = node;
             if (node.getMiddleChild() != null) {
-                matrix[line][column + 1] = '|';
+                matrix[line][column + 1] = MIDDLE_SON;
                 populateMatrix(node.getMiddleChild(), line, column + 2);
             }
             if (node.getRightChild() != null) {
                 right = parser.calculateDimensions(node.getRightChild());
-                matrix[line - middle.rightDimension - right.leftDimension - 1][column + 1] = '\\';
+                matrix[line - middle.rightDimension - right.leftDimension - 1][column + 1] = RIGHT_SON;
                 populateMatrix(node.getRightChild(), line - middle.rightDimension - right.leftDimension - 1, column + 2);
             }
             if (node.getLeftChild() != null) {
                 left = parser.calculateDimensions(node.getLeftChild());
-                matrix[line + middle.leftDimension + left.rightDimension + 1][column + 1] = '/';
+                matrix[line + middle.leftDimension + left.rightDimension + 1][column + 1] = LEFT_SON;
                 populateMatrix(node.getLeftChild(), line + middle.leftDimension + left.rightDimension + 1, column + 2);
             }
         } catch (Exception e) {
@@ -79,13 +83,13 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
     }
 
     private void revertMatrix() {
-        Character[][] revertedMatrix = new Character[y][x];
+        TstNode[][] revertedMatrix = new TstNode[y][x];
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 revertedMatrix[i][j] = matrix[j][i];
             }
         }
-        matrix = new Character[y][x];
+        matrix = new TstNode[y][x];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 matrix[j][i] = revertedMatrix[j][x - i - 1];
@@ -98,9 +102,13 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 if (matrix[i][j] == null) {
-                    stringBuilder.append(" ");
+                    stringBuilder.append("    ");
                 } else {
-                    stringBuilder.append(matrix[i][j]);
+                    int r = matrix[i][j].getWeight();
+                    stringBuilder.append(matrix[i][j].getCharacter()).append("|").append(r);
+                    if(r<10){
+                        stringBuilder.append(" ");
+                    }
                 }
             }
             stringBuilder.append("\n");
