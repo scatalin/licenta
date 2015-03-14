@@ -26,13 +26,10 @@ public class TernarySearchTreeFactory {
         TernarySearchTree tst = new TernarySearchTreeRecursive();
         List<Word> words = new ArrayList<Word>(dictionary.getWords());
         int middlePosition = words.size()/2;
-        String[] rootWord = new String[1];
-        rootWord[0] = words.remove(middlePosition).getWord();
-        tst.load(rootWord);
+        tst.insert(words.remove(middlePosition).getWord());
         Random random = new Random();
         while (words.size()>0){
             int position = random.nextInt(words.size());
-            System.out.println("word inserted is :" + words.get(position));
             tst.insert(words.remove(position).getWord());
         }
         return tst;

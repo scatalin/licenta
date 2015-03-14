@@ -1,4 +1,5 @@
 import algorithms.segmenttree.SegmentTree;
+import algorithms.segmenttree.printing.SegmentFilePrinter;
 import algorithms.tst.TernarySearchTree;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.tst.printing.TstFilePrinter;
@@ -19,9 +20,9 @@ public class Main {
     private static String RESET = "reset";
     private static String IMPORT = "import";
     private static String DISPLAY = "d d";
-    private static String BUILD_TST = "tst b";
-    private static String RANDOM_BUILD_TST = "tst rb";
-    private static String PRINT_TST = "tst p";
+    private static String TST_BUILD = "tst b";
+    private static String TST_RANDOM_BUILD = "tst rb";
+    private static String TST_PRINT = "tst p";
     private static String TEST = "test";
     private static String BUILD_SEGMENT = "sgm b";
     private static String PRINT_SEGMENT = "sgm p";
@@ -60,15 +61,15 @@ public class Main {
             if (command.equals(DISPLAY)) {
                 continue;
             }
-            if (command.equals(BUILD_TST)) {
+            if (command.equals(TST_BUILD)) {
                 tst = TernarySearchTreeFactory.buildTst(dictionary);
                 continue;
             }
-            if (command.equals(RANDOM_BUILD_TST)) {
+            if (command.equals(TST_RANDOM_BUILD)) {
                 tst = TernarySearchTreeFactory.buildRandomTst(dictionary);
                 continue;
             }
-            if (command.equals(PRINT_TST)) {
+            if (command.equals(TST_PRINT)) {
                 FilePrinter.printTstToFile(TstFilePrinter.file,tst.print());
                 continue;
             }
@@ -79,7 +80,7 @@ public class Main {
                 continue;
             }
             if (command.equals(PRINT_SEGMENT)) {
-                System.out.println(segmentTree.print());
+                FilePrinter.printTstToFile(SegmentFilePrinter.file,segmentTree.print());
                 continue;
             }
             if (command.equals(TEST)) {

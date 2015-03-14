@@ -24,6 +24,8 @@ public class SegmentTree {
     }
 
     public void buildSegmentTree() {
+        root.setLeftLimit(0);
+        root.setRightLimit(size);
         recursiveBuildSegmentTree(root, new Interval(0, size));
     }
 
