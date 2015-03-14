@@ -87,10 +87,7 @@ public class Main {
                 ifp.processInputFiles();
                 continue;
             }
-            System.out.println("use:");
-            System.out.println(RESET);
-            System.out.println(IMPORT);
-            System.out.println(DISPLAY);
+            System.out.println("wrong use:");
         }
     }
 }
