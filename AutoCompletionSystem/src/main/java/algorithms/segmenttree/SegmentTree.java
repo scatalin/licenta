@@ -27,8 +27,4 @@ public class SegmentTree {
     public String print(){
         return printer.prettyPrint();
     }
-
-    //todo add an interval acording to the tree expected size. divide it by some algorithm
-
-
 }
