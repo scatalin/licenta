@@ -3,12 +3,12 @@ package algorithms.tst.printing;
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.parsing.DimensionsInfo;
 import algorithms.tst.parsing.TreeParser;
-import algorithms.utils.PrettyPrinter;
+import algorithms.utils.AbstractPrettyPrinter;
 
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class TstPrettyPrinter implements PrettyPrinter{
+public class TstPrettyPrinter extends AbstractPrettyPrinter{
 
     private Character[][] matrix;
 //    private Character[][] dummyMatrix;
@@ -23,7 +23,8 @@ public class TstPrettyPrinter implements PrettyPrinter{
         parser = new TreeParser();
     }
 
-    public String prettyPrint() {
+    @Override
+    protected void initPrint() {
         initMatrix();
         System.out.println("depth of the tst is " + rootInfo.depth);
         System.out.println("left dimension of the tst is " + rootInfo.leftDimension);
@@ -33,9 +34,6 @@ public class TstPrettyPrinter implements PrettyPrinter{
         //todo remove debugging
 //        printMatrix(matrix, x, y);
         revertMatrix();
-        StringBuilder stringBuilder = new StringBuilder();
-        constructString(stringBuilder);
-        return stringBuilder.toString();
     }
 
     private void initMatrix() {
@@ -95,7 +93,8 @@ public class TstPrettyPrinter implements PrettyPrinter{
         }
     }
 
-    private void constructString(StringBuilder stringBuilder) {
+    @Override
+    protected void constructString(StringBuilder stringBuilder) {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 if (matrix[i][j] == null) {
