@@ -4,6 +4,7 @@ import algorithms.tst.TernarySearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TstPrettyPrinterTest {
@@ -55,10 +56,11 @@ public class TstPrettyPrinterTest {
         tst = new TernarySearchTreeRecursive();
     }
 
+    @Ignore
     @Test
     public void testLoad() throws Exception {
-        tst.load(words);
-        System.out.println(tst.print());
+//        tst.load(words);
+//        System.out.println(tst.print());
     }
 
 }
