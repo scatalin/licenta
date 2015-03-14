@@ -34,6 +34,10 @@ public class SegmentNode {
         this.interval.rightLimit = rightLimit;
     }
 
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
     public int getDepth() {
         return depth;
     }
