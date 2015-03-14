@@ -1,14 +1,13 @@
-import algorithms.segmenttree.SegmentNode;
+import algorithms.segmenttree.SegmentTree;
 import algorithms.tst.TernarySearchTree;
-import algorithms.tst.TernarySearchTreeRecursive;
-import algorithms.tst.extras.FilePrinter;
-import algorithms.tst.extras.TernarySearchTreeFactory;
+import algorithms.tst.build.TernarySearchTreeFactory;
+import algorithms.tst.printing.TstFilePrinter;
+import algorithms.utils.FilePrinter;
 import input.InputFilesProcessor;
 import input.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -22,9 +21,10 @@ public class Main {
     private static String DISPLAY = "d d";
     private static String BUILD_TST = "tst b";
     private static String RANDOM_BUILD_TST = "tst rb";
-    private static String PRINT_BUILD_TST = "tst p";
+    private static String PRINT_TST = "tst p";
     private static String TEST = "test";
     private static String BUILD_SEGMENT = "sgm b";
+    private static String PRINT_SEGMENT = "sgm p";
 
     public static void main(String[] args) {
         try {
@@ -40,8 +40,8 @@ public class Main {
     }
 
     public void start() {
-        TernarySearchTree tst = new TernarySearchTreeRecursive();
-        SegmentNode segmentNode;
+        TernarySearchTree tst = null;
+        SegmentTree segmentTree = null;
         Dictionary dictionary = new Dictionary();
 
         Scanner scanner = new Scanner(System.in);
@@ -68,16 +68,18 @@ public class Main {
                 tst = TernarySearchTreeFactory.buildRandomTst(dictionary);
                 continue;
             }
-            if (command.equals(PRINT_BUILD_TST)) {
-                FilePrinter filePrinter = new FilePrinter();
-                File file = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.TST_OUTPUT_FILE_NAME);
-                filePrinter.printTstToFile(file, tst.print());
+            if (command.equals(PRINT_TST)) {
+                FilePrinter.printTstToFile(TstFilePrinter.file,tst.print());
                 continue;
             }
             if (command.equals(BUILD_SEGMENT)) {
-                segmentNode = new SegmentNode();
-                segmentNode.setSize(Properties.SEGMENT_SIZE);
-                segmentNode.buildSegmentTree();
+                segmentTree = new SegmentTree();
+                segmentTree.setMaximumSize(Properties.SEGMENT_SIZE);
+                segmentTree.buildSegmentTree();
+                continue;
+            }
+            if (command.equals(PRINT_SEGMENT)) {
+                System.out.println(segmentTree.print());
                 continue;
             }
             if (command.equals(TEST)) {
@@ -92,3 +94,4 @@ public class Main {
         }
     }
 }
+
