@@ -11,7 +11,8 @@ public enum FileProperties {
     TST_OUTPUT_FILE_NAME("tst.file.output.name"),
     FORCE_SUPORT_OS("force.suported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
-    SEGMENT_SIZE("segment.size");
+    SEGMENT_SIZE("segment.size"),
+    SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name");
 
     private final String value;
 
