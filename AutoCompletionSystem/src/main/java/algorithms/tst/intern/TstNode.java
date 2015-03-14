@@ -6,22 +6,23 @@ package algorithms.tst.intern;
 public class TstNode {
 
     private Character character;
-    private String additionalInfo;
+    private int maxWeight;
+    private boolean endWord;
     private TstNode leftChild;
     private TstNode middleChild;
     private TstNode rightChild;
 
     public TstNode(){
-        this(' ',"");
+        this(' ',0);
     }
 
     public TstNode(Character character){
-        this(character,"");
+        this(character,0);
     }
 
-    public TstNode(Character character, String info){
+    public TstNode(Character character, int maxWeight){
         this.character = character;
-        additionalInfo = info;
+        this.maxWeight = maxWeight;
     }
 
     public boolean isEmpty() {
@@ -47,7 +48,7 @@ public class TstNode {
     public String toString() {
         return "TstNode{" +
                 "ch=" + character +
-                ", Info='" + additionalInfo + '\'' +
+                ", W='" + maxWeight + '\'' +
                 ", lC=" + leftChild +
                 ", mC=" + middleChild +
                 ", rC=" + rightChild +
