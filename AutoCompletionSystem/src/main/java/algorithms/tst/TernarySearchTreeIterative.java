@@ -7,12 +7,12 @@ import java.util.List;
 /**
  * Created by Catalin on 2/21/2015 .
  */
-public class TernarySearchTreeIterative extends AbstractTernarySearchTree {
+public class TernarySearchTreeIterative {
 
-    @Override
+//    @Override
     public boolean search(String s) {
         String string = s;
-        TstNode node = root;
+        TstNode node = new TstNode();
         boolean found = false;
 
         while (true) {
@@ -44,19 +44,19 @@ public class TernarySearchTreeIterative extends AbstractTernarySearchTree {
         return found;
     }
 
-    @Override
+//    @Override
     public List<String> getTopK(String prefix) {
         return null;
     }
 
-    @Override
+//    @Override
     public void insert(String s) {
 
         String string = s;
-        if(root == null){
-            root = new TstNode();
-        }
-        TstNode node = root;
+//        if(root == null){
+//            root = new TstNode();
+//        }
+        TstNode node = new TstNode();
 
         while (true) {
             if (string.length() == 0) {

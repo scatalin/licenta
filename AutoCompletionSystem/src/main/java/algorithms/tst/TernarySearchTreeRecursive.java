@@ -1,6 +1,7 @@
 package algorithms.tst;
 
 import algorithms.tst.intern.TstNode;
+import model.dictionary.Word;
 
 import java.util.List;
 
@@ -9,23 +10,26 @@ import java.util.List;
  */
 public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
 
-    public boolean search(String s) {
+    private int toInsertWeight;
+
+    public int search(String s) {
         return recursiveSearch(root, s);
     }
 
-    @Override
-    public List<String> getTopK(String prefix) {
-        return null;
-    }
-
-    private boolean recursiveSearch(TstNode node, String s) {
+    private int recursiveSearch(TstNode node, String s) {
         if (s.length() == 0) {
-            return true;
+            if (node == null) {
+                return -1;
+            }
+            if (node.isEndWord()) {
+                return node.getWeight();
+            }
+            return -1;
         }
         if (node == null) {
-            return false;
+            return -1;
         }
-        int comparisonResult = node.getCharacter().compareTo(s.charAt(0));
+        int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
         if (comparisonResult < 0) {
             return recursiveSearch(node.getLeftChild(), s.substring(1));
         }
@@ -35,18 +39,28 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         return recursiveSearch(node.getMiddleChild(), s.substring(1));
     }
 
-    public void insert(String s) {
+    @Override
+    public List<Word> getTopK(String prefix) {
+        return null;
+    }
+
+    public void insert(String s, int weight) {
+        this.toInsertWeight = weight;
         root = recursiveInsert(root, s);
     }
 
     private TstNode recursiveInsert(TstNode node, String s) {
         if (s.length() == 0) {
+            node.setEndWord(true);
             return node;
         }
         if (node == null) {
-            node = new TstNode(s.charAt(0));
+            node = new TstNode(s.charAt(0),toInsertWeight);
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
             return node;
+        }
+        if(toInsertWeight>node.getWeight()){
+            node.setWeight(toInsertWeight);
         }
         int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
         if (comparisonResult < 0) {
@@ -55,7 +69,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         if (comparisonResult > 0) {
             node.setRightChild(recursiveInsert(node.getRightChild(), s));
         }
-        if(comparisonResult == 0){
+        if (comparisonResult == 0) {
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
         }
         return node;

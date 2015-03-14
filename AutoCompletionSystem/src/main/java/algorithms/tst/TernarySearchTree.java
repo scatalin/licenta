@@ -1,5 +1,7 @@
 package algorithms.tst;
 
+import model.dictionary.Word;
+
 import java.util.List;
 
 /**
@@ -7,17 +9,17 @@ import java.util.List;
  */
 public interface TernarySearchTree {
 
-    void load(String[] strings);
+    void load(List<Word> words);
 
-    void additionalLoad(String[] strings);
+    void additionalLoad(List<Word> words);
 
-    boolean search(String s);
+    int search(String s);
 
-    List<String> getTopK(String prefix);
+    List<Word> getTopK(String prefix);
 
     void setK(int k);
 
-    void insert(String s);
+    void insert(String word, int weight);
 
     String print();
 }
