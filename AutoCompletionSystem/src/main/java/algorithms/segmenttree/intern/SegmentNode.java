@@ -1,4 +1,4 @@
-package algorithms.segmenttree;
+package algorithms.segmenttree.intern;
 
 /**
  * Created by gstan on 13.03.2015.
@@ -16,48 +16,6 @@ public class SegmentNode {
 
     public SegmentNode(Interval interval) {
         this.interval = interval;
-    }
-
-    public int createChildren() {
-        depth = 1;
-        interval.middle = interval.leftLimit + ((interval.rightLimit - interval.leftLimit) / 2);
-        if (interval.leftLimit == interval.rightLimit) {
-            return 1;
-        }
-
-        int maxDepth = 0;
-
-        Interval leftInterval = new Interval();
-        leftInterval.leftLimit = interval.leftLimit;
-        leftInterval.rightLimit = interval.middle;
-        leftChild = new SegmentNode(leftInterval);
-        int leftDepth = leftChild.createChildren();
-        if (maxDepth < leftDepth) {
-            maxDepth = leftDepth;
-        }
-
-        Interval rightInterval = new Interval();
-        rightInterval.leftLimit = interval.middle + 1;
-        rightInterval.rightLimit = interval.rightLimit;
-        rightChild = new SegmentNode(rightInterval);
-        int rightDepth = rightChild.createChildren();
-        if (maxDepth < rightDepth) {
-            maxDepth = rightDepth;
-        }
-
-        depth = maxDepth + 1;
-        return depth;
-    }
-
-    private class Interval {
-        int leftLimit = 0;
-        int rightLimit = 0;
-        int middle = 0;
-
-        @Override
-        public String toString() {
-            return "[" + leftLimit + "," + rightLimit + "]";
-        }
     }
 
     public int getLeftLimit() {

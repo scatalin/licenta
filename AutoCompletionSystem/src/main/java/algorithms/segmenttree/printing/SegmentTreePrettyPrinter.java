@@ -1,6 +1,6 @@
 package algorithms.segmenttree.printing;
 
-import algorithms.segmenttree.SegmentNode;
+import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.utils.AbstractPrettyPrinter;
 
 import java.util.ArrayList;
