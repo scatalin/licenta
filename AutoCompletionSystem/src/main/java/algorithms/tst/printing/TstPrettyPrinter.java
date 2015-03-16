@@ -10,9 +10,9 @@ import algorithms.utils.AbstractPrettyPrinter;
  */
 public class TstPrettyPrinter extends AbstractPrettyPrinter{
 
-    private static final TstNode LEFT_SON = new TstNode('/');
-    private static final TstNode MIDDLE_SON = new TstNode('|');
-    private static final TstNode RIGHT_SON = new TstNode('\\');
+    private static final TstNode LEFT_SON = new TstNode('/',-1);
+    private static final TstNode MIDDLE_SON = new TstNode('|',-1);
+    private static final TstNode RIGHT_SON = new TstNode('\\',-1);
 
     private TstNode[][] matrix;
 //    private Character[][] dummyMatrix;
@@ -102,10 +102,16 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 if (matrix[i][j] == null) {
-                    stringBuilder.append("    ");
+                    stringBuilder.append("     ");
                 } else {
                     int r = matrix[i][j].getWeight();
-                    stringBuilder.append(matrix[i][j].getCharacter()).append("|").append(r);
+                    stringBuilder.append(" ").append(matrix[i][j].getCharacter());
+                    if(r == -1){
+                        stringBuilder.append("  ");
+                    }
+                    else {
+                        stringBuilder.append("|").append(r);
+                    }
                     if(r<10){
                         stringBuilder.append(" ");
                     }
