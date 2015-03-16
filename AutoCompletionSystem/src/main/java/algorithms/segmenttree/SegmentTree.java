@@ -3,6 +3,7 @@ package algorithms.segmenttree;
 import algorithms.segmenttree.intern.Interval;
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.segmenttree.intern.SegmentTreeData;
+import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import model.dictionary.Word;
@@ -102,7 +103,7 @@ public class SegmentTree {
     }
 
     public String printSubtrees() {
-        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
+        PrettyPrinter printer = new NestedTstPrettyPrinter(root);
         return printer.prettyPrint();
     }
 
