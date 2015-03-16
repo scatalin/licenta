@@ -15,7 +15,8 @@ public enum FileProperties {
     FORCE_SUPORT_OS("force.suported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SEGMENT_SIZE("segment.size"),
-    SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name");
+    SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name"),
+    SEGMENT_TREE_OUTPUT_FILE_NAME("segment.tree.file.output.name");
 
     private final String value;
 

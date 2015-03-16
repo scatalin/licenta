@@ -71,6 +71,9 @@ public class PropertiesParser {
                 if (tokens[0].equals(FileProperties.SEGMENT_OUTPUT_FILE_NAME.getValue())) {
                     Properties.SEGMENT_OUTPUT_FILE_NAME = tokens[1];
                 }
+                if (tokens[0].equals(FileProperties.SEGMENT_TREE_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.SEGMENT_TREE_OUTPUT_FILE_NAME = tokens[1];
+                }
             }
             line = reader.readLine();
         }

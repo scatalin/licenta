@@ -1,6 +1,7 @@
 import algorithms.segmenttree.SegmentTree;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
 import algorithms.segmenttree.printing.SegmentFilePrinter;
+import algorithms.segmenttree.printing.SegmentTreeFilePrinter;
 import algorithms.tst.TernarySearchTree;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.tst.printing.TstFilePrinter;
@@ -94,10 +95,11 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_TST_WEIGHTED_BUILD)) {
-                SegmentTstTreeFactory.buildWeightedSegmentTst(segmentTree,dictionary);
+                SegmentTstTreeFactory.buildWeightedSegmentTst(segmentTree, dictionary);
                 continue;
             }
             if (command.equals(SEGMENT_TST_PRINT)) {
+                FilePrinter.printTstToFile(SegmentTreeFilePrinter.file, segmentTree.printSubtrees());
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {
@@ -107,7 +109,7 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(SegmentFilePrinter.file, segmentTree.print());
+                FilePrinter.printTstToFile(SegmentFilePrinter.file, segmentTree.printTree());
                 continue;
             }
             if (command.equals(TEST)) {
