@@ -60,8 +60,12 @@ public class Dictionary {
         word1.increaseFrequency();
     }
 
-    public void sortDictionary(){
+    public void sortDictionaryAlphabetically(){
         Collections.sort(words);
+    }
+
+    public void sortDictionaryByWeight() {
+        Collections.sort(words, new WordFrequencyComparator());
     }
 
     public void saveDictionary() {

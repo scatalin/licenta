@@ -55,7 +55,7 @@ public class InputFilesProcessor {
                 e.printStackTrace();
             }
         }
-        dictionary.sortDictionary();
+        dictionary.sortDictionaryAlphabetically();
         dictionary.removeNonWords();
         dictionary.saveDictionary();
     }

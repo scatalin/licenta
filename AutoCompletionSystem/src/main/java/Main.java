@@ -22,10 +22,11 @@ public class Main {
     private static String DISPLAY = "d d";
     private static String TST_BUILD = "tst b";
     private static String TST_RANDOM_BUILD = "tst rb";
+    private static String TST_WEIGHTED_BUILD = "tst wb";
     private static String TST_PRINT = "tst p";
     private static String TEST = "test";
-    private static String BUILD_SEGMENT = "sgm b";
-    private static String PRINT_SEGMENT = "sgm p";
+    private static String SEGMENT_BUILD = "sgm b";
+    private static String SEGMENT_PRINT = "sgm p";
 
     public static void main(String[] args) {
         try {
@@ -69,17 +70,21 @@ public class Main {
                 tst = TernarySearchTreeFactory.buildRandomTst(dictionary);
                 continue;
             }
+            if (command.equals(TST_RANDOM_BUILD)) {
+                tst = TernarySearchTreeFactory.buildWeightedTst(dictionary);
+                continue;
+            }
             if (command.equals(TST_PRINT)) {
                 FilePrinter.printTstToFile(TstFilePrinter.file,tst.print());
                 continue;
             }
-            if (command.equals(BUILD_SEGMENT)) {
+            if (command.equals(SEGMENT_BUILD)) {
                 segmentTree = new SegmentTree();
                 segmentTree.setMaximumSize(Properties.SEGMENT_SIZE);
                 segmentTree.buildSegmentTree();
                 continue;
             }
-            if (command.equals(PRINT_SEGMENT)) {
+            if (command.equals(SEGMENT_PRINT)) {
                 FilePrinter.printTstToFile(SegmentFilePrinter.file,segmentTree.print());
                 continue;
             }

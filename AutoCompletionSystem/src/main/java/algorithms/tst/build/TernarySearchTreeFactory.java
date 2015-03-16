@@ -22,6 +22,12 @@ public class TernarySearchTreeFactory {
         return tst;
     }
 
+    public static TernarySearchTree buildWeightedTst(Dictionary dictionary) {
+        dictionary.sortDictionaryByWeight();
+        return buildTst(dictionary);
+    }
+
+
     public static TernarySearchTree buildRandomTst(Dictionary dictionary) {
         TernarySearchTree tst = new TernarySearchTreeRecursive();
         List<Word> words = new ArrayList<Word>(dictionary.getWords());
