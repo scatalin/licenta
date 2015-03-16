@@ -11,6 +11,8 @@ import java.io.IOException;
 public class PropertiesParser {
 
     public static final String AUTOCOMPLETION_SYSTEM_PROPERTIES_LOCATION = "src/main/resources/autocompletionsystem.properties";
+    public static final String WINDOWS = "WINDOWS";
+    public static final String LINUX = "LINUX";
 
     public static void propertiesFileRead() throws IOException {
         System.out.println("Hello world");
@@ -33,13 +35,22 @@ public class PropertiesParser {
         while (line != null) {
             String[] tokens = line.split("=");
             if (tokens.length == 2) {
-                if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY.getValue())) {
+                if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
                 }
-                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY.getValue())) {
+                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
                     Properties.PROCESSED_FILES_DIRECTORY = tokens[1];
                 }
-                if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY.getValue())) {
+                if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
+                    Properties.DICTIONARY_DIRECTORY = tokens[1];
+                }
+                if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
+                    Properties.INPUT_FILES_DIRECTORY = tokens[1];
+                }
+                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
+                    Properties.PROCESSED_FILES_DIRECTORY = tokens[1];
+                }
+                if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
                     Properties.DICTIONARY_DIRECTORY = tokens[1];
                 }
                 if (tokens[0].equals(FileProperties.DICTIONARY_FILE_NAME.getValue())) {
@@ -69,8 +80,10 @@ public class PropertiesParser {
         String OS = System.getProperty("os.name").toLowerCase();
         if (isWindows(OS)) {
             Properties.SYSTEM_PATH_SEPARATOR = "\\";
+            Properties.SYSTEM = WINDOWS;
         } else if (isUnix(OS)) {
             Properties.SYSTEM_PATH_SEPARATOR = "/";
+            Properties.SYSTEM = LINUX;
         } else if (Properties.IS_FORCED_SUPORTED_OS) {
             Properties.SYSTEM_PATH_SEPARATOR = Properties.FORCED_SYSTEM_PATH_SEPARATOR;
             System.out.println("Operating system not suported. if you want this to be suported, set the force.suported property to true and write by hand the system separator and the paths");

@@ -18,8 +18,8 @@ import java.util.Scanner;
 public class Main {
 
     private static String RESET = "reset";
-    private static String IMPORT = "import";
-    private static String DISPLAY = "d d";
+    private static String DICTIONARY_IMPORT = "dict i";
+    private static String DICTIONARY_DISPLAY = "dict d";
     private static String TST_BUILD = "tst b";
     private static String TST_RANDOM_BUILD = "tst rb";
     private static String TST_WEIGHTED_BUILD = "tst wb";
@@ -30,8 +30,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            PropertiesParser.propertiesFileRead();
             PropertiesParser.validateOS();
+            PropertiesParser.propertiesFileRead();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
@@ -56,10 +56,12 @@ public class Main {
             if (command.equals(RESET)) {
                 continue;
             }
-            if (command.equals(IMPORT)) {
+            if (command.equals(DICTIONARY_IMPORT)) {
+                InputFilesProcessor ifp = new InputFilesProcessor(dictionary);
+                ifp.processInputFiles();
                 continue;
             }
-            if (command.equals(DISPLAY)) {
+            if (command.equals(DICTIONARY_DISPLAY)) {
                 continue;
             }
             if (command.equals(TST_BUILD)) {
@@ -70,7 +72,7 @@ public class Main {
                 tst = TernarySearchTreeFactory.buildRandomTst(dictionary);
                 continue;
             }
-            if (command.equals(TST_RANDOM_BUILD)) {
+            if (command.equals(TST_WEIGHTED_BUILD)) {
                 tst = TernarySearchTreeFactory.buildWeightedTst(dictionary);
                 continue;
             }
@@ -85,16 +87,15 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(SegmentFilePrinter.file,segmentTree.print());
+                FilePrinter.printTstToFile(SegmentFilePrinter.file, segmentTree.print());
                 continue;
             }
             if (command.equals(TEST)) {
-                InputFilesProcessor ifp = new InputFilesProcessor(dictionary);
-                ifp.processInputFiles();
                 continue;
             }
             System.out.println("wrong use:");
         }
+        System.out.println("bye bye");
     }
 }
 
