@@ -11,6 +11,7 @@ import java.util.List;
 public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
 
     private int toInsertWeight;
+    private boolean wasEndWord;
 
     public int search(String s) {
         return recursiveSearch(root, s);
@@ -46,17 +47,22 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
 
     public void insert(String s, int weight) {
         this.toInsertWeight = weight;
+        wasEndWord = false;
         root = recursiveInsert(root, s);
     }
 
     private TstNode recursiveInsert(TstNode node, String s) {
         if (s.length() == 0) {
-            node.setEndWord(true);
+            wasEndWord = true;
             return node;
         }
         if (node == null) {
             node = new TstNode(s.charAt(0),toInsertWeight);
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
+            if(wasEndWord){
+                node.setEndWord(true);
+                wasEndWord = false;
+            }
             return node;
         }
         if(toInsertWeight>node.getWeight()){
@@ -71,6 +77,10 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         }
         if (comparisonResult == 0) {
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
+        }
+        if(wasEndWord){
+            wasEndWord = false;
+            node.setEndWord(true);
         }
         return node;
     }
