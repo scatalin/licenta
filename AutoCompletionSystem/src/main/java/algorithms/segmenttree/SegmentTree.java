@@ -64,18 +64,20 @@ public class SegmentTree {
         return node.getDepth();
     }
 
-    public String print() {
-        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
-        return printer.prettyPrint();
-    }
-
     public int search(String s) {
         int position = data.getInterval(s.substring(0, 1));
         return recursiveSearch(root, s, position);
     }
 
     private int recursiveSearch(SegmentNode node, String s, int position) {
-        return 0;
+        if (node.isLeaf()) {
+            return node.searchTst(s);
+        } else {
+            int left = node.getLeftLimit();
+            int right = node.getRightLimit();
+            int middle = left + ((right - left) / 2);
+            return recursiveSearch(position <= middle ? node.getLeftChild() : node.getRightChild(), s, position);
+        }
     }
 
     public void insert(Word word) {
@@ -92,6 +94,16 @@ public class SegmentTree {
             int middle = left + ((right - left) / 2);
             recursiveInsert(position <= middle ? node.getLeftChild() : node.getRightChild(), word, position);
         }
+    }
+
+    public String printTree() {
+        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
+        return printer.prettyPrint();
+    }
+
+    public String printSubtrees() {
+        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
+        return printer.prettyPrint();
     }
 
 }

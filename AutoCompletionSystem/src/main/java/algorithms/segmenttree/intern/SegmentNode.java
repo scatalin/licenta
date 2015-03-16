@@ -86,4 +86,12 @@ public class SegmentNode {
     public void insertInTst(Word word) {
         tst.insert(word.getWord(),word.getFrequency());
     }
+
+    public int searchTst(String s) {
+        return tst.search(s);
+    }
+
+    public TernarySearchTree getTst() {
+        return tst;
+    }
 }
