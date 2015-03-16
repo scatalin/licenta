@@ -83,11 +83,11 @@ public class Main {
                 continue;
             }
             if (command.equals(TST_PRINT)) {
-                FilePrinter.printTstToFile(TstFilePrinter.file,tst.print());
+                FilePrinter.printTstToFile(TstFilePrinter.file, tst.print());
                 continue;
             }
             if (command.equals(SEGMENT_TST_BUILD)) {
-                SegmentTstTreeFactory.buildSegmentTst(segmentTree,dictionary);
+                SegmentTstTreeFactory.buildSegmentTst(segmentTree, dictionary);
                 continue;
             }
             if (command.equals(SEGMENT_TST_RANDOM_BUILD)) {
