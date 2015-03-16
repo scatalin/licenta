@@ -1,16 +1,14 @@
 import algorithms.segmenttree.SegmentTree;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
-import algorithms.segmenttree.printing.SegmentFilePrinter;
-import algorithms.segmenttree.printing.SegmentTreeFilePrinter;
 import algorithms.tst.TernarySearchTree;
 import algorithms.tst.build.TernarySearchTreeFactory;
-import algorithms.tst.printing.TstFilePrinter;
 import algorithms.utils.FilePrinter;
 import input.InputFilesProcessor;
 import input.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -83,7 +81,7 @@ public class Main {
                 continue;
             }
             if (command.equals(TST_PRINT)) {
-                FilePrinter.printTstToFile(TstFilePrinter.file, tst.print());
+                FilePrinter.printTstToFile(FilePrinter.TST_FILE, tst.print());
                 continue;
             }
             if (command.equals(SEGMENT_TST_BUILD)) {
@@ -99,7 +97,7 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_TST_PRINT)) {
-                FilePrinter.printTstToFile(SegmentTreeFilePrinter.file, segmentTree.printSubtrees());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, segmentTree.printSubtrees());
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {
@@ -109,7 +107,7 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(SegmentFilePrinter.file, segmentTree.printTree());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, segmentTree.printTree());
                 continue;
             }
             if (command.equals(TEST)) {
