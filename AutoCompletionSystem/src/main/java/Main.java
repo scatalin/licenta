@@ -1,4 +1,5 @@
 import algorithms.segmenttree.SegmentTree;
+import algorithms.segmenttree.build.SegmentTstTreeFactory;
 import algorithms.segmenttree.printing.SegmentFilePrinter;
 import algorithms.tst.TernarySearchTree;
 import algorithms.tst.build.TernarySearchTreeFactory;
@@ -24,6 +25,10 @@ public class Main {
     private static String TST_RANDOM_BUILD = "tst rb";
     private static String TST_WEIGHTED_BUILD = "tst wb";
     private static String TST_PRINT = "tst p";
+    private static String SEGMENT_TST_BUILD = "st b";
+    private static String SEGMENT_TST_RANDOM_BUILD = "st rb";
+    private static String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
+    private static String SEGMENT_TST_PRINT = "st p";
     private static String TEST = "test";
     private static String SEGMENT_BUILD = "sgm b";
     private static String SEGMENT_PRINT = "sgm p";
@@ -78,6 +83,21 @@ public class Main {
             }
             if (command.equals(TST_PRINT)) {
                 FilePrinter.printTstToFile(TstFilePrinter.file,tst.print());
+                continue;
+            }
+            if (command.equals(SEGMENT_TST_BUILD)) {
+                SegmentTstTreeFactory.buildSegmentTst(segmentTree,dictionary);
+                continue;
+            }
+            if (command.equals(SEGMENT_TST_RANDOM_BUILD)) {
+                SegmentTstTreeFactory.buildRandomSegmentTst(segmentTree, dictionary);
+                continue;
+            }
+            if (command.equals(SEGMENT_TST_WEIGHTED_BUILD)) {
+                SegmentTstTreeFactory.buildWeightedSegmentTst(segmentTree,dictionary);
+                continue;
+            }
+            if (command.equals(SEGMENT_TST_PRINT)) {
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {

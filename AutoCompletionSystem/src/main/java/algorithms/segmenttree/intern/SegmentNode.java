@@ -1,5 +1,9 @@
 package algorithms.segmenttree.intern;
 
+import algorithms.tst.TernarySearchTree;
+import algorithms.tst.TernarySearchTreeRecursive;
+import model.dictionary.Word;
+
 /**
  * Created by gstan on 13.03.2015.
  */
@@ -9,6 +13,7 @@ public class SegmentNode {
     private SegmentNode leftChild;
     private SegmentNode rightChild;
     private int depth;
+    private TernarySearchTree tst;
 
     public SegmentNode() {
         interval = new Interval();
@@ -70,5 +75,15 @@ public class SegmentNode {
         return "[" + left + "," + right + "]";
     }
 
+    public void createTst() {
+        tst = new TernarySearchTreeRecursive();
+    }
 
+    public boolean isLeaf() {
+        return interval.rightLimit - interval.leftLimit == 0;
+    }
+
+    public void insertInTst(Word word) {
+        tst.insert(word.getWord(),word.getFrequency());
+    }
 }
