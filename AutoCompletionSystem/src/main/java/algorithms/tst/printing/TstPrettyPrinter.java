@@ -102,15 +102,23 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 if (matrix[i][j] == null) {
-                    stringBuilder.append("     ");
+                    stringBuilder.append("       ");
                 } else {
                     int r = matrix[i][j].getWeight();
                     stringBuilder.append(" ").append(matrix[i][j].getCharacter());
+
                     if(r == -1){
                         stringBuilder.append("  ");
                     }
                     else {
                         stringBuilder.append("|").append(r);
+                    }
+
+                    if(matrix[i][j].isEndWord()){
+                        stringBuilder.append("|").append("w");
+                    }
+                    else {
+                        stringBuilder.append("  ");
                     }
                     if(r<10){
                         stringBuilder.append(" ");
