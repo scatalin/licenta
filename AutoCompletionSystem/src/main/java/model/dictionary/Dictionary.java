@@ -12,42 +12,12 @@ import java.util.List;
  */
 public class Dictionary {
 
-    private final String directoryPath;
-    private final String fileName;
-    private final File directory;
-    private final File dictionaryFile;
+
     private List<Word> words;
 
     public Dictionary() {
-        directoryPath = Properties.DICTIONARY_DIRECTORY;
-        fileName = Properties.DICTIONARY_FILE_NAME;
-        directory = new File(directoryPath);
-        if (!directory.exists() && !directory.isDirectory()) {
-            System.out.println("dictionary directory does not exist: " + directory + ";");
-        }
-        dictionaryFile = new File(directoryPath + Properties.SYSTEM_PATH_SEPARATOR + fileName);
-        if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
-            System.out.println("dictionary file does not exist " + dictionaryFile + ";");
-        }
-        words = new ArrayList<Word>();
-    }
 
-    public void readDictionary() {
-        try {
-            words.clear();
-            BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile));
-            String line = reader.readLine();
-            while (line != null) {
-                String[] tokens = line.split("=");
-                words.add(new Word(tokens[0],Integer.parseInt(tokens[1])));
-                line = reader.readLine();
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        words = new ArrayList<Word>();
     }
 
     public void addWord(String word){
@@ -68,21 +38,6 @@ public class Dictionary {
         Collections.sort(words, new WordFrequencyComparator());
     }
 
-    public void saveDictionary() {
-        try {
-            dictionaryFile.delete();
-            dictionaryFile.createNewFile();
-            PrintWriter writer = new PrintWriter(dictionaryFile);
-            for (Word word : words) {
-                writer.println(word);
-            }
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Word> getWords() {
         return words;
     }
@@ -95,5 +50,13 @@ public class Dictionary {
                 i--;
             }
         }
+    }
+
+    public void clear() {
+        words.clear();
+    }
+
+    public void add(Word word) {
+        words.add(word);
     }
 }
