@@ -13,7 +13,7 @@ public class TernarySearchTreeIterative {
     public boolean search(String s) {
         String string = s;
         TstNode node = new TstNode();
-        boolean found = false;
+        boolean found;
 
         while (true) {
             if (string.length() == 0) {

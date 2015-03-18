@@ -2,7 +2,6 @@ package algorithms.segmenttree.parsing;
 
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.tst.TernarySearchTree;
-import model.dictionary.Word;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * Created by gstan on 16.03.2015.
  */
 public class SegmentTreeParser {
-    private SegmentNode root;
+    private final SegmentNode root;
     private List<TernarySearchTree> leafs;
 
     public SegmentTreeParser(SegmentNode root) {

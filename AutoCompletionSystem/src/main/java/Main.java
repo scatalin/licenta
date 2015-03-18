@@ -17,21 +17,21 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static String RESET = "reset";
-    private static String DICTIONARY_IMPORT = "dict i";
-    private static String DICTIONARY_DISPLAY = "dict d";
-    private static String TST_BUILD = "tst b";
-    private static String TST_RANDOM_BUILD = "tst rb";
-    private static String TST_WEIGHTED_BUILD = "tst wb";
-    private static String TST_PRINT = "tst p";
-    private static String SEGMENT_TST_BUILD = "st b";
-    private static String SEGMENT_TST_RANDOM_BUILD = "st rb";
-    private static String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
-    private static String SEGMENT_TST_PRINT = "st p";
-    private static String TEST = "test";
-    private static String SEGMENT_BUILD = "sgm b";
-    private static String SEGMENT_PRINT = "sgm p";
+    private static final String RESET = "reset";
     private static final String PROCESS_FILES = "input";
+    private static final String DICTIONARY_IMPORT = "dict i";
+    private static final String DICTIONARY_DISPLAY = "dict d";
+    private static final String TST_BUILD = "tst b";
+    private static final String TST_RANDOM_BUILD = "tst rb";
+    private static final String TST_WEIGHTED_BUILD = "tst wb";
+    private static final String TST_PRINT = "tst p";
+    private static final String SEGMENT_TST_BUILD = "st b";
+    private static final String SEGMENT_TST_RANDOM_BUILD = "st rb";
+    private static final String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
+    private static final String SEGMENT_TST_PRINT = "st p";
+    private static final String TEST = "test";
+    private static final String SEGMENT_BUILD = "sgm b";
+    private static final String SEGMENT_PRINT = "sgm p";
 
     public static void main(String[] args) {
         try {
@@ -46,10 +46,10 @@ public class Main {
         main.start();
     }
 
-    public void start() {
-        TernarySearchTree tst = null;
-        SegmentTree segmentTree = null;
-        Dictionary dictionary = new Dictionary();
+    void start() {
+        TernarySearchTree tst= new TernarySearchTreeRecursive();
+        SegmentTree segmentTree = new SegmentTree();
+        Dictionary dictionary  = new Dictionary();
 
         Scanner scanner = new Scanner(System.in);
 

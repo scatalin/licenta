@@ -12,12 +12,8 @@ import java.util.List;
  */
 public abstract class AbstractTernarySearchTree implements TernarySearchTree {
 
-    protected TstNode root;
-    protected int k;
-
-    public AbstractTernarySearchTree() {
-        root = null;
-    }
+    TstNode root;
+    int k;
 
     public void load(List<Word> words) {
         root = null;

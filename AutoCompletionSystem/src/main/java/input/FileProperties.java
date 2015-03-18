@@ -12,7 +12,7 @@ public enum FileProperties {
     DICTIONARY_DIRECTORY_LINUX("linux.dictionary.directory"),
     DICTIONARY_FILE_NAME("dictionary.name"),
     TST_OUTPUT_FILE_NAME("tst.file.output.name"),
-    FORCE_SUPORT_OS("force.suported"),
+    FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SEGMENT_SIZE("segment.size"),
     SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name"),

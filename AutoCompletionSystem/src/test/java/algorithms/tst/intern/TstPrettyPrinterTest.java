@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class TstPrettyPrinterTest {
 
     private TernarySearchTree tst;

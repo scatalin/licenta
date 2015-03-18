@@ -9,7 +9,7 @@ import model.dictionary.Word;
  */
 public class SegmentNode {
 
-    private Interval interval;
+    private final Interval interval;
     private SegmentNode leftChild;
     private SegmentNode rightChild;
     private int depth;

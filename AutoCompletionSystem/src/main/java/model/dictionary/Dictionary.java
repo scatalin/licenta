@@ -1,8 +1,5 @@
 package model.dictionary;
 
-import input.Properties;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 public class Dictionary {
 
 
-    private List<Word> words;
+    private final List<Word> words;
 
     public Dictionary() {
 

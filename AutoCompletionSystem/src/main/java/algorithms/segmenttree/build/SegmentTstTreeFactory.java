@@ -1,8 +1,6 @@
 package algorithms.segmenttree.build;
 
 import algorithms.segmenttree.SegmentTree;
-import algorithms.tst.TernarySearchTree;
-import algorithms.tst.TernarySearchTreeRecursive;
 import model.dictionary.Dictionary;
 import model.dictionary.Word;
 

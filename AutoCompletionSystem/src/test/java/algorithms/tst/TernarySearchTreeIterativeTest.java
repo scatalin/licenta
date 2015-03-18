@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class TernarySearchTreeIterativeTest {
 
     private TernarySearchTree tst;

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
 
-    private SegmentNode root;
+    private final SegmentNode root;
     private List<List<SegmentElement>> matrix;
     private StringBuilder stringBuilder;
 
@@ -26,19 +26,19 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
         for (List<SegmentElement> line : matrix) {
             for (SegmentElement node : line) {
                 if(node.node != null) {
-                    addIdentation(node.level-1, 0);
+                    addIndentation(node.level - 1, 0);
                     stringBuilder.append(node.node.toString());
-                    addIdentation(node.level-1, 1);
+                    addIndentation(node.level - 1, 1);
                 }
                 else {
-                    addIdentation(1,0);
+                    addIndentation(1, 0);
                 }
             }
             stringBuilder.append("\n");
         }
     }
 
-    private void addIdentation(int depth, int extra) {
+    private void addIndentation(int depth, int extra) {
         double size = Math.pow(2, depth);
         size -= extra;
         for (int i = 0; i < size; i++) {
@@ -71,8 +71,8 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
     }
 
     private class SegmentElement{
-        int level;
-        SegmentNode node;
+        final int level;
+        final SegmentNode node;
 
         public SegmentElement(int level, SegmentNode node) {
             this.level = level;

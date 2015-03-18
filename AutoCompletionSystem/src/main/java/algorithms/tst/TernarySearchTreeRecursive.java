@@ -60,7 +60,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
             node = new TstNode(s.charAt(0),toInsertWeight);
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
             if(wasEndWord){
-                node.setEndWord(true);
+                node.setEndWord();
                 wasEndWord = false;
             }
             return node;
@@ -80,7 +80,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         }
         if(wasEndWord){
             wasEndWord = false;
-            node.setEndWord(true);
+            node.setEndWord();
         }
         return node;
     }

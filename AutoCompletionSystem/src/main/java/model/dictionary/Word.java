@@ -21,10 +21,6 @@ public class Word implements Comparable{
         return word;
     }
 
-    public void setWord(String word) {
-        this.word = word;
-    }
-
     public int getFrequency() {
         return frequency;
     }
@@ -40,9 +36,7 @@ public class Word implements Comparable{
 
         Word word1 = (Word) o;
 
-        if (word != null ? !word.equals(word1.word) : word1.word != null) return false;
-
-        return true;
+        return !(word != null ? !word.equals(word1.word) : word1.word != null);
     }
 
     @Override

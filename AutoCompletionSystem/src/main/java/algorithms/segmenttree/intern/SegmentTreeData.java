@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public class SegmentTreeData {
 
-    private Map<String, Integer> data;
-    private static String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    private int size;
+    private final Map<String, Integer> data;
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    private final int size;
 
     public SegmentTreeData(int size) {
         this.size = size;

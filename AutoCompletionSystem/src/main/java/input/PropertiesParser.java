@@ -10,9 +10,9 @@ import java.io.IOException;
  */
 public class PropertiesParser {
 
-    public static final String AUTOCOMPLETION_SYSTEM_PROPERTIES_LOCATION = "src/main/resources/autocompletionsystem.properties";
-    public static final String WINDOWS = "WINDOWS";
-    public static final String LINUX = "LINUX";
+    private static final String AUTO_COMPLETION_SYSTEM_PROPERTIES_LOCATION = "src/main/resources/autocompletionsystem.properties";
+    private static final String WINDOWS = "WINDOWS";
+    private static final String LINUX = "LINUX";
 
     public static void propertiesFileRead() throws IOException {
         System.out.println("Hello world");
@@ -27,7 +27,7 @@ public class PropertiesParser {
 //            System.out.println(fileName);
 //        }
 
-        File propertiesFile = new File(AUTOCOMPLETION_SYSTEM_PROPERTIES_LOCATION);
+        File propertiesFile = new File(AUTO_COMPLETION_SYSTEM_PROPERTIES_LOCATION);
         FileReader fReader = new FileReader(propertiesFile);
         BufferedReader reader = new BufferedReader(fReader);
         System.out.println("Initialize properties file");
@@ -59,8 +59,8 @@ public class PropertiesParser {
                 if (tokens[0].equals(FileProperties.TST_OUTPUT_FILE_NAME.getValue())) {
                     Properties.TST_OUTPUT_FILE_NAME = tokens[1];
                 }
-                if (tokens[0].equals(FileProperties.FORCE_SUPORT_OS.getValue())) {
-                    Properties.IS_FORCED_SUPORTED_OS = Boolean.parseBoolean(tokens[1]);
+                if (tokens[0].equals(FileProperties.FORCE_SUPPORT_OS.getValue())) {
+                    Properties.IS_FORCED_SUPPORTED_OS = Boolean.parseBoolean(tokens[1]);
                 }
                 if (tokens[0].equals(FileProperties.FORCE_SYSTEM_PATH_SEPARATOR.getValue())) {
                     Properties.FORCED_SYSTEM_PATH_SEPARATOR = tokens[1];
@@ -87,20 +87,20 @@ public class PropertiesParser {
         } else if (isUnix(OS)) {
             Properties.SYSTEM_PATH_SEPARATOR = "/";
             Properties.SYSTEM = LINUX;
-        } else if (Properties.IS_FORCED_SUPORTED_OS) {
+        } else if (Properties.IS_FORCED_SUPPORTED_OS) {
             Properties.SYSTEM_PATH_SEPARATOR = Properties.FORCED_SYSTEM_PATH_SEPARATOR;
-            System.out.println("Operating system not suported. if you want this to be suported, set the force.suported property to true and write by hand the system separator and the paths");
+            System.out.println("Operating system not supported. if you want this to be supported, set the force.supported property to true and write by hand the system separator and the paths");
             System.exit(1);
         }
     }
 
-    public static boolean isWindows(String OS) {
+    private static boolean isWindows(String OS) {
 
         return (OS.contains("win"));
 
     }
 
-    public static boolean isUnix(String OS) {
+    private static boolean isUnix(String OS) {
 
         return (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"));
 

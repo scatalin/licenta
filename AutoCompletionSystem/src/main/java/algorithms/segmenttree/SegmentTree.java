@@ -13,7 +13,7 @@ import model.dictionary.Word;
  */
 public class SegmentTree {
 
-    private SegmentNode root;
+    private final SegmentNode root;
     private int size;
     private SegmentTreeData data;
 

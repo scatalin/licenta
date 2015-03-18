@@ -92,8 +92,8 @@ public class TstNode {
         return endWord;
     }
 
-    public void setEndWord(boolean endWord) {
-        this.endWord = endWord;
+    public void setEndWord() {
+        this.endWord = true;
     }
 
     public int getWeight() {

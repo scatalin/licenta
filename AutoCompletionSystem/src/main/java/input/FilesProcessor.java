@@ -12,14 +12,14 @@ import java.io.*;
 public class FilesProcessor {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
-    private File inputDir;
-    private String processedDirectory;
+    private final File inputDir;
+    private final String processedDirectory;
 
-    private File dictionaryFile;
+    private final File dictionaryFile;
 
-    private Dictionary dictionary;
+    private final Dictionary dictionary;
 
-    private FileManager manager;
+    private final FileManager manager;
 
     public FilesProcessor(Dictionary dictionary) {
         this.dictionary = dictionary;

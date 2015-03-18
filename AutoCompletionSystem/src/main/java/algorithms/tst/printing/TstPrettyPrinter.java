@@ -19,8 +19,8 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
     private DimensionsInfo rootInfo;
     private int x;
     private int y;
-    private TstNode root;
-    private TreeParser parser;
+    private final TstNode root;
+    private final TreeParser parser;
 
     public TstPrettyPrinter(TstNode root) {
         this.root = root;
