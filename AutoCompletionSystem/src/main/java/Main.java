@@ -1,14 +1,14 @@
 import algorithms.segmenttree.SegmentTree;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
 import algorithms.tst.TernarySearchTree;
+import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.FilePrinter;
-import input.InputFilesProcessor;
+import input.FilesProcessor;
 import input.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -31,6 +31,7 @@ public class Main {
     private static String TEST = "test";
     private static String SEGMENT_BUILD = "sgm b";
     private static String SEGMENT_PRINT = "sgm p";
+    private static final String PROCESS_FILES = "input";
 
     public static void main(String[] args) {
         try {
@@ -58,10 +59,26 @@ public class Main {
             System.out.println("enter command:");
             command = scanner.nextLine();
             if (command.equals(RESET)) {
+                try {
+                    PropertiesParser.validateOS();
+                    PropertiesParser.propertiesFileRead();
+                    tst = new TernarySearchTreeRecursive();
+                    segmentTree = new SegmentTree();
+                    dictionary = new Dictionary();
+                } catch (IOException e) {
+                    System.out.println("System cannot restart");
+                    e.printStackTrace();
+                    System.exit(0);
+                }
                 continue;
             }
             if (command.equals(DICTIONARY_IMPORT)) {
-                InputFilesProcessor ifp = new InputFilesProcessor(dictionary);
+                FilesProcessor ifp = new FilesProcessor(dictionary);
+                ifp.readDictionary();
+                continue;
+            }
+            if (command.equals(PROCESS_FILES)) {
+                FilesProcessor ifp = new FilesProcessor(dictionary);
                 ifp.processInputFiles();
                 continue;
             }

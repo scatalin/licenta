@@ -2,34 +2,36 @@ package input;
 
 import model.dictionary.Dictionary;
 import model.dictionary.Word;
+import utils.FileManager;
 
 import java.io.*;
 
 /**
  * Created by Catalin on 2/21/2015 .
  */
-public class InputFilesProcessor {
+public class FilesProcessor {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private File inputDir;
-    private File processedDir;
+    private String processedDirectory;
 
     private File dictionaryFile;
 
     private Dictionary dictionary;
 
+    private FileManager manager;
 
-    public InputFilesProcessor(Dictionary dictionary) {
+    public FilesProcessor(Dictionary dictionary) {
         this.dictionary = dictionary;
         String inputDirectory = Properties.INPUT_FILES_DIRECTORY;
-        String processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
+        processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
 
         inputDir = new File(inputDirectory);
         if (!inputDir.exists() && !inputDir.isDirectory()) {
             System.out.println("input files directory does not exist: " + inputDir + ";");
         }
 
-        processedDir = new File(processedDirectory);
+        File processedDir = new File(processedDirectory);
         if (!processedDir.exists() && !processedDir.isDirectory()) {
             System.out.println("processed files directory does not exist: " + processedDir + ";");
         }
@@ -46,17 +48,25 @@ public class InputFilesProcessor {
         if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
             System.out.println("dictionary file does not exist " + dictionaryFile + ";");
         }
+
+        manager = new FileManager();
     }
 
     public void processInputFiles() {
         readDictionary();
-        String[] listFileNames = inputDir.list();
-        for (String fileName : listFileNames) {
-            System.out.println(fileName);
-            File file = new File(inputDir + Properties.SYSTEM_PATH_SEPARATOR + fileName);
+        File[] listFileNames = inputDir.listFiles();
+
+        if (listFileNames == null) {
+            System.out.println("an exception occurred while reading files from " + inputDir);
+            return;
+        }
+
+        for (File file : listFileNames) {
+            System.out.println("processing file " + file.getName());
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();
+
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
@@ -64,13 +74,18 @@ public class InputFilesProcessor {
                     }
                     line = reader.readLine();
                 }
+
                 reader.close();
+                manager.moveFile(file, processedDirectory);
+                System.out.println("file " + file.getName() + " was moved to processed directory");
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         dictionary.sortDictionaryAlphabetically();
         dictionary.removeNonWords();
         saveDictionary();
