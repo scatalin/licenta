@@ -2,6 +2,7 @@ package input;
 
 import model.dictionary.Dictionary;
 import model.dictionary.Word;
+import system.Properties;
 import utils.FileManager;
 
 import java.io.*;

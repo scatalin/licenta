@@ -5,7 +5,7 @@ import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.FilePrinter;
 import input.FilesProcessor;
-import input.Properties;
+import system.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
 

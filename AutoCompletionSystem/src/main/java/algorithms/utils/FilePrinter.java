@@ -1,6 +1,6 @@
 package algorithms.utils;
 
-import input.Properties;
+import system.Properties;
 
 import java.io.File;
 import java.io.IOException;
