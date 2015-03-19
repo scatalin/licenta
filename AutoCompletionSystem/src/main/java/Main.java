@@ -4,6 +4,7 @@ import algorithms.tst.TernarySearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.FilePrinter;
+import input.DictionaryProcessor;
 import input.FilesProcessor;
 import system.Properties;
 import input.PropertiesParser;
@@ -29,7 +30,6 @@ public class Main {
     private static final String SEGMENT_TST_RANDOM_BUILD = "st rb";
     private static final String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
     private static final String SEGMENT_TST_PRINT = "st p";
-    private static final String TEST = "test";
     private static final String SEGMENT_BUILD = "sgm b";
     private static final String SEGMENT_PRINT = "sgm p";
 
@@ -50,6 +50,7 @@ public class Main {
         TernarySearchTree tst= new TernarySearchTreeRecursive();
         SegmentTree segmentTree = new SegmentTree();
         Dictionary dictionary  = new Dictionary();
+        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -65,6 +66,7 @@ public class Main {
                     tst = new TernarySearchTreeRecursive();
                     segmentTree = new SegmentTree();
                     dictionary = new Dictionary();
+                    dictionaryProcessor = new DictionaryProcessor(dictionary);
                 } catch (IOException e) {
                     System.out.println("System cannot restart");
                     e.printStackTrace();
@@ -73,16 +75,16 @@ public class Main {
                 continue;
             }
             if (command.equals(DICTIONARY_IMPORT)) {
-                FilesProcessor ifp = new FilesProcessor(dictionary);
-                ifp.readDictionary();
+                dictionaryProcessor.readDictionary();
                 continue;
             }
             if (command.equals(PROCESS_FILES)) {
-                FilesProcessor ifp = new FilesProcessor(dictionary);
-                ifp.processInputFiles();
+                FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
+                filesProcessor.processInputFiles();
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
+                System.out.println(dictionary.getWords());
                 continue;
             }
             if (command.equals(TST_BUILD)) {
@@ -125,9 +127,6 @@ public class Main {
             }
             if (command.equals(SEGMENT_PRINT)) {
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, segmentTree.printTree());
-                continue;
-            }
-            if (command.equals(TEST)) {
                 continue;
             }
             System.out.println("wrong use:");

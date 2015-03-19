@@ -1,7 +1,5 @@
 package input;
 
-import model.dictionary.Dictionary;
-import model.dictionary.Word;
 import system.Properties;
 import utils.FileManager;
 
@@ -16,13 +14,11 @@ public class FilesProcessor {
     private final File inputDir;
     private final String processedDirectory;
 
-    private final File dictionaryFile;
-
-    private final Dictionary dictionary;
+    private final DictionaryProcessor dictionary;
 
     private final FileManager manager;
 
-    public FilesProcessor(Dictionary dictionary) {
+    public FilesProcessor(DictionaryProcessor dictionary) {
         this.dictionary = dictionary;
         String inputDirectory = Properties.INPUT_FILES_DIRECTORY;
         processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
@@ -37,31 +33,18 @@ public class FilesProcessor {
             System.out.println("processed files directory does not exist: " + processedDir + ";");
         }
 
-        String dictDirectory = Properties.DICTIONARY_DIRECTORY;
-        String fileName = Properties.DICTIONARY_FILE_NAME;
-
-        File directory = new File(dictDirectory);
-        if (!directory.exists() && !directory.isDirectory()) {
-            System.out.println("dictionary directory does not exist: " + directory + ";");
-        }
-
-        dictionaryFile = new File(dictDirectory + Properties.SYSTEM_PATH_SEPARATOR + fileName);
-        if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
-            System.out.println("dictionary file does not exist " + dictionaryFile + ";");
-        }
-
         manager = new FileManager();
     }
 
     public void processInputFiles() {
-        readDictionary();
+        dictionary.readDictionary();
         File[] listFileNames = inputDir.listFiles();
 
         if (listFileNames == null) {
             System.out.println("an exception occurred while reading files from " + inputDir);
             return;
         }
-
+        //todo read all input files and hand over to delegates, word processor and phrase processor
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
@@ -71,7 +54,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.addWord(word);
+                        dictionary.getDictionary().addWord(word);
                     }
                     line = reader.readLine();
                 }
@@ -87,45 +70,9 @@ public class FilesProcessor {
             }
         }
 
-        dictionary.sortDictionaryAlphabetically();
-        dictionary.removeNonWords();
-        saveDictionary();
+        dictionary.getDictionary().sortDictionaryAlphabetically();
+        dictionary.getDictionary().removeNonWords();
+        dictionary.saveDictionary();
     }
-
-    public void readDictionary() {
-        try {
-            dictionary.clear();
-            BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile));
-            String line = reader.readLine();
-            while (line != null) {
-                String[] tokens = line.split("=");
-                dictionary.add(new Word(tokens[0], Integer.parseInt(tokens[1])));
-                line = reader.readLine();
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveDictionary() {
-        try {
-            dictionaryFile.delete();
-            dictionaryFile.createNewFile();
-            PrintWriter writer = new PrintWriter(dictionaryFile);
-            for (Word word : dictionary.getWords()) {
-                writer.println(word);
-            }
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // read all input files and hand over to delegates, word processor and phrase processor
-
 }
 
