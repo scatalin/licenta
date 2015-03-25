@@ -17,6 +17,10 @@ public class Dictionary {
         words = new ArrayList<Word>();
     }
 
+    public void addWord(String word, int weight) {
+        words.add(new Word(word, weight));
+    }
+
     public void addWord(String word){
         int index = words.lastIndexOf(new Word(word));
         if (index == -1){
@@ -51,9 +55,5 @@ public class Dictionary {
 
     public void clear() {
         words.clear();
-    }
-
-    public void add(Word word) {
-        words.add(word);
     }
 }

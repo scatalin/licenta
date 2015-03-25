@@ -40,7 +40,7 @@ public class DictionaryProcessor {
             String line = reader.readLine();
             while (line != null) {
                 String[] tokens = line.split("=");
-                dictionary.add(new Word(tokens[0], Integer.parseInt(tokens[1])));
+                dictionary.addWord(tokens[0], Integer.parseInt(tokens[1]));
                 line = reader.readLine();
             }
             reader.close();
