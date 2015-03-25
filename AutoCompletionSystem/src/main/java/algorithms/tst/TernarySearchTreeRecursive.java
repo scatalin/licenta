@@ -61,6 +61,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
             if(wasEndWord){
                 node.setEndWord();
+                node.setEndWordWeight(toInsertWeight);
                 wasEndWord = false;
             }
             return node;
@@ -80,6 +81,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         }
         if(wasEndWord){
             wasEndWord = false;
+            node.setEndWordWeight(toInsertWeight);
             node.setEndWord();
         }
         return node;

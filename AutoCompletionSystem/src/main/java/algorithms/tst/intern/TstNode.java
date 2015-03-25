@@ -7,22 +7,24 @@ public class TstNode {
 
     private Character character;
     private int weight;
+    private int endWordWeight;
     private boolean endWord;
     private TstNode leftChild;
     private TstNode middleChild;
     private TstNode rightChild;
 
-    public TstNode(){
-        this(' ',0);
+    public TstNode() {
+        this(' ', 0);
     }
 
-    public TstNode(Character character){
-        this(character,0);
+    public TstNode(Character character) {
+        this(character, 0);
     }
 
-    public TstNode(Character character, int weight){
+    public TstNode(Character character, int weight) {
         this.character = character;
         this.weight = weight;
+        this.endWordWeight = weight;
         endWord = false;
     }
 
@@ -102,5 +104,17 @@ public class TstNode {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public int getEndWordWeight() {
+        return endWordWeight;
+    }
+
+    public int getSpecificWeight(){
+        return endWord ? endWordWeight : weight;
+    }
+
+    public void setEndWordWeight(int endWordWeight) {
+        this.endWordWeight = endWordWeight;
     }
 }

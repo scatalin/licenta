@@ -104,7 +104,7 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
                 if (matrix[i][j] == null) {
                     stringBuilder.append("       ");
                 } else {
-                    int r = matrix[i][j].getWeight();
+                    int r = matrix[i][j].getSpecificWeight();
                     stringBuilder.append(" ").append(matrix[i][j].getCharacter());
 
                     if(r == -1){
