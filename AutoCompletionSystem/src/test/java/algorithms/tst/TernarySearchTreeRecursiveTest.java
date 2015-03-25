@@ -12,7 +12,7 @@ public class TernarySearchTreeRecursiveTest {
     private static String word1 = "asd";
     private static String word2 = "as";
     private static String word3 = "fr";
-    private static String word4 = "frtasda";
+    private static String word4 = "frta";
     private static String word5 = "bbr";
     private static String word6 = "bar";
     private static String word7 = "gz";
