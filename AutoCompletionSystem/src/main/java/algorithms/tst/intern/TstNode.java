@@ -3,7 +3,7 @@ package algorithms.tst.intern;
 /**
  * Created by Catalin on 2/21/2015.
  */
-public class TstNode {
+public class TstNode implements Comparable<TstNode> {
 
     private Character character;
     private int weight;
@@ -116,5 +116,10 @@ public class TstNode {
 
     public void setEndWordWeight(int endWordWeight) {
         this.endWordWeight = endWordWeight;
+    }
+
+    @Override
+    public int compareTo(TstNode o) {
+        return Integer.valueOf(this.getWeight()).compareTo(o.getWeight());
     }
 }
