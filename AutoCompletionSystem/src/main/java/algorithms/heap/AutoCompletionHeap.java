@@ -1,7 +1,5 @@
 package algorithms.heap;
 
-import algorithms.tst.intern.TstNode;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -9,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * Created by gstan on 27.03.2015.
  */
-public class AutoCompletionHeap<T extends TstNode> {
+public class AutoCompletionHeap<T extends HeapNode> {
 
     private List<T> items;
 
@@ -28,13 +26,11 @@ public class AutoCompletionHeap<T extends TstNode> {
                 //swap
                 items.set(k, parent);
                 items.set(p, item);
-
                 //move up one level
                 k = p;
             } else {
                 break;
             }
-
         }
     }
 
