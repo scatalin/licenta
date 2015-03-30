@@ -1,10 +1,11 @@
 package testing;
 
-import input.DictionaryProcessor;
+import algorithms.tst.TernarySearchTree;
 import system.Properties;
-import utils.FileManager;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Catalin on 3/30/2015 .
@@ -12,43 +13,40 @@ import java.io.*;
 public class SystemTester {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
-    private final File inputDir;
-    private final String processedDirectory;
+    private final File testDir;
 
-    private final DictionaryProcessor dictionary;
+    private TernarySearchTree tst;
 
-    private final FileManager manager;
+    private List<Statistics> statisticsList;
 
-    public SystemTester(DictionaryProcessor dictionary) {
-        this.dictionary = dictionary;
-        String inputDirectory = Properties.INPUT_FILES_DIRECTORY;
-        processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
+    public SystemTester(TernarySearchTree tst) {
 
-        inputDir = new File(inputDirectory);
-        if (!inputDir.exists() && !inputDir.isDirectory()) {
-            System.out.println("input files directory does not exist: " + inputDir + ";");
+        this.tst = tst;
+
+        String inputDirectory = Properties.TEST_FILES_DIRECTORY;
+
+        testDir = new File(inputDirectory);
+        if (!testDir.exists() && !testDir.isDirectory()) {
+            System.out.println("test files directory does not exist: " + testDir + ";");
         }
 
-        File processedDir = new File(processedDirectory);
-        if (!processedDir.exists() && !processedDir.isDirectory()) {
-            System.out.println("processed files directory does not exist: " + processedDir + ";");
-        }
-
-        manager = new FileManager();
+        statisticsList = new ArrayList<Statistics>();
     }
 
-    public void processInputFiles() {
-        dictionary.readDictionary();
-        File[] listFileNames = inputDir.listFiles();
+    public void testSystem() {
+        File[] listFileNames = testDir.listFiles();
 
         if (listFileNames == null) {
-            System.out.println("an exception occurred while reading files from " + inputDir);
+            System.out.println("an exception occurred while reading files from " + testDir);
             return;
         }
         //todo read all input files and hand over to delegates, word processor and phrase processor
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
+                Statistics statistics = new Statistics(file.getName());
+                statisticsList.add(statistics);
+
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();
 
@@ -56,15 +54,17 @@ public class SystemTester {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
                         if(word.length()>1) {
-                            dictionary.getDictionary().addWord(word.toLowerCase());
+                            boolean done = false;
+                            while (!done){
+                                //interogate the sistem
+                            }
                         }
                     }
                     line = reader.readLine();
                 }
 
                 reader.close();
-                manager.moveFile(file, processedDirectory);
-                System.out.println("file " + file.getName() + " was moved to processed directory");
+                System.out.println("file " + file.getName() + " was tested");
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -73,8 +73,10 @@ public class SystemTester {
             }
         }
 
-        dictionary.getDictionary().sortDictionaryAlphabetically();
-        dictionary.getDictionary().removeNonWords();
-        dictionary.saveDictionary();
+        System.out.println("statistics are:");
+
+        for(Statistics statistics : statisticsList){
+            System.out.println(statistics);
+        }
     }
 }

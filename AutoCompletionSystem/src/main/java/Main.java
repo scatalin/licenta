@@ -9,6 +9,7 @@ import input.FilesProcessor;
 import system.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
+import testing.SystemTester;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -20,6 +21,7 @@ public class Main {
 
     private static final String RESET = "reset";
     private static final String PROCESS_FILES = "input";
+    private static final String TEST_SYSTEM = "test";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
     private static final String TST_BUILD = "tst b";
@@ -153,6 +155,11 @@ public class Main {
             }
             if (command.equals(SEGMENT_PRINT)) {
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, segmentTree.printTree());
+                continue;
+            }
+            if (command.equals(TEST_SYSTEM)) {
+                SystemTester tester = new SystemTester(tst);
+                tester.testSystem();
                 continue;
             }
             System.out.println("wrong use:");
