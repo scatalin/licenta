@@ -1,18 +1,22 @@
 package algorithms.heap;
 
+import model.dictionary.Word;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Created by gstan on 27.03.2015.
  */
 public class AutoCompletionHeap<T extends HeapNode> {
 
+    private List<Word> foundWords;
     private List<T> items;
 
     public AutoCompletionHeap() {
         items = new ArrayList<T>();
+        foundWords = new ArrayList<Word>();
     }
 
     private void shiftUp() {
@@ -37,6 +41,9 @@ public class AutoCompletionHeap<T extends HeapNode> {
     public void insert(T item) {
         items.add(item);
         shiftUp();
+//        if (item.getNode().isEndWord()) {
+//            foundWords.add(new Word(item.getBuiltWord(), item.getNode().getEndWordWeight()));
+//        }
     }
 
     private void shiftDown() {
@@ -63,9 +70,9 @@ public class AutoCompletionHeap<T extends HeapNode> {
         }
     }
 
-    public T delete() throws NoSuchElementException {
+    public T delete() {
         if (items.size() == 0) {
-            throw new NoSuchElementException();
+            return null;
         }
         if (items.size() == 1) {
             return items.remove(0);
@@ -74,6 +81,11 @@ public class AutoCompletionHeap<T extends HeapNode> {
         items.set(0, items.remove(items.size() - 1));
         shiftDown();
         return hold;
+    }
+
+    public void clearHeap() {
+        items.clear();
+        foundWords.clear();
     }
 
     private int parent(int k) {
@@ -88,4 +100,68 @@ public class AutoCompletionHeap<T extends HeapNode> {
         return 2 * k + 1;
     }
 
+    public void clearInvalidPaths(String prefix) {
+        Iterator<Word> iter = foundWords.iterator();
+        while (iter.hasNext()) {
+            Word word = iter.next();
+            if (!word.getWord().startsWith(prefix)) {
+                iter.remove();
+            }
+        }
+        Iterator<T> it = items.iterator();
+        while (it.hasNext()) {
+            T item = it.next();
+            if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
+                it.remove();
+            }
+        }
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+
+    public List<Word> getWordList() {
+        return foundWords;
+    }
+
+    public void seachFurther(String prefix, int limit) {
+        while (items.size() > 0 && foundWords.size() < limit) {
+            T item = delete();
+            if(item == null){
+                return;
+            }
+            if(!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())){
+                continue;
+            }
+            if(item.getNode().isEndWord()){
+                foundWords.add(new Word(item.getBuiltWord()+item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
+            }
+            //todo prune the search paths
+            if(item.getNode().getLeftChild() != null){
+                HeapNode newNode = item.clone();
+                newNode.setNode(item.getNode().getLeftChild());
+                insert((T) newNode);
+            }
+            if(item.getNode().getMiddleChild() != null){
+                HeapNode newNode = item.clone();
+                newNode.setNode(item.getNode().getMiddleChild());
+                newNode.addCharacter(item.getNode().getCharacter());
+                insert((T) newNode);
+            }
+            if(item.getNode().getRightChild() != null){
+                HeapNode newNode = item.clone();
+                newNode.setNode(item.getNode().getRightChild());
+                insert((T) newNode);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "AutoCompletionHeap{" +
+                "foundWords=" + foundWords +
+                ", items=" + items +
+                '}';
+    }
 }

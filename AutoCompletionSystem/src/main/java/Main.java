@@ -26,6 +26,9 @@ public class Main {
     private static final String TST_RANDOM_BUILD = "tst rb";
     private static final String TST_WEIGHTED_BUILD = "tst wb";
     private static final String TST_PRINT = "tst p";
+    private static final String TST_SET_K = "tst sk";
+    private static final String TST_GET_NEXT_K = "tst gnk";
+    private static final String TST_GET_K = "tst gk";
     private static final String SEGMENT_TST_BUILD = "st b";
     private static final String SEGMENT_TST_RANDOM_BUILD = "st rb";
     private static final String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
@@ -101,6 +104,29 @@ public class Main {
             }
             if (command.equals(TST_PRINT)) {
                 FilePrinter.printTstToFile(FilePrinter.TST_FILE, tst.print());
+                continue;
+            }
+            if(command.startsWith(TST_SET_K)){
+                command = command.replace(TST_SET_K+" ","");
+                try{
+                    int k = Integer.parseInt(command);
+                    tst.setK(k);
+                    tst.resetSearchK();
+                }
+                catch (NumberFormatException e){
+                    System.out.println("no integer provided");
+                }
+                continue;
+            }
+            if(command.startsWith(TST_GET_K)){
+                command = command.replace(TST_GET_K+" ","");
+                tst.resetSearchK();
+                System.out.println(tst.getNextTopK(command));
+                continue;
+            }
+            if(command.startsWith(TST_GET_NEXT_K)){
+                command = command.replace(TST_GET_NEXT_K+" ","");
+                System.out.println(tst.getNextTopK(command));
                 continue;
             }
             if (command.equals(SEGMENT_TST_BUILD)) {

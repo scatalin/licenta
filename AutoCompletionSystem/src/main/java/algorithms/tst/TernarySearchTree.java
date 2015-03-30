@@ -15,7 +15,9 @@ public interface TernarySearchTree {
 
     int search(String s);
 
-    List<Word> getTopK(String prefix);
+    List<Word> getNextTopK(String prefix);
+
+    void resetSearchK();
 
     void setK(int k);
 

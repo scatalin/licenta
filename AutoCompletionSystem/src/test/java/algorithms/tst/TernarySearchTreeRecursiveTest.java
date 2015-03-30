@@ -92,7 +92,12 @@ public class TernarySearchTreeRecursiveTest {
     public void testTopK(){
 //        tst.load(words);
 //        tst.setK(2);
-//        List<String> completions = tst.getTopK("a");
+//        List<String> completions = tst.getNextTopK("a");
+    }
+
+    @Test
+    public void testSomething(){
+        System.out.println("s".startsWith("sa"));
     }
 
 }

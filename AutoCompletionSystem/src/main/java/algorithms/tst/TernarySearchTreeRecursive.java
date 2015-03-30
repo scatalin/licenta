@@ -41,8 +41,10 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
     }
 
     @Override
-    public List<Word> getTopK(String prefix) {
-        return null;
+    public List<Word> getNextTopK(String prefix) {
+        heap.clearInvalidPaths(prefix);
+        heap.seachFurther(prefix,k);
+        return heap.getWordList();
     }
 
     public void insert(String s, int weight) {
@@ -57,16 +59,16 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
             return node;
         }
         if (node == null) {
-            node = new TstNode(s.charAt(0),toInsertWeight);
+            node = new TstNode(s.charAt(0), toInsertWeight);
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
-            if(wasEndWord){
+            if (wasEndWord) {
                 node.setEndWord();
                 node.setEndWordWeight(toInsertWeight);
                 wasEndWord = false;
             }
             return node;
         }
-        if(toInsertWeight>node.getWeight()){
+        if (toInsertWeight > node.getWeight()) {
             node.setWeight(toInsertWeight);
         }
         int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
@@ -79,7 +81,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         if (comparisonResult == 0) {
             node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
         }
-        if(wasEndWord){
+        if (wasEndWord) {
             wasEndWord = false;
             node.setEndWordWeight(toInsertWeight);
             node.setEndWord();
