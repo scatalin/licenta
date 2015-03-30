@@ -40,13 +40,6 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         return recursiveSearch(node.getMiddleChild(), s.substring(1));
     }
 
-    @Override
-    public List<Word> getNextTopK(String prefix) {
-        heap.clearInvalidPaths(prefix);
-        heap.seachFurther(prefix,k);
-        return heap.getWordList();
-    }
-
     public void insert(String s, int weight) {
         this.toInsertWeight = weight;
         wasEndWord = false;

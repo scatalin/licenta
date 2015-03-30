@@ -45,7 +45,7 @@ public class HeapNode {
     @Override
     public String toString() {
         return "HeapNode{" +
-                "builtWord='" + builtWord + '\'' +
+                "builtWord=" + builtWord +
                 ", node=" + node.getCharacter()+"|"+node.getSpecificWeight() +
                 '}';
     }

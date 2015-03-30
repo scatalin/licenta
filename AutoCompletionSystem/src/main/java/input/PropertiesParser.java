@@ -17,11 +17,10 @@ public class PropertiesParser {
     private static final String LINUX = "LINUX";
 
     public static void propertiesFileRead() throws IOException {
-        System.out.println("Hello world");
 //        File file = new File("Main.class");
 //        System.out.println(file.exists());
 //        System.out.println(file.getAbsoluteFile());
-//        System.out.println(fteile.getAbsolutePath());
+//        System.out.println(file.getAbsolutePath());
 //        System.out.println(file.getAbsoluteFile().getParentFile());
 //        file = file.getAbsoluteFile().getParentFile();
 //        String[] listFileNames = file.list();
