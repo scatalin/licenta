@@ -106,6 +106,4 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
         }
         heap.clearInvalidPaths(prefix);
     }
-
-
 }
