@@ -1,6 +1,7 @@
 package testing;
 
 import algorithms.tst.TernarySearchTree;
+import model.dictionary.Word;
 import system.Properties;
 
 import java.io.*;
@@ -11,6 +12,8 @@ import java.util.List;
  * Created by Catalin on 3/30/2015 .
  */
 public class SystemTester {
+
+    private final File reportFile;
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File testDir;
@@ -23,6 +26,11 @@ public class SystemTester {
 
         this.tst = tst;
 
+        reportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
+        if (!reportFile.exists() && !reportFile.isFile()) {
+            System.out.println("dictionary file does not exist " + reportFile + ";");
+        }
+
         String inputDirectory = Properties.TEST_FILES_DIRECTORY;
 
         testDir = new File(inputDirectory);
@@ -33,13 +41,16 @@ public class SystemTester {
         statisticsList = new ArrayList<Statistics>();
     }
 
-    public void testSystem() {
+    public void testSystem() throws FileNotFoundException {
         File[] listFileNames = testDir.listFiles();
 
         if (listFileNames == null) {
             System.out.println("an exception occurred while reading files from " + testDir);
             return;
         }
+
+        PrintWriter printWriter = new PrintWriter(reportFile);
+
         //todo read all input files and hand over to delegates, word processor and phrase processor
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
@@ -53,10 +64,36 @@ public class SystemTester {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        if(word.length()>1) {
+                        word = word.toLowerCase();
+                        statistics.beginWordStatistics(word);
+                        if (word.length() > 1) {
                             boolean done = false;
-                            while (!done){
-                                //interogate the sistem
+                            int index = 1;
+                            tst.resetSearchK();
+                            while (!done) {
+                                if (index == word.length()) {
+                                    break;
+                                }
+                                String prefix = word.substring(0, index);
+                                List<Word> completedWords = tst.getNextTopK(prefix);
+                                if (completedWords.isEmpty()) {
+                                    printWriter.println("prefix " + prefix + " from word " + word + " generated no output");
+                                }
+                                int found = -1;
+                                for (int i = 0; i < completedWords.size(); i++) {
+                                    Word aWord = completedWords.get(i);
+                                    if (aWord.getWord().equals(word)) {
+                                        found = i;
+                                        break;
+                                    }
+                                }
+                                if (found != -1) {
+                                    statistics.interrogationStatistic(prefix.length(), found + 1);
+                                }
+                                if (found == 0) {
+                                    done = true;
+                                }
+                                index++;
                             }
                         }
                     }
@@ -73,10 +110,14 @@ public class SystemTester {
             }
         }
 
-        System.out.println("statistics are:");
+        printWriter.println("statistics are:");
 
-        for(Statistics statistics : statisticsList){
-            System.out.println(statistics);
+        for (Statistics statistics : statisticsList) {
+            printWriter.println(statistics);
         }
+
+
+        printWriter.flush();
+        printWriter.close();
     }
 }

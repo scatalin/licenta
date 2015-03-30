@@ -66,6 +66,9 @@ public class PropertiesParser {
                 if (tokens[0].equals(FileProperties.TST_OUTPUT_FILE_NAME.getValue())) {
                     Properties.TST_OUTPUT_FILE_NAME = tokens[1];
                 }
+                if (tokens[0].equals(FileProperties.REPORT_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.REPORT_OUTPUT_FILE_NAME = tokens[1];
+                }
                 if (tokens[0].equals(FileProperties.FORCE_SUPPORT_OS.getValue())) {
                     Properties.IS_FORCED_SUPPORTED_OS = Boolean.parseBoolean(tokens[1]);
                 }

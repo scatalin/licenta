@@ -11,6 +11,7 @@ import input.PropertiesParser;
 import model.dictionary.Dictionary;
 import testing.SystemTester;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -158,8 +159,13 @@ public class Main {
                 continue;
             }
             if (command.equals(TEST_SYSTEM)) {
+                tst.setK(10);
                 SystemTester tester = new SystemTester(tst);
-                tester.testSystem();
+                try {
+                    tester.testSystem();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 continue;
             }
             System.out.println("wrong use:");
