@@ -50,9 +50,9 @@ public class Main {
     }
 
     void start() {
-        TernarySearchTree tst= new TernarySearchTreeRecursive();
+        TernarySearchTree tst = new TernarySearchTreeRecursive();
         SegmentTree segmentTree = new SegmentTree();
-        Dictionary dictionary  = new Dictionary();
+        Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
 
         Scanner scanner = new Scanner(System.in);
@@ -87,6 +87,7 @@ public class Main {
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
+                System.out.println("dictionarul are " + dictionary.getWords().size() + " cuvinte");
                 System.out.println(dictionary.getWords());
                 continue;
             }
@@ -106,26 +107,25 @@ public class Main {
                 FilePrinter.printTstToFile(FilePrinter.TST_FILE, tst.print());
                 continue;
             }
-            if(command.startsWith(TST_SET_K)){
-                command = command.replace(TST_SET_K+" ","");
-                try{
+            if (command.startsWith(TST_SET_K)) {
+                command = command.replace(TST_SET_K + " ", "");
+                try {
                     int k = Integer.parseInt(command);
                     tst.setK(k);
                     tst.resetSearchK();
-                }
-                catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     System.out.println("no integer provided");
                 }
                 continue;
             }
-            if(command.startsWith(TST_GET_K)){
-                command = command.replace(TST_GET_K+" ","");
+            if (command.startsWith(TST_GET_K)) {
+                command = command.replace(TST_GET_K + " ", "");
                 tst.resetSearchK();
                 System.out.println(tst.getNextTopK(command));
                 continue;
             }
-            if(command.startsWith(TST_GET_NEXT_K)){
-                command = command.replace(TST_GET_NEXT_K+" ","");
+            if (command.startsWith(TST_GET_NEXT_K)) {
+                command = command.replace(TST_GET_NEXT_K + " ", "");
                 System.out.println(tst.getNextTopK(command));
                 continue;
             }

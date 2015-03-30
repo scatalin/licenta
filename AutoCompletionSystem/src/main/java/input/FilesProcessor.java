@@ -54,7 +54,9 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.getDictionary().addWord(word);
+                        if(word.length()>1) {
+                            dictionary.getDictionary().addWord(word.toLowerCase());
+                        }
                     }
                     line = reader.readLine();
                 }
