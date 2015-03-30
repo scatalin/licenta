@@ -1,0 +1,6 @@
+for each word
+    type characters to the system until the same word is on the first line in the suggestions list
+    save to statistics the following:
+        characters typed so far
+        position in the suggestions list
+        characters saved from printing
