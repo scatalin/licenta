@@ -15,11 +15,12 @@ public class SegmentNode {
     private SearchTree tst;
 
     public SegmentNode() {
-        interval = new Interval();
+        this(new Interval());
     }
 
     public SegmentNode(Interval interval) {
         this.interval = interval;
+        tst = new TernarySearchTreeRecursive();
     }
 
     public int getLeftLimit() {

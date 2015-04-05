@@ -25,6 +25,7 @@ public class Main {
     private static final String RESET = "reset";
     private static final String PROCESS_FILES = "input";
     private static final String TEST_SYSTEM = "test";
+    private static final String TEST_SYSTEM_PERCENTAGES = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
     private static final String TST_BUILD = "tst b";
@@ -59,9 +60,8 @@ public class Main {
     }
 
     void start() {
-        SearchTree tree = new SegmentTree();
+        SegmentTree tree = new SegmentTree();
         SearchTree tst = new TernarySearchTreeRecursive();
-        SegmentTree segmentTree = new SegmentTree();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
 
@@ -78,7 +78,6 @@ public class Main {
                     PropertiesParser.propertiesFileRead();
                     tree = new SegmentTree();
                     tst = new TernarySearchTreeRecursive();
-                    segmentTree = new SegmentTree();
                     dictionary = new Dictionary();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
                 } catch (IOException e) {
@@ -141,41 +140,53 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_TST_BUILD)) {
-                SegmentTstTreeFactory.buildSegmentTst(segmentTree, dictionary);
+                SegmentTstTreeFactory.buildSegmentTst(tree, dictionary);
                 continue;
             }
             if (command.equals(SEGMENT_TST_RANDOM_BUILD)) {
-                SegmentTstTreeFactory.buildRandomSegmentTst(segmentTree, dictionary);
+                SegmentTstTreeFactory.buildRandomSegmentTst(tree, dictionary);
                 continue;
             }
             if (command.equals(SEGMENT_TST_WEIGHTED_BUILD)) {
-                SegmentTstTreeFactory.buildWeightedSegmentTst(segmentTree, dictionary);
+                tree.buildSegmentTree();
+                tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
+                SegmentTstTreeFactory.buildWeightedSegmentTst(tree, dictionary);
                 continue;
             }
             if (command.equals(SEGMENT_TST_PRINT)) {
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, segmentTree.printSubtrees());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, tree.printSubtrees());
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {
-                segmentTree = new SegmentTree();
-                segmentTree.setMaximumSize(Properties.SEGMENT_SIZE);
-                segmentTree.buildSegmentTree();
+                tree = new SegmentTree();
+                tree.buildSegmentTree();
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, segmentTree.printTree());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, tree.printTree());
                 continue;
             }
             if (command.equals(SEGMENT_COUNT)) {
-                SegmentTreeParser parser = new SegmentTreeParser((SegmentNode) segmentTree.getRoot());
+                SegmentTreeParser parser = new SegmentTreeParser((SegmentNode) tree.getRoot());
                 System.out.println(parser.countNodes());
                 continue;
             }
             if (command.equals(TEST_SYSTEM)) {
                 tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
-                SystemTester tester = new SystemTester(tst);
+                SystemTester tester = new SystemTester(tree);
                 try {
                     tester.testSystem();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
+            if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
+                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
+                SystemTester tester = new SystemTester(tree);
+                try {
+                    tester.testSystemWithPercentages();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

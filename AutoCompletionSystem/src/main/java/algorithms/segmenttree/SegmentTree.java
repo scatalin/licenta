@@ -8,6 +8,7 @@ import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import model.dictionary.Word;
+import system.Properties;
 
 import java.util.List;
 
@@ -16,12 +17,13 @@ import java.util.List;
  */
 public class SegmentTree implements SearchTree {
 
-    private final SegmentNode root;
+    private SegmentNode root;
     private int size;
     private SegmentTreeData data;
 
     public SegmentTree() {
         this.root = new SegmentNode();
+        size = Properties.SEGMENT_SIZE;
     }
 
     public void setMaximumSize(int size) {
@@ -29,6 +31,7 @@ public class SegmentTree implements SearchTree {
     }
 
     public void buildSegmentTree() {
+        root = new SegmentNode();
         root.setLeftLimit(0);
         root.setRightLimit(size);
         data = new SegmentTreeData(size);
