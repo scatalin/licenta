@@ -1,6 +1,6 @@
 package testing;
 
-import algorithms.tst.TernarySearchTree;
+import algorithms.SearchTree;
 import model.dictionary.Word;
 import system.Properties;
 
@@ -18,11 +18,11 @@ public class SystemTester {
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File testDir;
 
-    private TernarySearchTree tst;
+    private SearchTree tst;
 
     private List<Statistics> statisticsList;
 
-    public SystemTester(TernarySearchTree tst) {
+    public SystemTester(SearchTree tst) {
 
         this.tst = tst;
 

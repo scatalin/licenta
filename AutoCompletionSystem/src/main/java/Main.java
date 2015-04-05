@@ -1,14 +1,16 @@
+import algorithms.SearchTree;
 import algorithms.segmenttree.SegmentTree;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
-import algorithms.tst.TernarySearchTree;
+import algorithms.segmenttree.intern.SegmentNode;
+import algorithms.segmenttree.parsing.SegmentTreeParser;
 import algorithms.tst.TernarySearchTreeRecursive;
-import algorithms.tst.build.TernarySearchTreeFactory;
+import algorithms.tst.build.SearchTreeFactory;
 import algorithms.utils.FilePrinter;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
-import system.Properties;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
+import system.Properties;
 import testing.SystemTester;
 
 import java.io.FileNotFoundException;
@@ -32,12 +34,16 @@ public class Main {
     private static final String TST_SET_K = "tst sk";
     private static final String TST_GET_NEXT_K = "tst gnk";
     private static final String TST_GET_K = "tst gk";
-    private static final String SEGMENT_TST_BUILD = "st b";
-    private static final String SEGMENT_TST_RANDOM_BUILD = "st rb";
-    private static final String SEGMENT_TST_WEIGHTED_BUILD = "st wb";
-    private static final String SEGMENT_TST_PRINT = "st p";
+    private static final String TREE_SET_K = "tree sk";
+    private static final String TREE_GET_NEXT_K = "tree gnk";
+    private static final String TREE_GET_K = "tree gk";
+    private static final String SEGMENT_TST_BUILD = "tree b";
+    private static final String SEGMENT_TST_RANDOM_BUILD = "tree rb";
+    private static final String SEGMENT_TST_WEIGHTED_BUILD = "tree wb";
+    private static final String SEGMENT_TST_PRINT = "tree p";
     private static final String SEGMENT_BUILD = "sgm b";
     private static final String SEGMENT_PRINT = "sgm p";
+    private static final String SEGMENT_COUNT = "sgm c";
 
     public static void main(String[] args) {
         try {
@@ -53,7 +59,8 @@ public class Main {
     }
 
     void start() {
-        TernarySearchTree tst = new TernarySearchTreeRecursive();
+        SearchTree tree = new SegmentTree();
+        SearchTree tst = new TernarySearchTreeRecursive();
         SegmentTree segmentTree = new SegmentTree();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
@@ -69,6 +76,7 @@ public class Main {
                 try {
                     PropertiesParser.validateOS();
                     PropertiesParser.propertiesFileRead();
+                    tree = new SegmentTree();
                     tst = new TernarySearchTreeRecursive();
                     segmentTree = new SegmentTree();
                     dictionary = new Dictionary();
@@ -95,15 +103,15 @@ public class Main {
                 continue;
             }
             if (command.equals(TST_BUILD)) {
-                tst = TernarySearchTreeFactory.buildTst(dictionary);
+                tst = SearchTreeFactory.buildTst(dictionary);
                 continue;
             }
             if (command.equals(TST_RANDOM_BUILD)) {
-                tst = TernarySearchTreeFactory.buildRandomTst(dictionary);
+                tst = SearchTreeFactory.buildRandomTst(dictionary);
                 continue;
             }
             if (command.equals(TST_WEIGHTED_BUILD)) {
-                tst = TernarySearchTreeFactory.buildWeightedTst(dictionary);
+                tst = SearchTreeFactory.buildWeightedTst(dictionary);
                 continue;
             }
             if (command.equals(TST_PRINT)) {
@@ -158,14 +166,42 @@ public class Main {
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, segmentTree.printTree());
                 continue;
             }
+            if (command.equals(SEGMENT_COUNT)) {
+                SegmentTreeParser parser = new SegmentTreeParser((SegmentNode) segmentTree.getRoot());
+                System.out.println(parser.countNodes());
+                continue;
+            }
             if (command.equals(TEST_SYSTEM)) {
-                tst.setK(10);
+                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SystemTester tester = new SystemTester(tst);
                 try {
                     tester.testSystem();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                continue;
+            }
+
+            if (command.startsWith(TREE_SET_K)) {
+                String number = command.replace(TREE_SET_K + " ", "");
+                try {
+                    int k = Integer.parseInt(number);
+                    tree.setK(k);
+                    tree.resetSearchK();
+                } catch (NumberFormatException e) {
+                    System.out.println("no integer provided");
+                }
+                continue;
+            }
+            if (command.startsWith(TREE_GET_K)) {
+                String word = command.replace(TREE_GET_K + " ", "");
+                tree.resetSearchK();
+                System.out.println(tree.getNextTopK(word));
+                continue;
+            }
+            if (command.startsWith(TREE_GET_NEXT_K)) {
+                String word = command.replace(TREE_GET_NEXT_K + " ", "");
+                System.out.println(tree.getNextTopK(word));
                 continue;
             }
             System.out.println("wrong use:");

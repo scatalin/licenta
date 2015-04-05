@@ -1,5 +1,6 @@
 package algorithms.tst;
 
+import algorithms.SearchTree;
 import algorithms.heap.AutoCompletionHeap;
 import algorithms.heap.HeapNode;
 import algorithms.tst.intern.TstNode;
@@ -14,29 +15,25 @@ import java.util.List;
 /**
  * Created by Catalin on 2/21/2015 .
  */
-public abstract class AbstractTernarySearchTree implements TernarySearchTree {
+public abstract class AbstractTernarySearchTree implements SearchTree {
 
     TstNode root;
     AutoCompletionHeap<HeapNode> heap;
     List<Word> foundWords;
     int k;
 
-    AbstractTernarySearchTree(){
+    AbstractTernarySearchTree() {
         heap = new AutoCompletionHeap<HeapNode>();
         foundWords = new ArrayList<Word>();
         k = 5;
     }
 
-    public void load(List<Word> words) {
-        root = null;
-        for (Word word : words) {
-            insert(word.getWord(),word.getFrequency());
+    public void load(List<Word> words, boolean reset) {
+        if(reset){
+            root = null;
         }
-    }
-
-    public void additionalLoad(List<Word> words) {
         for (Word word : words) {
-            insert(word.getWord(), word.getFrequency());
+            insert(word);
         }
     }
 
@@ -54,41 +51,41 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
     public void resetSearchK() {
         heap.clearHeap();
         foundWords.clear();
-        heap.insert(new HeapNode(root,""));
+        heap.insert(new HeapNode(root, ""));
     }
 
     @Override
     public List<Word> getNextTopK(String prefix) {
         clearInvalidPaths(prefix);
-        seachFurther(prefix,k);
+        seachFurther(prefix, k);
         return foundWords;
     }
 
     protected void seachFurther(String prefix, int limit) {
         while (!heap.isEmpty() && foundWords.size() < limit) {
             HeapNode item = heap.delete();
-            if(item == null){
+            if (item == null) {
                 return;
             }
-            if(!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())){
+            if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
                 continue;
             }
-            if(item.getNode().isEndWord() && item.getBuiltWord().startsWith(prefix)){
-                foundWords.add(new Word(item.getBuiltWord()+item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
+            if (item.getNode().isEndWord() && item.getBuiltWord().startsWith(prefix)) {
+                foundWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
             }
             //todo prune the search paths
-            if(item.getNode().getLeftChild() != null){
+            if (item.getNode().getLeftChild() != null) {
                 HeapNode newNode = item.clone();
                 newNode.setNode(item.getNode().getLeftChild());
                 heap.insert(newNode);
             }
-            if(item.getNode().getMiddleChild() != null){
+            if (item.getNode().getMiddleChild() != null) {
                 HeapNode newNode = item.clone();
                 newNode.setNode(item.getNode().getMiddleChild());
                 newNode.addCharacter(item.getNode().getCharacter());
                 heap.insert(newNode);
             }
-            if(item.getNode().getRightChild() != null){
+            if (item.getNode().getRightChild() != null) {
                 HeapNode newNode = item.clone();
                 newNode.setNode(item.getNode().getRightChild());
                 heap.insert(newNode);
@@ -105,5 +102,15 @@ public abstract class AbstractTernarySearchTree implements TernarySearchTree {
             }
         }
         heap.clearInvalidPaths(prefix);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    @Override
+    public TstNode getRoot() {
+        return root;
     }
 }

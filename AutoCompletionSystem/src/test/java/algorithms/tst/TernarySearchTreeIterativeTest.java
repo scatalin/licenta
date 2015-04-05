@@ -1,5 +1,6 @@
 package algorithms.tst;
 
+import algorithms.SearchTree;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -8,7 +9,7 @@ import org.junit.Test;
 @SuppressWarnings("FieldCanBeLocal")
 public class TernarySearchTreeIterativeTest {
 
-    private TernarySearchTree tst;
+    private SearchTree tst;
     private static String word1 = "asd";
     private static String word2 = "as";
     private static String word3 = "fr";

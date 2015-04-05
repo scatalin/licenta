@@ -1,22 +1,20 @@
 package algorithms.tst.intern;
 
-import algorithms.tst.TernarySearchTree;
+import algorithms.SearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
 import model.dictionary.Dictionary;
 import model.dictionary.Word;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.WeakHashMap;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class TstPrettyPrinterTest {
 
-    private TernarySearchTree tst;
+    private SearchTree tst;
     private Dictionary dictionary;
     private static String word1 = "asd";
     private static String word2 = "as";
@@ -87,7 +85,7 @@ public class TstPrettyPrinterTest {
 
     @Test
     public void testLoad() throws Exception {
-        tst.load(dictionary.getWords());
+        tst.load(dictionary.getWords(),true);
         System.out.println(tst.print());
     }
 

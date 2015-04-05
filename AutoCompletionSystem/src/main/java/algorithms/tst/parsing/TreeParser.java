@@ -47,4 +47,16 @@ public class TreeParser {
 
         return toReturn;
     }
+
+    public int countNodes(TstNode node){
+        if(node == null){
+            return 0;
+        }
+        int number = 0;
+        number += countNodes(node.getLeftChild());
+        number += countNodes(node.getMiddleChild());
+        number += countNodes(node.getRightChild());
+        number++;
+        return number;
+    }
 }

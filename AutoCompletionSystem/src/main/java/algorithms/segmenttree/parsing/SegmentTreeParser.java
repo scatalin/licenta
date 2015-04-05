@@ -1,7 +1,9 @@
 package algorithms.segmenttree.parsing;
 
+import algorithms.SearchTree;
 import algorithms.segmenttree.intern.SegmentNode;
-import algorithms.tst.TernarySearchTree;
+import algorithms.tst.intern.TstNode;
+import algorithms.tst.parsing.TreeParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +13,44 @@ import java.util.List;
  */
 public class SegmentTreeParser {
     private final SegmentNode root;
-    private List<TernarySearchTree> leafs;
+    private List<SearchTree> leafs;
+    private TreeParser parser;
 
     public SegmentTreeParser(SegmentNode root) {
         this.root = root;
+        parser = new TreeParser();
     }
 
-    public List<TernarySearchTree> findAllTst(){
-        leafs = new ArrayList<TernarySearchTree>();
+    public List<SearchTree> findAllTst() {
+        leafs = new ArrayList<SearchTree>();
         recursiveFindAll(root);
         return leafs;
     }
 
     private void recursiveFindAll(SegmentNode node) {
         if (node.isLeaf()) {
-            leafs.add(node.getTst());
+            if (!node.getTree().isEmpty()) {
+                leafs.add(node.getTree());
+            }
         } else {
             recursiveFindAll(node.getLeftChild());
             recursiveFindAll(node.getRightChild());
         }
+    }
+
+    public int countNodes() {
+        return recursiveCountNodes(root);
+    }
+
+    private int recursiveCountNodes(SegmentNode node) {
+        if (node.isLeaf()) {
+            return parser.countNodes((TstNode) node.getTree().getRoot());
+        }
+
+        int number = 0;
+        number += recursiveCountNodes(node.getLeftChild());
+        number += recursiveCountNodes(node.getRightChild());
+
+        return number;
     }
 }

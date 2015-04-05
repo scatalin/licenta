@@ -1,5 +1,6 @@
 package algorithms.segmenttree;
 
+import algorithms.SearchTree;
 import algorithms.segmenttree.intern.Interval;
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.segmenttree.intern.SegmentTreeData;
@@ -8,10 +9,12 @@ import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import model.dictionary.Word;
 
+import java.util.List;
+
 /**
  * Created by Catalin on 3/13/2015 .
  */
-public class SegmentTree {
+public class SegmentTree implements SearchTree {
 
     private final SegmentNode root;
     private int size;
@@ -65,22 +68,7 @@ public class SegmentTree {
         return node.getDepth();
     }
 
-    public int search(String s) {
-        int position = data.getInterval(s.substring(0, 1));
-        return recursiveSearch(root, s, position);
-    }
-
-    private int recursiveSearch(SegmentNode node, String s, int position) {
-        if (node.isLeaf()) {
-            return node.searchTst(s);
-        } else {
-            int left = node.getLeftLimit();
-            int right = node.getRightLimit();
-            int middle = left + ((right - left) / 2);
-            return recursiveSearch(position <= middle ? node.getLeftChild() : node.getRightChild(), s, position);
-        }
-    }
-
+    @Override
     public void insert(Word word) {
         int position = data.getInterval(word.getWord().substring(0, 1));
         recursiveInsert(root, word, position);
@@ -88,7 +76,7 @@ public class SegmentTree {
 
     private void recursiveInsert(SegmentNode node, Word word, int position) {
         if (node.isLeaf()) {
-            node.insertInTst(word);
+            node.getTree().insert(word);
         } else {
             int left = node.getLeftLimit();
             int right = node.getRightLimit();
@@ -107,4 +95,85 @@ public class SegmentTree {
         return printer.prettyPrint();
     }
 
+    @Override
+    public void load(List<Word> words, boolean reset) {
+        for (Word word : words) {
+            insert(word);
+        }
+    }
+
+    @Override
+    public List<Word> getNextTopK(String prefix) {
+        int position = data.getInterval(prefix.substring(0, 1));
+        return recursiveGetNextTopK(root, prefix, position);
+    }
+
+    private List<Word> recursiveGetNextTopK(SegmentNode node, String prefix, int position) {
+        if (node.isLeaf()) {
+            return node.getTree().getNextTopK(prefix);
+        } else {
+            int left = node.getLeftLimit();
+            int right = node.getRightLimit();
+            int middle = left + ((right - left) / 2);
+            return recursiveGetNextTopK(position <= middle ? node.getLeftChild() : node.getRightChild(), prefix, position);
+        }
+    }
+
+    @Override
+    public void setK(int k) {
+        recursiveSetK(root, k);
+    }
+
+    private void recursiveSetK(SegmentNode node, int k) {
+        if (node.isLeaf()) {
+            node.getTree().setK(k);
+        } else {
+            recursiveSetK(node.getLeftChild(), k);
+            recursiveSetK(node.getRightChild(), k);
+        }
+    }
+
+    @Override
+    public void resetSearchK() {
+        recursiveResetSearchK(root);
+    }
+
+    private void recursiveResetSearchK(SegmentNode node) {
+        if (node.isLeaf()) {
+            node.getTree().resetSearchK();
+        } else {
+            recursiveResetSearchK(node.getLeftChild());
+            recursiveResetSearchK(node.getRightChild());
+        }
+    }
+
+    @Override
+    public String print() {
+        return printSubtrees();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public Object getRoot() {
+        return root;
+    }
+
+//    public int search(String s) {
+//        return recursiveSearch(root, s, position);
+//        int position = data.getInterval(s.substring(0, 1));
+//    }
+//
+//    private int recursiveSearch(SegmentNode node, String s, int position) {
+//        if (node.isLeaf()) {
+//            return node.getTree().search(s);
+//        } else {
+//            int left = node.getLeftLimit();
+//            int right = node.getRightLimit();
+//            int middle = left + ((right - left) / 2);
+//            return recursiveSearch(position <= middle ? node.getLeftChild() : node.getRightChild(), s, position);
+//        }
 }

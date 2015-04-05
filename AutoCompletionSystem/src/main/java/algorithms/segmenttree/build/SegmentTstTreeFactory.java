@@ -14,9 +14,7 @@ import java.util.Random;
 public class SegmentTstTreeFactory {
 
     public static void buildSegmentTst(SegmentTree segmentTree,Dictionary dictionary) {
-        for (Word word : dictionary.getWords()) {
-            segmentTree.insert(word);
-        }
+        segmentTree.load(dictionary.getWords(),true);
     }
 
     public static void buildWeightedSegmentTst(SegmentTree segmentTree,Dictionary dictionary) {
