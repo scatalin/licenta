@@ -66,7 +66,7 @@ public class SystemTester {
                     for (String word : words) {
                         word = word.toLowerCase();
                         statistics.beginWordStatistics(word);
-                        if (word.length() > 1) {
+                        if (word.length() > Properties.AUTOCOMPLETION_THRESHOLD) {
                             boolean done = false;
                             int index = 1;
                             tst.resetSearchK();

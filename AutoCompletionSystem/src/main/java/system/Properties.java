@@ -18,4 +18,6 @@ public class Properties {
     public static String REPORT_OUTPUT_FILE_NAME;
     public static boolean IS_FORCED_SUPPORTED_OS;
     public static String FORCED_SYSTEM_PATH_SEPARATOR;
+    public static int AUTOCOMPLETION_THRESHOLD;
+    public static int AUTOCOMPLETION_K_SIZE;
 }

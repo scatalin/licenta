@@ -18,6 +18,8 @@ public enum FileProperties {
     FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SEGMENT_SIZE("segment.size"),
+    AUTOCOMPLETION_THRESHOLD("autocompletion.minimum.characters"),
+    AUTOCOMPLETION_K_SIZE("autocompletion.k.size"),
     SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name"),
     SEGMENT_TREE_OUTPUT_FILE_NAME("segment.tree.file.output.name");
 
