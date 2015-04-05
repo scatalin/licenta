@@ -14,6 +14,7 @@ import java.util.List;
 public class SystemTester {
 
     private final File reportFile;
+    private final File allReportFile;
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File testDir;
@@ -28,7 +29,12 @@ public class SystemTester {
 
         reportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
         if (!reportFile.exists() && !reportFile.isFile()) {
-            System.out.println("dictionary file does not exist " + reportFile + ";");
+            System.out.println("report file does not exist " + reportFile + ";");
+        }
+
+        allReportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_ALL_OUTPUT_FILE_NAME);
+        if (!reportFile.exists() && !reportFile.isFile()) {
+            System.out.println("all report file does not exist " + reportFile + ";");
         }
 
         String inputDirectory = Properties.TEST_FILES_DIRECTORY;
@@ -129,12 +135,13 @@ public class SystemTester {
             return;
         }
 
-        PrintWriter printWriter = new PrintWriter(reportFile);
+        PrintWriter printWriter = new PrintWriter(allReportFile);
 
         //todo read all input files and hand over to delegates, word processor and phrase processor
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
+                int currentRun = 3;
                 Statistics statistics = new Statistics(file.getName());
                 statisticsList.add(statistics);
 
@@ -145,11 +152,10 @@ public class SystemTester {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
                         word = word.toLowerCase();
-                        statistics.beginWordStatistics(word);
                         if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
-                            int index = Properties.AUTOCOMPLETION_THRESHOLD;
+                            statistics.beginWordStatistics(word);
                             segmentTree.resetSearchK();
-                            String prefix = word.substring(0, index);
+                            String prefix = word.substring(0, currentRun);
                             List<Word> completedWords = segmentTree.getNextTopK(prefix);
                             if (completedWords.isEmpty()) {
                                 printWriter.println("prefix " + prefix + " from word " + word + " generated no output");
@@ -169,8 +175,13 @@ public class SystemTester {
                             }
                         }
                     }
+                    //for words
                     line = reader.readLine();
                 }
+                //while line
+
+                statistics.makeAverages();
+                printWriter.println(statistics.printStatistics());
 
                 reader.close();
                 System.out.println("file " + file.getName() + " was tested");
@@ -180,14 +191,6 @@ public class SystemTester {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-
-        printWriter.println("statistics are:");
-
-
-
-        for (Statistics statistics : statisticsList) {
-            printWriter.println(statistics);
         }
 
         printWriter.flush();

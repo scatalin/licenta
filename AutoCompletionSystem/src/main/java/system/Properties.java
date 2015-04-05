@@ -20,4 +20,6 @@ public class Properties {
     public static String FORCED_SYSTEM_PATH_SEPARATOR;
     public static int AUTOCOMPLETION_THRESHOLD;
     public static int AUTOCOMPLETION_K_SIZE;
+    public static String REPORT_ALL_OUTPUT_FILE_NAME;
+    public static int SUCCESS_THRESHOLD;
 }

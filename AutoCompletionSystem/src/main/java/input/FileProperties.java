@@ -15,6 +15,8 @@ public enum FileProperties {
     DICTIONARY_FILE_NAME("dictionary.name"),
     TST_OUTPUT_FILE_NAME("tst.file.output.name"),
     REPORT_OUTPUT_FILE_NAME("test.report.file.name"),
+    REPORT_ALL_OUTPUT_FILE_NAME("test.all.file.name"),
+    SUCCESSFUL_THRESHOLD("autocompletion.success.threshold"),
     FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SEGMENT_SIZE("segment.size"),

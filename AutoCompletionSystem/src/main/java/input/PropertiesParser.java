@@ -83,6 +83,10 @@ public class PropertiesParser {
                     Properties.REPORT_OUTPUT_FILE_NAME = tokens[1];
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.REPORT_ALL_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.REPORT_ALL_OUTPUT_FILE_NAME = tokens[1];
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.FORCE_SUPPORT_OS.getValue())) {
                     Properties.IS_FORCED_SUPPORTED_OS = Boolean.parseBoolean(tokens[1]);
                     continue;
@@ -93,6 +97,10 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.SEGMENT_SIZE.getValue())) {
                     Properties.SEGMENT_SIZE = Integer.parseInt(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.SUCCESSFUL_THRESHOLD.getValue())) {
+                    Properties.SUCCESS_THRESHOLD = Integer.parseInt(tokens[1]);
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.AUTOCOMPLETION_THRESHOLD.getValue())) {
