@@ -122,4 +122,8 @@ public class TstNode implements Comparable<TstNode> {
     public int compareTo(TstNode o) {
         return Integer.valueOf(this.getWeight()).compareTo(o.getWeight());
     }
+
+    public int compareWordsWeights(TstNode o) {
+        return Integer.valueOf(this.getSpecificWeight()).compareTo(o.getSpecificWeight());
+    }
 }

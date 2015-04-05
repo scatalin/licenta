@@ -1,7 +1,5 @@
 package algorithms.heap;
 
-import model.dictionary.Word;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,7 +8,6 @@ import java.util.List;
  * Created by gstan on 27.03.2015.
  */
 public class AutoCompletionHeap<T extends HeapNode> {
-
 
     private List<T> items;
 

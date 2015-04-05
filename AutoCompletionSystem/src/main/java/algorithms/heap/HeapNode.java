@@ -6,7 +6,7 @@ import algorithms.tst.intern.TstNode;
  * Created by Catalin on 3/28/2015 .
  */
 public class HeapNode {
-    private TstNode node;
+    protected TstNode node;
     private String builtWord;
 
     public HeapNode(TstNode node) {
@@ -38,15 +38,16 @@ public class HeapNode {
         return node.compareTo(parent.getNode());
     }
 
-    public HeapNode clone(){
-        return new HeapNode(node,builtWord);
+    public HeapNode clone() {
+        return new HeapNode(node, builtWord);
     }
 
     @Override
     public String toString() {
-        return "HeapNode{" +
-                "builtWord=" + builtWord +
-                ", node=" + node.getCharacter()+"|"+node.getSpecificWeight() +
+        return "{" +
+                "W=" + builtWord +
+                ", n=" + node.getCharacter() + "|" + node.getSpecificWeight() +
+                (node.isEndWord() ? "|w" : "") +
                 '}';
     }
 }

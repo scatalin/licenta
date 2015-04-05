@@ -50,7 +50,7 @@ public class Word implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return word.compareTo(((Word)o).getWord());
+        return Integer.valueOf(((Word)o).getFrequency()).compareTo(frequency);
     }
 
     @Override
