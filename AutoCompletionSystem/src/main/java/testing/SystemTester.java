@@ -164,8 +164,7 @@ public class SystemTester {
                             }
                             if (found != -1) {
                                 statistics.interrogationStatistic(prefix.length(), found + 1);
-                            }
-                            else {
+                            } else {
                                 statistics.interrogationStatistic(prefix.length(), found);
                             }
                         }
@@ -185,14 +184,11 @@ public class SystemTester {
 
         printWriter.println("statistics are:");
 
-        for (
-                Statistics statistics
-                : statisticsList)
 
-        {
+
+        for (Statistics statistics : statisticsList) {
             printWriter.println(statistics);
         }
-
 
         printWriter.flush();
         printWriter.close();
