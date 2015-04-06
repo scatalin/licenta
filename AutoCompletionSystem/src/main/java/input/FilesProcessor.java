@@ -72,8 +72,8 @@ public class FilesProcessor {
             }
         }
 
-        dictionary.getDictionary().sortDictionaryAlphabetically();
         dictionary.getDictionary().removeNonWords();
+        dictionary.getDictionary().sortDictionaryAlphabetically();
         dictionary.saveDictionary();
     }
 }

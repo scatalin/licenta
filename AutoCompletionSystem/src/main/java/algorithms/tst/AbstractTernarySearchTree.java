@@ -7,6 +7,7 @@ import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import model.dictionary.Word;
+import model.dictionary.WordFrequencyComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,7 +81,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             if (item.getNode().isEndWord() && word.startsWith(prefix)) {
                 //todo add a heap for found words (specific weight stuff)
                 foundSmallWeightWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
-                Collections.sort(foundSmallWeightWords);
+                Collections.sort(foundSmallWeightWords,new WordFrequencyComparator());
                 if(foundSmallWeightWords.get(0).getFrequency() >= maxWeight){
                     foundWords.add(foundSmallWeightWords.remove(0));
                 }

@@ -3,7 +3,7 @@ package model.dictionary;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word implements Comparable{
+public class Word{
     private String word;
     private int frequency;
 
@@ -46,11 +46,6 @@ public class Word implements Comparable{
 
     public void increaseFrequency() {
         frequency++;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return Integer.valueOf(((Word)o).getFrequency()).compareTo(frequency);
     }
 
     @Override

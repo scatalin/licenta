@@ -11,7 +11,9 @@ import java.util.List;
 public class Statistics {
 
     private String fileName;
+    private int currentRun;
     private List<StatisticEntry> statistics;
+    private List<String> outOfRange;
     private List<Integer> successfulPositions;
     private StatisticEntry currentEntry;
     private String currentWord;
@@ -19,15 +21,18 @@ public class Statistics {
     private int successful;
     private int outRange;
     private int notInTree;
+    private int notFound;
 
-    Statistics(String filename) {
+    Statistics(String filename, int currentRun) {
         this.fileName = filename;
+        this.currentRun = currentRun;
         statistics = new ArrayList<StatisticEntry>();
         successfulPositions = new ArrayList<Integer>(Properties.SUCCESS_THRESHOLD + 1);
         for (int i = 0; i < Properties.SUCCESS_THRESHOLD + 1; i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
+        outOfRange = new ArrayList<String>();
     }
 
     public void makeAverages() {
@@ -40,10 +45,16 @@ public class Statistics {
                     successfulPositions.set(entry.positionFound, successfulPositions.get(entry.positionFound) + 1);
                 } else {
                     outRange++;
+                    outOfRange.add(entry.word);
                 }
             }
             else {
-                notInTree++;
+                if(entry.positionFound==-2){
+                    notInTree++;
+                }
+                if(entry.positionFound==-1){
+                    notFound++;
+                }
             }
         }
     }
@@ -55,9 +66,12 @@ public class Statistics {
         stringBuilder.append("number of words: ").append(total).append("\n");
         stringBuilder.append("successful: ").append(successful).append("=")
                 .append((int) ((double) successful / total * 100)).append("% with threshold ")
-                .append(Properties.SUCCESS_THRESHOLD).append("\n");
+                .append(currentRun).append("\n");
         stringBuilder.append("out of range: ").append(outRange).append("\n");
         stringBuilder.append("not in tree: ").append(notInTree).append("\n");
+        stringBuilder.append("not found: ").append(notFound).append("\n");
+
+//        stringBuilder.append(outOfRange).append("\n");
         for (int i = 1; i < Properties.SUCCESS_THRESHOLD + 1; i++) {
             stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
         }

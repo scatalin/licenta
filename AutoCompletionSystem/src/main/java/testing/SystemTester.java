@@ -61,7 +61,7 @@ public class SystemTester {
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
-                Statistics statistics = new Statistics(file.getName());
+                Statistics statistics = new Statistics(file.getName(), 0);
                 statisticsList.add(statistics);
 
                 BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -141,51 +141,53 @@ public class SystemTester {
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
-                int currentRun = 3;
-                Statistics statistics = new Statistics(file.getName());
-                statisticsList.add(statistics);
+                for (int currentRun = 1; currentRun <= 10; currentRun++) {
 
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line = reader.readLine();
+                    Statistics statistics = new Statistics(file.getName(), currentRun);
+                    statisticsList.add(statistics);
 
-                while (line != null) {
-                    String[] words = line.split(WORD_SEPARATION_REGEX);
-                    for (String word : words) {
-                        word = word.toLowerCase();
-                        if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
-                            statistics.beginWordStatistics(word);
-                            segmentTree.resetSearchK();
-                            String prefix = word.substring(0, currentRun);
-                            List<Word> completedWords = segmentTree.getNextTopK(prefix);
-                            if (completedWords.isEmpty()) {
-                                printWriter.println("prefix " + prefix + " from word " + word + " generated no output");
-                            }
-                            int found = -1;
-                            for (int i = 0; i < completedWords.size(); i++) {
-                                Word aWord = completedWords.get(i);
-                                if (aWord.getWord().equals(word)) {
-                                    found = i;
-                                    break;
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    String line = reader.readLine();
+
+                    while (line != null) {
+                        String[] words = line.split(WORD_SEPARATION_REGEX);
+                        for (String word : words) {
+                            word = word.toLowerCase();
+                            if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
+                                statistics.beginWordStatistics(word);
+                                segmentTree.resetSearchK();
+                                String prefix = word.substring(0, Math.min(currentRun, word.length()));
+                                List<Word> completedWords = segmentTree.getNextTopK(prefix);
+                                int found = -1;
+                                if (completedWords.isEmpty()) {
+                                    statistics.interrogationStatistic(prefix.length(), found - 1);
+                                }
+                                for (int i = 0; i < completedWords.size(); i++) {
+                                    Word aWord = completedWords.get(i);
+                                    if (aWord.getWord().equals(word)) {
+                                        found = i;
+                                        break;
+                                    }
+                                }
+                                if (found != -1) {
+                                    statistics.interrogationStatistic(prefix.length(), found + 1);
+                                } else {
+                                    statistics.interrogationStatistic(prefix.length(), found);
                                 }
                             }
-                            if (found != -1) {
-                                statistics.interrogationStatistic(prefix.length(), found + 1);
-                            } else {
-                                statistics.interrogationStatistic(prefix.length(), found);
-                            }
                         }
+                        //for words
+                        line = reader.readLine();
                     }
-                    //for words
-                    line = reader.readLine();
+                    //while line
+
+                    statistics.makeAverages();
+                    printWriter.println(statistics.printStatistics());
+
+                    reader.close();
+                    System.out.println("file " + file.getName() + " was tested");
                 }
-                //while line
-
-                statistics.makeAverages();
-                printWriter.println(statistics.printStatistics());
-
-                reader.close();
-                System.out.println("file " + file.getName() + " was tested");
-
+                // for threshold
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -64,6 +64,7 @@ public class Main {
         SearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
+        dictionaryProcessor.readDictionary();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -80,6 +81,7 @@ public class Main {
                     tst = new TernarySearchTreeRecursive();
                     dictionary = new Dictionary();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
+                    dictionaryProcessor.readDictionary();
                 } catch (IOException e) {
                     System.out.println("System cannot restart");
                     e.printStackTrace();

@@ -32,7 +32,7 @@ public class Dictionary {
     }
 
     public void sortDictionaryAlphabetically(){
-        Collections.sort(words);
+        Collections.sort(words, new WordComparator());
     }
 
     public void sortDictionaryByWeight() {
