@@ -103,6 +103,14 @@ public class PropertiesParser {
                     Properties.SUCCESS_THRESHOLD = Integer.parseInt(tokens[1]);
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.TEST_WORD_DEPTH.getValue())) {
+                    Properties.TEST_WORD_DEPTH = Integer.parseInt(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.TEST_WORD_START.getValue())) {
+                    Properties.TEST_WORD_START = Integer.parseInt(tokens[1]);
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.AUTOCOMPLETION_THRESHOLD.getValue())) {
                     Properties.AUTOCOMPLETION_THRESHOLD = Integer.parseInt(tokens[1]);
                     continue;

@@ -22,4 +22,7 @@ public class Properties {
     public static int AUTOCOMPLETION_K_SIZE;
     public static String REPORT_ALL_OUTPUT_FILE_NAME;
     public static int SUCCESS_THRESHOLD;
+    public static int TEST_WORD_DEPTH;
+    public static int TEST_WORD_START;
 }
+

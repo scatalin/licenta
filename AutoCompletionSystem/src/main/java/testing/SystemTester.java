@@ -141,7 +141,7 @@ public class SystemTester {
         for (File file : listFileNames) {
             System.out.println("processing file " + file.getName());
             try {
-                for (int currentRun = 1; currentRun <= 10; currentRun++) {
+                for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
 
                     Statistics statistics = new Statistics(file.getName(), currentRun);
                     statisticsList.add(statistics);
