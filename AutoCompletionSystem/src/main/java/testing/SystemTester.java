@@ -3,6 +3,7 @@ package testing;
 import algorithms.SearchTree;
 import model.dictionary.Word;
 import system.Properties;
+import utils.FileManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ public class SystemTester {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File testDir;
+    private final String processedDirectory;
 
     private SearchTree segmentTree;
 
     private List<Statistics> statisticsList;
+
+    private final FileManager manager;
 
     public SystemTester(SearchTree segmentTree) {
 
@@ -37,6 +41,13 @@ public class SystemTester {
             System.out.println("all report file does not exist " + reportFile + ";");
         }
 
+        processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
+
+        File processedDir = new File(processedDirectory);
+        if (!processedDir.exists() && !processedDir.isDirectory()) {
+            System.out.println("processed files directory does not exist: " + processedDir + ";");
+        }
+
         String inputDirectory = Properties.TEST_FILES_DIRECTORY;
 
         testDir = new File(inputDirectory);
@@ -45,6 +56,8 @@ public class SystemTester {
         }
 
         statisticsList = new ArrayList<Statistics>();
+
+        manager = new FileManager();
     }
 
     public void testSystem() throws FileNotFoundException {
@@ -127,7 +140,7 @@ public class SystemTester {
         printWriter.close();
     }
 
-    public void testSystemWithPercentages() throws FileNotFoundException {
+    public void enhancedTesting(boolean move) throws FileNotFoundException {
         File[] listFileNames = testDir.listFiles();
 
         if (listFileNames == null) {
@@ -188,6 +201,10 @@ public class SystemTester {
                     System.out.println("file " + file.getName() + " was tested");
                 }
                 // for threshold
+
+                if(move){
+                    manager.moveFile(file, processedDirectory);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -23,9 +23,11 @@ import java.util.Scanner;
 public class Main {
 
     private static final String RESET = "reset";
-    private static final String PROCESS_FILES = "input";
+    private static final String PROCESS_FILES_NO_MOVE = "input";
+    private static final String PROCESS_FILES_MOVE = "input m";
     private static final String TEST_SYSTEM = "test";
-    private static final String TEST_SYSTEM_PERCENTAGES = "test p";
+    private static final String TEST_SYSTEM_PERCENTAGES_MOVE = "test p m";
+    private static final String TEST_SYSTEM_PERCENTAGES_NO_MOVE = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
     private static final String TST_BUILD = "tst b";
@@ -93,9 +95,14 @@ public class Main {
                 dictionaryProcessor.readDictionary();
                 continue;
             }
-            if (command.equals(PROCESS_FILES)) {
+            if (command.equals(PROCESS_FILES_MOVE)) {
                 FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles();
+                filesProcessor.processInputFiles(true);
+                continue;
+            }
+            if (command.equals(PROCESS_FILES_NO_MOVE)) {
+                FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
+                filesProcessor.processInputFiles(false);
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
@@ -183,18 +190,26 @@ public class Main {
                 }
                 continue;
             }
-
-            if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
+            if (command.equals(TEST_SYSTEM_PERCENTAGES_MOVE)) {
                 tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SystemTester tester = new SystemTester(tree);
                 try {
-                    tester.testSystemWithPercentages();
+                    tester.enhancedTesting(true);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 continue;
             }
-
+            if (command.equals(TEST_SYSTEM_PERCENTAGES_NO_MOVE)) {
+                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
+                SystemTester tester = new SystemTester(tree);
+                try {
+                    tester.enhancedTesting(false);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
             if (command.startsWith(TREE_SET_K)) {
                 String number = command.replace(TREE_SET_K + " ", "");
                 try {

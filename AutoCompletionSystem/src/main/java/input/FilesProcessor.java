@@ -36,7 +36,7 @@ public class FilesProcessor {
         manager = new FileManager();
     }
 
-    public void processInputFiles() {
+    public void processInputFiles(boolean move) {
         dictionary.readDictionary();
         File[] listFileNames = inputDir.listFiles();
 
@@ -62,7 +62,9 @@ public class FilesProcessor {
                 }
 
                 reader.close();
-                manager.moveFile(file, processedDirectory);
+                if(move){
+                    manager.moveFile(file, processedDirectory);
+                }
                 System.out.println("file " + file.getName() + " was moved to processed directory");
 
             } catch (FileNotFoundException e) {
