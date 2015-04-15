@@ -9,11 +9,15 @@ import java.util.List;
  */
 public class Dictionary {
 
-
+    private String fileName;
     private final List<Word> words;
 
-    public Dictionary() {
+    public Dictionary(){
+        this("");
+    }
 
+    public Dictionary(String fileName) {
+        this.fileName = fileName;
         words = new ArrayList<Word>();
     }
 
@@ -59,5 +63,13 @@ public class Dictionary {
 
     public int getNumberOfWords() {
         return words.size();
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

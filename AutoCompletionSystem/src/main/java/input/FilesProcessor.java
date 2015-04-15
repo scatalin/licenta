@@ -1,9 +1,13 @@
 package input;
 
+import model.dictionary.Dictionary;
 import system.Properties;
 import utils.FileManager;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Catalin on 2/21/2015 .
@@ -41,6 +45,10 @@ public class FilesProcessor {
         }
 
         manager = new FileManager();
+    }
+
+    public FilesProcessor(String inputDirectory) {
+        this(null, inputDirectory, Properties.PROCESSED_FILES_DIRECTORY);
     }
 
     public int getNumberOfFiles(){
@@ -95,6 +103,49 @@ public class FilesProcessor {
         dictionary.getDictionary().removeNonWords();
         dictionary.getDictionary().sortDictionaryAlphabetically();
         dictionary.saveDictionary();
+    }
+
+    public List<Dictionary> createDictionariesFromFiles() {
+        List<Dictionary> dictionaries = new ArrayList<Dictionary>();
+
+        File[] listFileNames = inputDir.listFiles();
+
+        if (listFileNames == null) {
+            System.out.println("an exception occurred while reading files from " + inputDir);
+            return Collections.emptyList();
+        }
+
+        //todo read all input files and hand over to delegates, word processor and phrase processor
+        for (File file : listFileNames) {
+            Dictionary dictionary = new Dictionary(file.getName());
+
+            System.out.println("processing file " + file.getName());
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String line = reader.readLine();
+
+                while (line != null) {
+                    String[] words = line.split(WORD_SEPARATION_REGEX);
+                    for (String word : words) {
+                        if (word.length() > 1) {
+                            dictionary.addWord(word.toLowerCase());
+                        }
+                    }
+                    line = reader.readLine();
+                }
+
+                reader.close();
+
+                dictionary.removeNonWords();
+                dictionaries.add(dictionary);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return dictionaries;
     }
 }
 
