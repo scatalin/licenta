@@ -13,7 +13,6 @@ public class Statistics {
     private String fileName;
     private int currentRun;
     private List<StatisticEntry> statistics;
-//    private List<String> outOfRange;
     private List<Integer> successfulPositions;
     private StatisticEntry currentEntry;
     private String currentWord;
@@ -24,18 +23,18 @@ public class Statistics {
     private long notFound;
     private double precision;
     private double recall;
-    private String dictionarySize;
+    private long dictionarySize;
 
     Statistics(String filename, int currentRun, int dictionarySize) {
         this.fileName = filename;
         this.currentRun = currentRun;
+        this.dictionarySize = dictionarySize;
         statistics = new ArrayList<StatisticEntry>();
         successfulPositions = new ArrayList<Integer>(Properties.AUTOCOMPLETION_K_SIZE+1);
         for (int i = 0; i < Properties.AUTOCOMPLETION_K_SIZE+1; i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
-//        outOfRange = new ArrayList<String>();
     }
 
     public void makeAverages() {
@@ -47,7 +46,6 @@ public class Statistics {
                     successful++;
                 } else {
                     outRange++;
-//                    outOfRange.add(entry.word);
                 }
                 successfulPositions.set(entry.positionFound, successfulPositions.get(entry.positionFound) + 1);
             }
@@ -65,14 +63,12 @@ public class Statistics {
     }
 
     private void calculateRecall() {
-        double sum = 0.0;
-        sum = calculateSum();
+        double sum = calculateSum();
         recall = sum / total;
     }
 
     private void calculatePrecision() {
-        double sum = 0.0;
-        sum = calculateSum();
+        double sum = calculateSum();
         precision = sum / (successful+outRange);
     }
 
@@ -208,11 +204,11 @@ public class Statistics {
         this.recall = recall;
     }
 
-    public String getDictionarySize() {
+    public long getDictionarySize() {
         return dictionarySize;
     }
 
-    public void setDictionarySize(String dictionarySize) {
+    public void setDictionarySize(long dictionarySize) {
         this.dictionarySize = dictionarySize;
     }
 }

@@ -72,4 +72,10 @@ public class Dictionary {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+    public String toString(){
+        return "d="+words.size()+" "+words.toString();
+    }
+
 }
+
