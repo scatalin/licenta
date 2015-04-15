@@ -18,10 +18,6 @@ public class FilesProcessor {
 
     private final FileManager manager;
 
-    public FilesProcessor(String inputDirectory){
-        this(null,inputDirectory,Properties.PROCESSED_FILES_DIRECTORY);
-    }
-
     public FilesProcessor(DictionaryProcessor dictionary) {
         this(dictionary,Properties.INPUT_FILES_DIRECTORY,Properties.PROCESSED_FILES_DIRECTORY);
     }
@@ -86,8 +82,8 @@ public class FilesProcessor {
                 reader.close();
                 if(move){
                     manager.moveFile(file, processedDirectory);
+                    System.out.println("file " + file.getName() + " was moved to processed directory");
                 }
-                System.out.println("file " + file.getName() + " was moved to processed directory");
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

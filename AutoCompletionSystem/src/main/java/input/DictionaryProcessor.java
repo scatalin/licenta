@@ -12,7 +12,11 @@ import java.io.*;
 public class DictionaryProcessor {
     private final File dictionaryFile;
 
-    private final Dictionary dictionary;
+    private Dictionary dictionary;
+
+    public DictionaryProcessor(){
+        this(null, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
+    }
 
     public DictionaryProcessor(Dictionary dictionary){
         this(dictionary, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
@@ -72,5 +76,9 @@ public class DictionaryProcessor {
 
     public Dictionary getDictionary() {
         return dictionary;
+    }
+
+    public void setDictionary(Dictionary dictionary) {
+        this.dictionary = dictionary;
     }
 }
