@@ -24,8 +24,9 @@ public class Statistics {
     private long notFound;
     private double precision;
     private double recall;
+    private String dictionarySize;
 
-    Statistics(String filename, int currentRun) {
+    Statistics(String filename, int currentRun, int dictionarySize) {
         this.fileName = filename;
         this.currentRun = currentRun;
         statistics = new ArrayList<StatisticEntry>();
@@ -89,9 +90,11 @@ public class Statistics {
             stringBuilder.append("file ").append(fileName).append(" ");
             stringBuilder.append("generated the following statistics").append("\n");
         }
+        stringBuilder.append("dictionary size ")
+                .append(dictionarySize).append("\n");
         stringBuilder.append("characters typed ")
                 .append(currentRun).append("\n");
-        stringBuilder.append("number of words: ").append(total).append("\n");
+        stringBuilder.append("number of test words: ").append(total).append("\n");
         stringBuilder.append("found within ").append(Properties.SUCCESS_THRESHOLD).append(" positions: ").append(successful)
                 .append("=").append((int) ((double) successful / total * 100)).append("%").append("\n");
         stringBuilder.append("precision: ").append(precision).append("\n");
@@ -203,5 +206,13 @@ public class Statistics {
 
     public void setRecall(double recall) {
         this.recall = recall;
+    }
+
+    public String getDictionarySize() {
+        return dictionarySize;
+    }
+
+    public void setDictionarySize(String dictionarySize) {
+        this.dictionarySize = dictionarySize;
     }
 }

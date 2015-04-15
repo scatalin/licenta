@@ -56,4 +56,8 @@ public class Dictionary {
     public void clear() {
         words.clear();
     }
+
+    public int getNumberOfWords() {
+        return words.size();
+    }
 }

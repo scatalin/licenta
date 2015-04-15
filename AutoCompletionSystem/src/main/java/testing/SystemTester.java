@@ -76,7 +76,8 @@ public class SystemTester {
             try {
                 for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
 
-                    Statistics statistics = new Statistics(file.getName(), currentRun);
+                    //todo insert here dictionary size
+                    Statistics statistics = new Statistics(file.getName(), currentRun, 0);
                     statisticsList.add(statistics);
 
                     BufferedReader reader = new BufferedReader(new FileReader(file));

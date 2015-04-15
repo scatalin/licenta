@@ -61,7 +61,7 @@ public class SystemRotationTester {
 
         for (int run = 0; run < numberOfRuns; run++) {
 
-            initTree(run);
+            int dictionarySize = initTree(run);
 
             File[] listFileNames = rotationTestDir.listFiles();
 
@@ -79,7 +79,7 @@ public class SystemRotationTester {
             try {
                 for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
 
-                    Statistics statistics = new Statistics(toTestFile.getName(), currentRun);
+                    Statistics statistics = new Statistics(toTestFile.getName(), currentRun, dictionarySize);
                     statisticsList.get(currentRun).add(statistics);
 
                     BufferedReader reader = new BufferedReader(new FileReader(toTestFile));
@@ -102,7 +102,7 @@ public class SystemRotationTester {
                     }
                     //while line
 
-//                    statistics.makeAverages();
+                    statistics.makeAverages();
 //                    printWriter.println(statistics.printStatistics(true));
 //
                     reader.close();
@@ -121,7 +121,7 @@ public class SystemRotationTester {
         System.out.println("making averages");
         for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
             List<Statistics> statistics = statisticsList.get(currentRun);
-            Statistics averageStatistic = new Statistics("", currentRun);
+            Statistics averageStatistic = new Statistics("", currentRun, 0);
             Statistics minimumStatistic;
             Statistics maximumStatistic;
             long totalTotal = 0;
@@ -132,6 +132,7 @@ public class SystemRotationTester {
             double totalPrecision = 0.0;
             double totalRecall = 0.0;
             for(Statistics statistic : statistics){
+                averageStatistic.setDictionarySize(statistic.getDictionarySize());
                 totalTotal += statistic.getTotal();
                 totalSuccessful += statistic.getSuccessful();
                 totalNotFound += statistic.getNotFound();
@@ -174,7 +175,7 @@ public class SystemRotationTester {
         }
     }
 
-    private void initTree(int run) {
+    private int initTree(int run) {
         Dictionary dictionary = new Dictionary();
         dictionaryProcessor.setDictionary(dictionary);
 
@@ -184,5 +185,7 @@ public class SystemRotationTester {
         tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
         dictionary.sortDictionaryByWeight();
         tree.load(dictionary.getWords(), true);
+
+        return dictionary.getNumberOfWords();
     }
 }
