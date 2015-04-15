@@ -36,9 +36,9 @@ public class SystemTester {
             System.out.println("report file does not exist " + reportFile + ";");
         }
 
-        allReportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_ALL_OUTPUT_FILE_NAME);
-        if (!reportFile.exists() && !reportFile.isFile()) {
-            System.out.println("all report file does not exist " + reportFile + ";");
+        allReportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
+        if (!allReportFile.exists() && !allReportFile.isFile()) {
+            System.out.println("all report file does not exist " + allReportFile + ";");
         }
 
         processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;

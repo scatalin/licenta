@@ -55,6 +55,10 @@ public class PropertiesParser {
                     Properties.TEST_FILES_DIRECTORY = tokens[1];
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.TEST_ROTATION_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
+                    Properties.TEST_ROTATION_DIRECTORY = tokens[1];
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
                     continue;
@@ -71,8 +75,16 @@ public class PropertiesParser {
                     Properties.TEST_FILES_DIRECTORY = tokens[1];
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.TEST_ROTATION_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
+                    Properties.TEST_ROTATION_DIRECTORY = tokens[1];
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.DICTIONARY_FILE_NAME.getValue())) {
                     Properties.DICTIONARY_FILE_NAME = tokens[1];
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DICTIONARY_TEST_FILE_NAME.getValue())) {
+                    Properties.DICTIONARY_TEST_FILE_NAME = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.TST_OUTPUT_FILE_NAME.getValue())) {
@@ -83,8 +95,8 @@ public class PropertiesParser {
                     Properties.REPORT_OUTPUT_FILE_NAME = tokens[1];
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.REPORT_ALL_OUTPUT_FILE_NAME.getValue())) {
-                    Properties.REPORT_ALL_OUTPUT_FILE_NAME = tokens[1];
+                if (tokens[0].equals(FileProperties.MEASURES_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.MEASURES_OUTPUT_FILE_NAME = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.FORCE_SUPPORT_OS.getValue())) {

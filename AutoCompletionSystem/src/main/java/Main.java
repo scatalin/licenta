@@ -97,12 +97,12 @@ public class Main {
             }
             if (command.equals(PROCESS_FILES_MOVE)) {
                 FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles(true);
+                filesProcessor.processInputFiles(true,-1);
                 continue;
             }
             if (command.equals(PROCESS_FILES_NO_MOVE)) {
                 FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles(false);
+                filesProcessor.processInputFiles(false,-1);
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {

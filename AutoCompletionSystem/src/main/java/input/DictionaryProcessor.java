@@ -15,18 +15,22 @@ public class DictionaryProcessor {
     private final Dictionary dictionary;
 
     public DictionaryProcessor(Dictionary dictionary){
+        this(dictionary, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
+    }
+
+    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName){
+        this(dictionary, dictionaryFileName, Properties.DICTIONARY_DIRECTORY);
+    }
+
+    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName, String dictionaryDirectory) {
         this.dictionary = dictionary;
 
-        String fileName = Properties.DICTIONARY_FILE_NAME;
-        String dictDirectory = Properties.DICTIONARY_DIRECTORY;
-
-
-        File directory = new File(dictDirectory);
+        File directory = new File(dictionaryDirectory);
         if (!directory.exists() && !directory.isDirectory()) {
             System.out.println("dictionary directory does not exist: " + directory + ";");
         }
 
-        dictionaryFile = new File(dictDirectory + Properties.SYSTEM_PATH_SEPARATOR + fileName);
+        dictionaryFile = new File(dictionaryDirectory + Properties.SYSTEM_PATH_SEPARATOR + dictionaryFileName);
         if (!dictionaryFile.exists() && !dictionaryFile.isFile()) {
             System.out.println("dictionary file does not exist " + dictionaryFile + ";");
         }

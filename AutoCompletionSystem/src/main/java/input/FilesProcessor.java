@@ -18,17 +18,28 @@ public class FilesProcessor {
 
     private final FileManager manager;
 
+    public FilesProcessor(String inputDirectory){
+        this(null,inputDirectory,Properties.PROCESSED_FILES_DIRECTORY);
+    }
+
     public FilesProcessor(DictionaryProcessor dictionary) {
+        this(dictionary,Properties.INPUT_FILES_DIRECTORY,Properties.PROCESSED_FILES_DIRECTORY);
+    }
+
+    public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory) {
+        this(dictionary,inputDirectory,Properties.PROCESSED_FILES_DIRECTORY);
+    }
+
+    public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory, String processedDirectory){
         this.dictionary = dictionary;
-        String inputDirectory = Properties.INPUT_FILES_DIRECTORY;
-        processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
+        this.processedDirectory = processedDirectory;
 
         inputDir = new File(inputDirectory);
         if (!inputDir.exists() && !inputDir.isDirectory()) {
             System.out.println("input files directory does not exist: " + inputDir + ";");
         }
 
-        File processedDir = new File(processedDirectory);
+        File processedDir = new File(this.processedDirectory);
         if (!processedDir.exists() && !processedDir.isDirectory()) {
             System.out.println("processed files directory does not exist: " + processedDir + ";");
         }
@@ -36,7 +47,12 @@ public class FilesProcessor {
         manager = new FileManager();
     }
 
-    public void processInputFiles(boolean move) {
+    public int getNumberOfFiles(){
+        File[] listFileNames = inputDir.listFiles();
+        return listFileNames != null ? listFileNames.length : 0;
+    }
+
+    public void processInputFiles(boolean move, int skip) {
         dictionary.readDictionary();
         File[] listFileNames = inputDir.listFiles();
 
@@ -45,7 +61,13 @@ public class FilesProcessor {
             return;
         }
         //todo read all input files and hand over to delegates, word processor and phrase processor
-        for (File file : listFileNames) {
+        for (int i = 0; i < listFileNames.length; i++) {
+            File file = listFileNames[i];
+
+            if(i == skip){
+                continue;
+            }
+
             System.out.println("processing file " + file.getName());
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
