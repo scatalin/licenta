@@ -136,4 +136,9 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
     public TstNode getRoot() {
         return root;
     }
+
+    @Override
+    public void reset() {
+        root = null;
+    }
 }

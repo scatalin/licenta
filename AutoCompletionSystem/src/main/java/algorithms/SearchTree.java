@@ -24,4 +24,6 @@ public interface SearchTree {
     boolean isEmpty();
 
     Object getRoot();
+
+    void reset();
 }

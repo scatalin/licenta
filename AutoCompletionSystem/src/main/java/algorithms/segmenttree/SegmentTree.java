@@ -100,8 +100,20 @@ public class SegmentTree implements SearchTree {
 
     @Override
     public void load(List<Word> words, boolean reset) {
+        if(reset){
+            recursiveReset(root);
+        }
         for (Word word : words) {
             insert(word);
+        }
+    }
+
+    private void recursiveReset(SegmentNode node) {
+        if (node.isLeaf()) {
+            node.getTree().reset();
+        } else {
+            recursiveReset(node.getLeftChild());
+            recursiveReset(node.getRightChild());
         }
     }
 
@@ -163,6 +175,12 @@ public class SegmentTree implements SearchTree {
     @Override
     public Object getRoot() {
         return root;
+    }
+
+    @Override
+    public void reset() {
+        recursiveReset(root);
+        buildSegmentTree();
     }
 
 //    public int search(String s) {
