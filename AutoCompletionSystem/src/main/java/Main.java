@@ -11,6 +11,7 @@ import input.FilesProcessor;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
 import system.Properties;
+import testing.SystemRotationTester;
 import testing.SystemTester;
 
 import java.io.FileNotFoundException;
@@ -25,7 +26,7 @@ public class Main {
     private static final String RESET = "reset";
     private static final String PROCESS_FILES_NO_MOVE = "input";
     private static final String PROCESS_FILES_MOVE = "input m";
-    private static final String TEST_SYSTEM = "test";
+    private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_PERCENTAGES_MOVE = "test p m";
     private static final String TEST_SYSTEM_PERCENTAGES_NO_MOVE = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
@@ -40,10 +41,10 @@ public class Main {
     private static final String TREE_SET_K = "tree sk";
     private static final String TREE_GET_NEXT_K = "tree gnk";
     private static final String TREE_GET_K = "tree gk";
-    private static final String SEGMENT_TST_BUILD = "tree b";
-    private static final String SEGMENT_TST_RANDOM_BUILD = "tree rb";
-    private static final String SEGMENT_TST_WEIGHTED_BUILD = "tree wb";
-    private static final String SEGMENT_TST_PRINT = "tree p";
+    private static final String TREE_BUILD = "tree b";
+    private static final String TREE_RANDOM_BUILD = "tree rb";
+    private static final String TREE_WEIGHTED_BUILD = "tree wb";
+    private static final String TREE_PRINT = "tree p";
     private static final String SEGMENT_BUILD = "sgm b";
     private static final String SEGMENT_PRINT = "sgm p";
     private static final String SEGMENT_COUNT = "sgm c";
@@ -148,21 +149,21 @@ public class Main {
                 System.out.println(tst.getNextTopK(command));
                 continue;
             }
-            if (command.equals(SEGMENT_TST_BUILD)) {
+            if (command.equals(TREE_BUILD)) {
                 SegmentTstTreeFactory.buildSegmentTst(tree, dictionary);
                 continue;
             }
-            if (command.equals(SEGMENT_TST_RANDOM_BUILD)) {
+            if (command.equals(TREE_RANDOM_BUILD)) {
                 SegmentTstTreeFactory.buildRandomSegmentTst(tree, dictionary);
                 continue;
             }
-            if (command.equals(SEGMENT_TST_WEIGHTED_BUILD)) {
+            if (command.equals(TREE_WEIGHTED_BUILD)) {
                 tree.buildSegmentTree();
                 tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SegmentTstTreeFactory.buildWeightedSegmentTst(tree, dictionary);
                 continue;
             }
-            if (command.equals(SEGMENT_TST_PRINT)) {
+            if (command.equals(TREE_PRINT)) {
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, tree.printSubtrees());
                 continue;
             }
@@ -180,31 +181,28 @@ public class Main {
                 System.out.println(parser.countNodes());
                 continue;
             }
-            if (command.equals(TEST_SYSTEM)) {
-                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
-                SystemTester tester = new SystemTester(tree);
+            if (command.equals(TEST_SYSTEM_ROTATION)) {
+                SystemRotationTester rotationTester = new SystemRotationTester();
                 try {
-                    tester.testSystem();
+                    rotationTester.testSystemByRotation();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 continue;
             }
             if (command.equals(TEST_SYSTEM_PERCENTAGES_MOVE)) {
-                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SystemTester tester = new SystemTester(tree);
                 try {
-                    tester.enhancedTesting(true);
+                    tester.testSystem(true);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 continue;
             }
             if (command.equals(TEST_SYSTEM_PERCENTAGES_NO_MOVE)) {
-                tst.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SystemTester tester = new SystemTester(tree);
                 try {
-                    tester.enhancedTesting(false);
+                    tester.testSystem(false);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

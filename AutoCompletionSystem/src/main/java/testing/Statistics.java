@@ -17,11 +17,11 @@ public class Statistics {
     private List<Integer> successfulPositions;
     private StatisticEntry currentEntry;
     private String currentWord;
-    private int total;
-    private int successful;
-    private int outRange;
-    private int notInTree;
-    private int notFound;
+    private long total;
+    private long successful;
+    private long outRange;
+    private long notInTree;
+    private long notFound;
     private double precision;
     private double recall;
 
@@ -29,8 +29,8 @@ public class Statistics {
         this.fileName = filename;
         this.currentRun = currentRun;
         statistics = new ArrayList<StatisticEntry>();
-        successfulPositions = new ArrayList<Integer>(Properties.TEST_WORD_DEPTH+1);
-        for (int i = 0; i < Properties.TEST_WORD_DEPTH+1; i++) {
+        successfulPositions = new ArrayList<Integer>(Properties.AUTOCOMPLETION_K_SIZE+1);
+        for (int i = 0; i < Properties.AUTOCOMPLETION_K_SIZE+1; i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
@@ -83,24 +83,27 @@ public class Statistics {
         return sum * 100 ;
     }
 
-    public String printStatistics() {
-        StringBuilder stringBuilder = new StringBuilder("file ");
-        stringBuilder.append(fileName).append(" ");
-        stringBuilder.append("with characters typed ")
+    public String printStatistics(boolean file) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if(file) {
+            stringBuilder.append("file ").append(fileName).append(" ");
+            stringBuilder.append("generated the following statistics").append("\n");
+        }
+        stringBuilder.append("characters typed ")
                 .append(currentRun).append("\n");
-        stringBuilder.append("generated the following statistics\n");
         stringBuilder.append("number of words: ").append(total).append("\n");
-        stringBuilder.append("found within ").append(Properties.SUCCESS_THRESHOLD).append(" positions: ").append(successful).append("=")
-                .append((int) ((double) successful / total * 100)).append("%").append("\n");
+        stringBuilder.append("found within ").append(Properties.SUCCESS_THRESHOLD).append(" positions: ").append(successful)
+                .append("=").append((int) ((double) successful / total * 100)).append("%").append("\n");
         stringBuilder.append("precision: ").append(precision).append("\n");
         stringBuilder.append("recall: ").append(recall).append("\n");
         stringBuilder.append("out of range: ").append(outRange).append("\n");
         stringBuilder.append("not in tree: ").append(notInTree).append("\n");
         stringBuilder.append("not found in suggestions: ").append(notFound).append("\n");
 
-//        stringBuilder.append(outOfRange).append("\n");
-        for (int i = Properties.TEST_WORD_START; i < Properties.TEST_WORD_DEPTH + 1; i++) {
-            stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
+        if(file) {
+            for (int i = 1; i < Properties.AUTOCOMPLETION_K_SIZE + 1; i++) {
+                stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
+            }
         }
         return stringBuilder.toString();
     }
@@ -128,10 +131,10 @@ public class Statistics {
     }
 
     private class StatisticEntry {
+
         String word;
         int charactersTyped;
         int positionFound;
-
         int charactersSaved;
 
         @Override
@@ -144,5 +147,61 @@ public class Statistics {
                     "}\n";
         }
 
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
+    public long getSuccessful() {
+        return successful;
+    }
+
+    public void setSuccessful(long successful) {
+        this.successful = successful;
+    }
+
+    public long getOutRange() {
+        return outRange;
+    }
+
+    public void setOutRange(long outRange) {
+        this.outRange = outRange;
+    }
+
+    public long getNotInTree() {
+        return notInTree;
+    }
+
+    public void setNotInTree(long notInTree) {
+        this.notInTree = notInTree;
+    }
+
+    public long getNotFound() {
+        return notFound;
+    }
+
+    public void setNotFound(long notFound) {
+        this.notFound = notFound;
+    }
+
+    public double getPrecision() {
+        return precision;
+    }
+
+    public void setPrecision(double precision) {
+        this.precision = precision;
+    }
+
+    public double getRecall() {
+        return recall;
+    }
+
+    public void setRecall(double recall) {
+        this.recall = recall;
     }
 }
