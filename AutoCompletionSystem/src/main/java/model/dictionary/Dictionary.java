@@ -35,6 +35,26 @@ public class Dictionary {
         word1.increaseFrequency();
     }
 
+    public List<Word> getWordsWithPrefix(String word){
+        List<Word> toReturn = new ArrayList<Word>();
+        for(Word word1: words){
+            if(word1.getWord().startsWith(word)){
+                toReturn.add(word1);
+            }
+        }
+        return toReturn;
+    }
+
+    public void addWord(Word word){
+        int index = words.lastIndexOf(word);
+        if (index == -1){
+            words.add(word);
+            return;
+        }
+        Word existentWord = words.get(index);
+        existentWord.increaseFrequency(word.getFrequency());
+    }
+
     public void sortDictionaryAlphabetically(){
         Collections.sort(words, new WordComparator());
     }

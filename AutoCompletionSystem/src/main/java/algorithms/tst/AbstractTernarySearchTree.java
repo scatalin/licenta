@@ -73,6 +73,9 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             if (item == null) {
                 return;
             }
+            if(item.getNode() == null){
+                continue;
+            }
             maxWeight = item.getNode().getWeight();
             if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
                 continue;

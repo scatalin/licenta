@@ -19,19 +19,25 @@ public class Statistics {
     private long total;
     private long successful;
     private long outRange;
-    private long notInTree;
-    private long notFound;
+    private long noSuggestionsForPrefix;
+    private long wordNotInTree;
     private double precision;
     private double recall;
     private long dictionarySize;
+    private int noTrainingFiles;
 
-    Statistics(String filename, int currentRun, int dictionarySize) {
-        this.fileName = filename;
+    Statistics(String fileName, int currentRun, int noTrainingFiles) {
+        this(fileName,currentRun,0,noTrainingFiles);
+    }
+
+    public Statistics(String fileName, int currentRun, int dictionarySize, int noTrainingFiles) {
+        this.fileName = fileName;
         this.currentRun = currentRun;
         this.dictionarySize = dictionarySize;
+        this.noTrainingFiles = noTrainingFiles;
         statistics = new ArrayList<StatisticEntry>();
-        successfulPositions = new ArrayList<Integer>(Properties.AUTOCOMPLETION_K_SIZE+1);
-        for (int i = 0; i < Properties.AUTOCOMPLETION_K_SIZE+1; i++) {
+        successfulPositions = new ArrayList<Integer>(Properties.AUTOCOMPLETION_K_SIZE + 1);
+        for (int i = 0; i < Properties.AUTOCOMPLETION_K_SIZE + 1; i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
@@ -48,13 +54,12 @@ public class Statistics {
                     outRange++;
                 }
                 successfulPositions.set(entry.positionFound, successfulPositions.get(entry.positionFound) + 1);
-            }
-            else {
-                if(entry.positionFound==-2){
-                    notInTree++;
+            } else {
+                if (entry.positionFound == -2) {
+                    noSuggestionsForPrefix++;
                 }
-                if(entry.positionFound==-1){
-                    notFound++;
+                if (entry.positionFound == -1) {
+                    wordNotInTree++;
                 }
             }
         }
@@ -69,24 +74,25 @@ public class Statistics {
 
     private void calculatePrecision() {
         double sum = calculateSum();
-        precision = sum / (successful+outRange);
+        precision = sum / (successful + outRange);
     }
 
     private double calculateSum() {
         double sum = 0.0;
-        for(int i = 1; i < successfulPositions.size(); i++){
-            sum += (successfulPositions.get(i))*(1d/(double)(i));
+        for (int i = 1; i < successfulPositions.size(); i++) {
+            sum += (successfulPositions.get(i)) * (1d / (double) (i));
         }
-        return sum * 100 ;
+        return sum * 100;
     }
 
     public String printStatistics(boolean file) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(file) {
+        if (file) {
             stringBuilder.append("file ").append(fileName).append(" ");
             stringBuilder.append("generated the following statistics").append("\n");
         }
-        stringBuilder.append("dictionary size ")
+        stringBuilder.append("number of training files ")
+                .append(noTrainingFiles).append(" with dictionary size ")
                 .append(dictionarySize).append("\n");
         stringBuilder.append("characters typed ")
                 .append(currentRun).append("\n");
@@ -96,10 +102,10 @@ public class Statistics {
         stringBuilder.append("precision: ").append(precision).append("\n");
         stringBuilder.append("recall: ").append(recall).append("\n");
         stringBuilder.append("out of range: ").append(outRange).append("\n");
-        stringBuilder.append("not in tree: ").append(notInTree).append("\n");
-        stringBuilder.append("not found in suggestions: ").append(notFound).append("\n");
+        stringBuilder.append("no suggestions for prefix: ").append(noSuggestionsForPrefix).append("\n");
+        stringBuilder.append("word not in tree: ").append(wordNotInTree).append("\n");
 
-        if(file) {
+        if (file) {
             for (int i = 1; i < Properties.AUTOCOMPLETION_K_SIZE + 1; i++) {
                 stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
             }
@@ -129,25 +135,6 @@ public class Statistics {
         return statistics.toString();
     }
 
-    private class StatisticEntry {
-
-        String word;
-        int charactersTyped;
-        int positionFound;
-        int charactersSaved;
-
-        @Override
-        public String toString() {
-            return "StatisticEntry{" +
-                    "word='" + word + '\'' +
-                    ", charactersTyped=" + charactersTyped +
-                    ", positionFound=" + positionFound +
-                    ", charactersSaved=" + charactersSaved +
-                    "}\n";
-        }
-
-    }
-
     public long getTotal() {
         return total;
     }
@@ -172,20 +159,20 @@ public class Statistics {
         this.outRange = outRange;
     }
 
-    public long getNotInTree() {
-        return notInTree;
+    public long getNoSuggestionsForPrefix() {
+        return noSuggestionsForPrefix;
     }
 
-    public void setNotInTree(long notInTree) {
-        this.notInTree = notInTree;
+    public void setNoSuggestionsForPrefix(long noSuggestionsForPrefix) {
+        this.noSuggestionsForPrefix = noSuggestionsForPrefix;
     }
 
-    public long getNotFound() {
-        return notFound;
+    public long getWordNotInTree() {
+        return wordNotInTree;
     }
 
-    public void setNotFound(long notFound) {
-        this.notFound = notFound;
+    public void setWordNotInTree(long wordNotInTree) {
+        this.wordNotInTree = wordNotInTree;
     }
 
     public double getPrecision() {
@@ -210,5 +197,24 @@ public class Statistics {
 
     public void setDictionarySize(long dictionarySize) {
         this.dictionarySize = dictionarySize;
+    }
+
+    private class StatisticEntry {
+
+        String word;
+        int charactersTyped;
+        int positionFound;
+        int charactersSaved;
+
+        @Override
+        public String toString() {
+            return "StatisticEntry{" +
+                    "word='" + word + '\'' +
+                    ", charactersTyped=" + charactersTyped +
+                    ", positionFound=" + positionFound +
+                    ", charactersSaved=" + charactersSaved +
+                    "}\n";
+        }
+
     }
 }

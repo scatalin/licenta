@@ -3,7 +3,7 @@ package model.dictionary;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word{
+public class Word {
     private String word;
     private int frequency;
 
@@ -13,8 +13,8 @@ public class Word{
         this.frequency = frequency;
     }
 
-    public Word(String word){
-        this(word,1);
+    public Word(String word) {
+        this(word, 1);
     }
 
     public String getWord() {
@@ -48,8 +48,12 @@ public class Word{
         frequency++;
     }
 
+    public void increaseFrequency(int increment) {
+        frequency += increment;
+    }
+
     @Override
     public String toString() {
-        return word+"="+frequency;
+        return word + "=" + frequency;
     }
 }

@@ -127,7 +127,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        if (word.length() > 1) {
+                        if (word.length() > 2) {
                             dictionary.addWord(word.toLowerCase());
                         }
                     }

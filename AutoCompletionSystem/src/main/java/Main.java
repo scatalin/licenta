@@ -12,6 +12,7 @@ import input.PropertiesParser;
 import model.dictionary.Dictionary;
 import system.Properties;
 import testing.SystemRotationTester;
+import testing.SystemTenFoldingTesting;
 import testing.SystemTester;
 
 import java.io.FileNotFoundException;
@@ -28,6 +29,7 @@ public class Main {
     private static final String PROCESS_FILES_MOVE = "input m";
     private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_ROTATION_IN_MEMORY = "test all m";
+    private static final String TEST_SYSTEM_TEN_FOLD = "test new";
     private static final String TEST_SYSTEM_PERCENTAGES_MOVE = "test p m";
     private static final String TEST_SYSTEM_PERCENTAGES_NO_MOVE = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
@@ -194,6 +196,15 @@ public class Main {
                 SystemRotationTester rotationTester = new SystemRotationTester();
                 try {
                     rotationTester.testSystemByRotationInMemory();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            if (command.equals(TEST_SYSTEM_TEN_FOLD)) {
+                SystemTenFoldingTesting tester = new SystemTenFoldingTesting();
+                try {
+                    tester.testSystem();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

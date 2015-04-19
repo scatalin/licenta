@@ -79,7 +79,7 @@ public class SystemRotationTester {
             try {
                 for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
                     Dictionary dictionary = new Dictionary();
-                    Statistics statistics = new Statistics(toTestFile.getName(), currentRun, dictionarySize);
+                    Statistics statistics = new Statistics(toTestFile.getName(), currentRun, dictionarySize, 0);
                     statisticsList.get(currentRun).add(statistics);
 
                     BufferedReader reader = new BufferedReader(new FileReader(toTestFile));
@@ -185,7 +185,7 @@ public class SystemRotationTester {
 
             for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
 
-                Statistics statistics = new Statistics(toTestDictionary.getFileName(), currentRun, dictionarySize);
+                Statistics statistics = new Statistics(toTestDictionary.getFileName(), currentRun, dictionarySize, 0);
                 statisticsList.get(currentRun).add(statistics);
 
                 for (Word w : toTestDictionary.getWords()) {
@@ -224,7 +224,7 @@ public class SystemRotationTester {
         System.out.println("making averages");
         for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
             List<Statistics> statistics = statisticsList.get(currentRun);
-            Statistics averageStatistic = new Statistics("", currentRun, 0);
+            Statistics averageStatistic = new Statistics("", currentRun, 0, 0);
             Statistics minimumStatistic;
             Statistics maximumStatistic;
             long totalTotal = 0;
@@ -239,16 +239,16 @@ public class SystemRotationTester {
                 totalDictionarySize += statistic.getDictionarySize();
                 totalTotal += statistic.getTotal();
                 totalSuccessful += statistic.getSuccessful();
-                totalNotFound += statistic.getNotFound();
-                totalNotInTree += statistic.getNotInTree();
+                totalNotFound += statistic.getWordNotInTree();
+                totalNotInTree += statistic.getNoSuggestionsForPrefix();
                 totalOutRange += statistic.getOutRange();
                 totalPrecision += statistic.getPrecision();
                 totalRecall += statistic.getRecall();
             }
             averageStatistic.setTotal(totalTotal / statistics.size());
             averageStatistic.setDictionarySize(totalDictionarySize - averageStatistic.getTotal());
-            averageStatistic.setNotFound(totalNotFound / statistics.size());
-            averageStatistic.setNotInTree(totalNotInTree / statistics.size());
+            averageStatistic.setWordNotInTree(totalNotFound / statistics.size());
+            averageStatistic.setNoSuggestionsForPrefix(totalNotInTree / statistics.size());
             averageStatistic.setOutRange(totalOutRange / statistics.size());
             averageStatistic.setPrecision(totalPrecision / statistics.size());
             averageStatistic.setSuccessful(totalSuccessful / statistics.size());
