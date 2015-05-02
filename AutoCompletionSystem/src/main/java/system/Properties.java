@@ -26,5 +26,8 @@ public class Properties {
     public static int SUCCESS_THRESHOLD;
     public static int TEST_WORD_DEPTH;
     public static int TEST_WORD_START;
+    public static double WEIGHT_FREQUENCY;
+    public static double WEIGHT_FREQUENCY_USER;
+    public static double WEIGHT_ACTUALITY_USER;
 }
 

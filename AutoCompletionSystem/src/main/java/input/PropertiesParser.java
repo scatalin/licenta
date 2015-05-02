@@ -138,6 +138,15 @@ public class PropertiesParser {
                 if (tokens[0].equals(FileProperties.SEGMENT_TREE_OUTPUT_FILE_NAME.getValue())) {
                     Properties.SEGMENT_TREE_OUTPUT_FILE_NAME = tokens[1];
                 }
+                if (tokens[0].equals(FileProperties.WEIGHT_FREQUENCY.getValue())) {
+                    Properties.WEIGHT_FREQUENCY = Double.parseDouble(tokens[1]);
+                }
+                if (tokens[0].equals(FileProperties.WEIGHT_FREQUENCY_USER.getValue())) {
+                    Properties.WEIGHT_FREQUENCY_USER = Double.parseDouble(tokens[1]);
+                }
+                if (tokens[0].equals(FileProperties.WEIGHT_ACTUALITY_USER.getValue())) {
+                    Properties.WEIGHT_ACTUALITY_USER = Double.parseDouble(tokens[1]);
+                }
             }
         }
     }

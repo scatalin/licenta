@@ -1,16 +1,26 @@
 package model.dictionary;
 
+import system.Properties;
+
 /**
  * Created by Catalin on 3/9/2015 .
  */
 public class Word {
     private String word;
+    private int totalWeight;
     private int frequency;
+    private int userFrequency;
+    private int userActuality;
 
-
-    public Word(String word, int frequency) {
+    public Word(String word, int frequency, int userFrequency, int userActuality) {
         this.word = word;
         this.frequency = frequency;
+        this.userFrequency = userFrequency;
+        this.userActuality = userActuality;
+    }
+
+    public Word(String word, int frequency) {
+        this(word, frequency, 0, 0);
     }
 
     public Word(String word) {
@@ -22,7 +32,9 @@ public class Word {
     }
 
     public int getFrequency() {
-        return frequency;
+        //todo distributed percentages
+        totalWeight = (int) (frequency * Properties.WEIGHT_FREQUENCY + userFrequency * Properties.WEIGHT_FREQUENCY_USER + userActuality * Properties.WEIGHT_ACTUALITY_USER);
+        return totalWeight;
     }
 
     public void setFrequency(int frequency) {

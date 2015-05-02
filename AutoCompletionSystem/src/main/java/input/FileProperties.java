@@ -28,7 +28,11 @@ public enum FileProperties {
     AUTOCOMPLETION_THRESHOLD("autocompletion.minimum.characters"),
     AUTOCOMPLETION_K_SIZE("autocompletion.k.size"),
     SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name"),
-    SEGMENT_TREE_OUTPUT_FILE_NAME("segment.tree.file.output.name");
+    SEGMENT_TREE_OUTPUT_FILE_NAME("segment.tree.file.output.name"),
+    WEIGHT_FREQUENCY("weight.frequency.rate"),
+    WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),
+    WEIGHT_ACTUALITY_USER("weight.actuality.user.rate");
+
 
     private final String value;
 
