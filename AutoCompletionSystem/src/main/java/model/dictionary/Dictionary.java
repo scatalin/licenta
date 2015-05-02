@@ -26,38 +26,18 @@ public class Dictionary {
     }
 
     public void addWord(String word){
-        int index = words.lastIndexOf(new Word(word));
-        if (index == -1){
-            words.add(new Word(word));
-            return;
-        }
-        Word word1 = words.get(index);
-        word1.increaseFrequency();
-    }
-
-    public List<Word> getWordsWithPrefix(String word){
-        List<Word> toReturn = new ArrayList<Word>();
-        for(Word word1: words){
-            if(word1.getWord().startsWith(word)){
-                toReturn.add(word1);
-            }
-        }
-        return toReturn;
+        integrateWord(new Word(word),1);
     }
 
     public void addWord(Word word){
-        int index = words.lastIndexOf(word);
-        if (index == -1){
-            words.add(word);
-            return;
-        }
-        Word existentWord = words.get(index);
-        existentWord.increaseFrequency(word.getFrequency());
+        integrateWord(word,word.getFrequency());
     }
 
     public void sortDictionaryAlphabetically(){
         Collections.sort(words, new WordComparator());
     }
+
+
 
     public void sortDictionaryByWeight() {
         Collections.sort(words, new WordFrequencyComparator());
@@ -70,15 +50,11 @@ public class Dictionary {
     public void removeNonWords(){
         for(int i = 0; i< words.size(); i++){
             Word word = words.get(i);
-            if (word.getWord().equals("") || word.getWord().equals(" ")){
+            if (word.getWord().isEmpty() || word.getWord().equals(" ")){
                 words.remove(word);
                 i--;
             }
         }
-    }
-
-    public void clear() {
-        words.clear();
     }
 
     public int getNumberOfWords() {
@@ -97,5 +73,30 @@ public class Dictionary {
         return "d="+words.size()+" "+words.toString();
     }
 
+    private void integrateWord(Word word, int increment) {
+        int index = words.lastIndexOf(word);
+        if (index == -1){
+            words.add(word);
+            return;
+        }
+        Word existentWord = words.get(index);
+        existentWord.increaseFrequency(increment);
+    }
+
+    /**
+     * For further use
+      * @param word
+     * @return
+     */
+    @Deprecated
+    public List<Word> getWordsWithPrefix(String word){
+        List<Word> toReturn = new ArrayList<Word>();
+        for(Word word1: words){
+            if(word1.getWord().startsWith(word)){
+                toReturn.add(word1);
+            }
+        }
+        return toReturn;
+    }
 }
 

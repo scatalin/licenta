@@ -42,33 +42,29 @@ public class DictionaryProcessor {
     }
 
     public void readDictionary() {
-        try {
-            dictionary.clear();
-            BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile));
+        try(BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile))) {
+            dictionary.getWords().clear();
+
             String line = reader.readLine();
             while (line != null) {
                 String[] tokens = line.split("=");
                 dictionary.addWord(tokens[0], Integer.parseInt(tokens[1]));
                 line = reader.readLine();
             }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void saveDictionary() {
-        try {
+        try (PrintWriter writer = new PrintWriter(dictionaryFile);) {
             dictionaryFile.delete();
             dictionaryFile.createNewFile();
-            PrintWriter writer = new PrintWriter(dictionaryFile);
+
             for (Word word : dictionary.getWords()) {
                 writer.println(word);
             }
             writer.flush();
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

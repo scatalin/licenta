@@ -93,8 +93,6 @@ public class FilesProcessor {
                     System.out.println("file " + file.getName() + " was moved to processed directory");
                 }
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
