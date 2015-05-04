@@ -34,7 +34,7 @@ public class PropertiesParser {
         System.out.println("Initialize properties file");
         while (true) {
             String line = reader.readLine();
-            if(line == null){
+            if (line == null) {
                 break;
             }
             String[] tokens = line.split("=");

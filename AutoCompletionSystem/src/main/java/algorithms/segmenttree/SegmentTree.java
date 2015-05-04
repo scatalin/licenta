@@ -100,7 +100,7 @@ public class SegmentTree implements SearchTree {
 
     @Override
     public void load(List<Word> words, boolean reset) {
-        if(reset){
+        if (reset) {
             recursiveReset(root);
         }
         for (Word word : words) {

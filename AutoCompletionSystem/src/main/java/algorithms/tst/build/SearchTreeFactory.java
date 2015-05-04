@@ -16,7 +16,7 @@ public class SearchTreeFactory {
 
     public static SearchTree buildTst(Dictionary dictionary) {
         SearchTree tst = new TernarySearchTreeRecursive();
-        tst.load(dictionary.getWords(),true);
+        tst.load(dictionary.getWords(), true);
         return tst;
     }
 

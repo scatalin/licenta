@@ -73,7 +73,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             if (item == null) {
                 return;
             }
-            if(item.getNode() == null){
+            if (item.getNode() == null) {
                 continue;
             }
             maxWeight = item.getNode().getWeight();
@@ -84,8 +84,8 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             if (item.getNode().isEndWord() && word.startsWith(prefix)) {
                 //todo add a heap for found words (specific weight stuff)
                 foundSmallWeightWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
-                Collections.sort(foundSmallWeightWords,new WordFrequencyComparator());
-                if(foundSmallWeightWords.get(0).getFrequency() >= maxWeight){
+                Collections.sort(foundSmallWeightWords, new WordFrequencyComparator());
+                if (foundSmallWeightWords.get(0).getFrequency() >= maxWeight) {
                     foundWords.add(foundSmallWeightWords.remove(0));
                 }
             }
@@ -107,7 +107,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
                 heap.insert(newNode);
             }
         }
-        while(foundWords.size()<limit && !foundSmallWeightWords.isEmpty()){
+        while (foundWords.size() < limit && !foundSmallWeightWords.isEmpty()) {
             foundWords.add(foundSmallWeightWords.remove(0));
         }
     }

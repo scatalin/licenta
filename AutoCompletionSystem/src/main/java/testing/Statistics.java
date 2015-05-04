@@ -27,7 +27,7 @@ public class Statistics {
     private int noTrainingFiles;
 
     Statistics(String fileName, int currentRun, int noTrainingFiles) {
-        this(fileName,currentRun,0,noTrainingFiles);
+        this(fileName, currentRun, 0, noTrainingFiles);
     }
 
     public Statistics(String fileName, int currentRun, int dictionarySize, int noTrainingFiles) {

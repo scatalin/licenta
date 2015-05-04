@@ -11,6 +11,9 @@ public class Word {
     private int frequency;
     private int userFrequency;
     private int userActuality;
+    private double frequencyPercentage;
+    private double userFrequencyPercentage;
+    private double userActualityPercentage;
 
     public Word(String word, int frequency, int userFrequency, int userActuality) {
         this.word = word;
@@ -32,13 +35,35 @@ public class Word {
     }
 
     public int getFrequency() {
-        //todo distributed percentages
-        totalWeight = (int) (frequency * Properties.WEIGHT_FREQUENCY + userFrequency * Properties.WEIGHT_FREQUENCY_USER + userActuality * Properties.WEIGHT_ACTUALITY_USER);
+        calculateTotalWeight();
         return totalWeight;
     }
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    private void calculateTotalWeight() {
+        initPercentages();
+        if (userFrequency <= 0) {
+            double normalizeDivision = 1;
+            frequencyPercentage += userFrequencyPercentage * (frequencyPercentage / normalizeDivision);
+            userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
+            userFrequencyPercentage = 0;
+        }
+        if (userActuality <= 0) {
+            double normalizeDivision = 1;
+            frequencyPercentage += userActualityPercentage * (frequencyPercentage / normalizeDivision);
+            userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
+            userActualityPercentage = 0;
+        }
+        totalWeight = (int) (frequency * frequencyPercentage + userFrequency * userFrequencyPercentage + userActuality * userActualityPercentage);
+    }
+
+    private void initPercentages() {
+        frequencyPercentage = Properties.WEIGHT_FREQUENCY;
+        userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER;
+        userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER;
     }
 
     @Override

@@ -110,7 +110,7 @@ public class TstNode implements Comparable<TstNode> {
         return endWordWeight;
     }
 
-    public int getSpecificWeight(){
+    public int getSpecificWeight() {
         return endWord ? endWordWeight : weight;
     }
 

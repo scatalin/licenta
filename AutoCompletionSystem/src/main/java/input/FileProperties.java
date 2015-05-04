@@ -40,7 +40,7 @@ public enum FileProperties {
         this.value = value;
     }
 
-    public String getValue(){
+    public String getValue() {
         return value;
     }
 }

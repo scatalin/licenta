@@ -14,15 +14,15 @@ public class DictionaryProcessor {
 
     private Dictionary dictionary;
 
-    public DictionaryProcessor(){
+    public DictionaryProcessor() {
         this(null, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
 
-    public DictionaryProcessor(Dictionary dictionary){
+    public DictionaryProcessor(Dictionary dictionary) {
         this(dictionary, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
 
-    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName){
+    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName) {
         this(dictionary, dictionaryFileName, Properties.DICTIONARY_DIRECTORY);
     }
 
@@ -42,7 +42,7 @@ public class DictionaryProcessor {
     }
 
     public void readDictionary() {
-        try(BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile))) {
             dictionary.getWords().clear();
 
             String line = reader.readLine();

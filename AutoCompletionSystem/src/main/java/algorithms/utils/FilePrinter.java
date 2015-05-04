@@ -18,9 +18,9 @@ public class FilePrinter {
 
     //todo make more clean this
 
-    public static void printTstToFile(File file, String string){
+    public static void printTstToFile(File file, String string) {
         try {
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.delete();
             }
             file.createNewFile();

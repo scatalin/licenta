@@ -123,7 +123,7 @@ public class SystemTester {
                 }
                 // for threshold
 
-                if(move){
+                if (move) {
                     manager.moveFile(file, processedDirectory);
                 }
             } catch (FileNotFoundException e) {

@@ -18,12 +18,12 @@ public class SegmentTreeData {
     }
 
     public void parseInterval() {
-        for(int i = 0; i < size; i++){
-            data.put(String.valueOf(ALPHABET.charAt(i)),i);
+        for (int i = 0; i < size; i++) {
+            data.put(String.valueOf(ALPHABET.charAt(i)), i);
         }
     }
 
-    public int getInterval(String s){
+    public int getInterval(String s) {
         return data.get(s);
     }
 }

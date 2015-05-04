@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TernarySearchTreeIterative {
 
-//    @Override
+    //    @Override
     public boolean search(String s) {
         String string = s;
         TstNode node = new TstNode();
@@ -44,12 +44,12 @@ public class TernarySearchTreeIterative {
         return found;
     }
 
-//    @Override
+    //    @Override
     public List<String> getTopK(String prefix) {
         return null;
     }
 
-//    @Override
+    //    @Override
     public void insert(String s) {
 
         String string = s;
@@ -63,8 +63,8 @@ public class TernarySearchTreeIterative {
                 break;
             }
 
-            if(node.isEmpty()){
-                insertRemainingWord(node,string);
+            if (node.isEmpty()) {
+                insertRemainingWord(node, string);
                 break;
             }
 
@@ -88,7 +88,7 @@ public class TernarySearchTreeIterative {
 
             if (comparisonResult == 0) {
                 string = string.substring(1);
-                if (node.getMiddleChild() == null && string.length()>0) {
+                if (node.getMiddleChild() == null && string.length() > 0) {
                     node.setMiddleChild(new TstNode());
                 }
                 node = node.getMiddleChild();
@@ -97,10 +97,10 @@ public class TernarySearchTreeIterative {
     }
 
     private void insertRemainingWord(TstNode node, String string) {
-        while(string.length()>0){
+        while (string.length() > 0) {
             node.setCharacter(string.charAt(0));
             string = string.substring(1);
-            if(string.length() > 0) {
+            if (string.length() > 0) {
                 node.setMiddleChild(new TstNode());
                 node = node.getMiddleChild();
             }

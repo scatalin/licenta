@@ -64,13 +64,13 @@ public class SegmentNode {
     }
 
     public String toString() {
-        String left = interval.leftLimit+"";
-        if(interval.leftLimit<10){
-            left = left+" ";
+        String left = interval.leftLimit + "";
+        if (interval.leftLimit < 10) {
+            left = left + " ";
         }
-        String right = interval.rightLimit+"";
-        if(interval.rightLimit<10){
-            right = right+" ";
+        String right = interval.rightLimit + "";
+        if (interval.rightLimit < 10) {
+            right = right + " ";
         }
         return "[" + left + "," + right + "]";
     }

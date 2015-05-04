@@ -2,6 +2,7 @@ package model.dictionary;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -9,35 +10,40 @@ import java.util.List;
  */
 public class Dictionary {
 
-    private String fileName;
     private final List<Word> words;
+    private String fileName;
 
-    public Dictionary(){
+    public Dictionary() {
         this("");
     }
 
     public Dictionary(String fileName) {
         this.fileName = fileName;
-        words = new ArrayList<Word>();
+        words = new ArrayList<>();
     }
 
     public void addWord(String word, int weight) {
         words.add(new Word(word, weight));
     }
 
-    public void addWord(String word){
-        integrateWord(new Word(word),1);
+    public void addWord(String word) {
+        integrateWord(new Word(word), 1);
     }
 
-    public void addWord(Word word){
-        integrateWord(word,word.getFrequency());
+    public void addWord(Word word) {
+        integrateWord(word, word.getFrequency());
     }
 
-    public void sortDictionaryAlphabetically(){
-        Collections.sort(words, new WordComparator());
+    public void sortDictionaryAlphabetically() {
+        Collections.sort(words, new Comparator<Word>() {
+            // word comparator
+            @Override
+            public int compare(Word o1, Word o2) {
+                //sortare crescatoare
+                return o1.getWord().compareTo(o2.getWord());
+            }
+        });
     }
-
-
 
     public void sortDictionaryByWeight() {
         Collections.sort(words, new WordFrequencyComparator());
@@ -47,10 +53,10 @@ public class Dictionary {
         return words;
     }
 
-    public void removeNonWords(){
-        for(int i = 0; i< words.size(); i++){
+    public void removeNonWords() {
+        for (int i = 0; i < words.size(); i++) {
             Word word = words.get(i);
-            if (word.getWord().isEmpty() || word.getWord().equals(" ")){
+            if (word.getWord().isEmpty() || word.getWord().equals(" ")) {
                 words.remove(word);
                 i--;
             }
@@ -69,13 +75,13 @@ public class Dictionary {
         this.fileName = fileName;
     }
 
-    public String toString(){
-        return "d="+words.size()+" "+words.toString();
+    public String toString() {
+        return "d=" + words.size() + " " + words.toString();
     }
 
     private void integrateWord(Word word, int increment) {
         int index = words.lastIndexOf(word);
-        if (index == -1){
+        if (index == -1) {
             words.add(word);
             return;
         }
@@ -85,14 +91,15 @@ public class Dictionary {
 
     /**
      * For further use
-      * @param word
+     *
+     * @param word
      * @return
      */
     @Deprecated
-    public List<Word> getWordsWithPrefix(String word){
+    public List<Word> getWordsWithPrefix(String word) {
         List<Word> toReturn = new ArrayList<Word>();
-        for(Word word1: words){
-            if(word1.getWord().startsWith(word)){
+        for (Word word1 : words) {
+            if (word1.getWord().startsWith(word)) {
                 toReturn.add(word1);
             }
         }

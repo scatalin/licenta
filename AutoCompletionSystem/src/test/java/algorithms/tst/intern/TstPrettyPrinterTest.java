@@ -49,18 +49,18 @@ public class TstPrettyPrinterTest {
         words[10] = word11;
         words[11] = word12;
         wordsList = new ArrayList<Word>();
-        wordsList.add(new Word(word3,30));
-        wordsList.add(new Word(word4,28));
-        wordsList.add(new Word(word1,26));
-        wordsList.add(new Word(word2,24));
-        wordsList.add(new Word(word5,22));
-        wordsList.add(new Word(word6,20));
-        wordsList.add(new Word(word7,17));
-        wordsList.add(new Word(word8,15));
-        wordsList.add(new Word(word9,13));
-        wordsList.add(new Word(word10,10));
-        wordsList.add(new Word(word11,6));
-        wordsList.add(new Word(word12,18));
+        wordsList.add(new Word(word3, 30));
+        wordsList.add(new Word(word4, 28));
+        wordsList.add(new Word(word1, 26));
+        wordsList.add(new Word(word2, 24));
+        wordsList.add(new Word(word5, 22));
+        wordsList.add(new Word(word6, 20));
+        wordsList.add(new Word(word7, 17));
+        wordsList.add(new Word(word8, 15));
+        wordsList.add(new Word(word9, 13));
+        wordsList.add(new Word(word10, 10));
+        wordsList.add(new Word(word11, 6));
+        wordsList.add(new Word(word12, 18));
         words1 = new String[5];
         words1[0] = word3;
         words1[1] = word4;
@@ -77,7 +77,7 @@ public class TstPrettyPrinterTest {
     public void setUp() throws Exception {
         tst = new TernarySearchTreeRecursive();
         dictionary = new Dictionary();
-        for(Word word : wordsList){
+        for (Word word : wordsList) {
             dictionary.addWord(word.getWord(), word.getFrequency());
         }
         dictionary.sortDictionaryByWeight();
@@ -85,7 +85,7 @@ public class TstPrettyPrinterTest {
 
     @Test
     public void testLoad() throws Exception {
-        tst.load(dictionary.getWords(),true);
+        tst.load(dictionary.getWords(), true);
         System.out.println(tst.print());
     }
 

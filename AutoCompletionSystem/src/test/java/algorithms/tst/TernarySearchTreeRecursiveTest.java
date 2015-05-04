@@ -90,14 +90,14 @@ public class TernarySearchTreeRecursiveTest {
 
     @Ignore
     @Test
-    public void testTopK(){
+    public void testTopK() {
 //        tst.load(words);
 //        tst.setK(2);
 //        List<String> completions = tst.getNextTopK("a");
     }
 
     @Test
-    public void testSomething(){
+    public void testSomething() {
         System.out.println("s".startsWith("sa"));
     }
 

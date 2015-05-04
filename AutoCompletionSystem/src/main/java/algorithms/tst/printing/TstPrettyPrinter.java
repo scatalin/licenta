@@ -8,14 +8,14 @@ import algorithms.utils.AbstractPrettyPrinter;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class TstPrettyPrinter extends AbstractPrettyPrinter{
+public class TstPrettyPrinter extends AbstractPrettyPrinter {
 
-    private static final TstNode LEFT_SON = new TstNode('/',-1);
-    private static final TstNode MIDDLE_SON = new TstNode('|',-1);
-    private static final TstNode RIGHT_SON = new TstNode('\\',-1);
+    private static final TstNode LEFT_SON = new TstNode('/', -1);
+    private static final TstNode MIDDLE_SON = new TstNode('|', -1);
+    private static final TstNode RIGHT_SON = new TstNode('\\', -1);
 
     private TstNode[][] matrix;
-//    private Character[][] dummyMatrix;
+    //    private Character[][] dummyMatrix;
     private DimensionsInfo rootInfo;
     private int x;
     private int y;
@@ -59,7 +59,7 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
                 return;
             }
             middle = parser.calculateDimensions(node.getMiddleChild());
-            if(middle == null){
+            if (middle == null) {
                 middle = new DimensionsInfo();
             }
             matrix[line][column] = node;
@@ -107,20 +107,18 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter{
                     int r = matrix[i][j].getSpecificWeight();
                     stringBuilder.append(" ").append(matrix[i][j].getCharacter());
 
-                    if(r == -1){
+                    if (r == -1) {
                         stringBuilder.append("  ");
-                    }
-                    else {
+                    } else {
                         stringBuilder.append("|").append(r);
                     }
 
-                    if(matrix[i][j].isEndWord()){
+                    if (matrix[i][j].isEndWord()) {
                         stringBuilder.append("|").append("w");
-                    }
-                    else {
+                    } else {
                         stringBuilder.append("  ");
                     }
-                    if(r<10){
+                    if (r < 10) {
                         stringBuilder.append(" ");
                     }
                 }

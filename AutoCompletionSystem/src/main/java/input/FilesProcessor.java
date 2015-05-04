@@ -23,14 +23,14 @@ public class FilesProcessor {
     private final FileManager manager;
 
     public FilesProcessor(DictionaryProcessor dictionary) {
-        this(dictionary,Properties.INPUT_FILES_DIRECTORY,Properties.PROCESSED_FILES_DIRECTORY);
+        this(dictionary, Properties.INPUT_FILES_DIRECTORY, Properties.PROCESSED_FILES_DIRECTORY);
     }
 
     public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory) {
-        this(dictionary,inputDirectory,Properties.PROCESSED_FILES_DIRECTORY);
+        this(dictionary, inputDirectory, Properties.PROCESSED_FILES_DIRECTORY);
     }
 
-    public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory, String processedDirectory){
+    public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory, String processedDirectory) {
         this.dictionary = dictionary;
         this.processedDirectory = processedDirectory;
 
@@ -51,7 +51,7 @@ public class FilesProcessor {
         this(null, inputDirectory, Properties.PROCESSED_FILES_DIRECTORY);
     }
 
-    public int getNumberOfFiles(){
+    public int getNumberOfFiles() {
         File[] listFileNames = inputDir.listFiles();
         return listFileNames != null ? listFileNames.length : 0;
     }
@@ -68,7 +68,7 @@ public class FilesProcessor {
         for (int i = 0; i < listFileNames.length; i++) {
             File file = listFileNames[i];
 
-            if(i == skip){
+            if (i == skip) {
                 continue;
             }
 
@@ -80,7 +80,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        if(word.length()>1) {
+                        if (word.length() > 1) {
                             dictionary.getDictionary().addWord(word.toLowerCase());
                         }
                     }
@@ -88,7 +88,7 @@ public class FilesProcessor {
                 }
 
                 reader.close();
-                if(move){
+                if (move) {
                     manager.moveFile(file, processedDirectory);
                     System.out.println("file " + file.getName() + " was moved to processed directory");
                 }

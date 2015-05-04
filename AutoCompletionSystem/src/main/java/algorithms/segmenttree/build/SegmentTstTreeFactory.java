@@ -13,17 +13,17 @@ import java.util.Random;
  */
 public class SegmentTstTreeFactory {
 
-    public static void buildSegmentTst(SegmentTree segmentTree,Dictionary dictionary) {
-        segmentTree.load(dictionary.getWords(),true);
+    public static void buildSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
+        segmentTree.load(dictionary.getWords(), true);
     }
 
-    public static void buildWeightedSegmentTst(SegmentTree segmentTree,Dictionary dictionary) {
+    public static void buildWeightedSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
         dictionary.sortDictionaryByWeight();
         buildSegmentTst(segmentTree, dictionary);
     }
 
 
-    public static void buildRandomSegmentTst(SegmentTree segmentTree,Dictionary dictionary) {
+    public static void buildRandomSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
         List<Word> words = new ArrayList<Word>(dictionary.getWords());
         int middlePosition = words.size() / 2;
         Word word = words.remove(middlePosition);

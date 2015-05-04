@@ -48,8 +48,8 @@ public class TreeParser {
         return toReturn;
     }
 
-    public int countNodes(TstNode node){
-        if(node == null){
+    public int countNodes(TstNode node) {
+        if (node == null) {
             return 0;
         }
         int number = 0;

@@ -25,12 +25,11 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
         recursiveConstructMatrix(root, 0);
         for (List<SegmentElement> line : matrix) {
             for (SegmentElement node : line) {
-                if(node.node != null) {
+                if (node.node != null) {
                     addIndentation(node.level - 1, 0);
                     stringBuilder.append(node.node.toString());
                     addIndentation(node.level - 1, 1);
-                }
-                else {
+                } else {
                     addIndentation(1, 0);
                 }
             }
@@ -48,18 +47,18 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
 
     private void recursiveConstructMatrix(SegmentNode node, int level) {
         if (node == null) {
-            if(level == matrix.size()-1){
+            if (level == matrix.size() - 1) {
                 addNonExistentSon();
             }
             return;
         }
-        matrix.get(level).add(new SegmentElement(matrix.size()-level,node));
+        matrix.get(level).add(new SegmentElement(matrix.size() - level, node));
         recursiveConstructMatrix(node.getLeftChild(), level + 1);
         recursiveConstructMatrix(node.getRightChild(), level + 1);
     }
 
-    private void addNonExistentSon(){
-        matrix.get(matrix.size()-1).add(new SegmentElement(0,null));
+    private void addNonExistentSon() {
+        matrix.get(matrix.size() - 1).add(new SegmentElement(0, null));
     }
 
     @Override
@@ -70,7 +69,7 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
         }
     }
 
-    private class SegmentElement{
+    private class SegmentElement {
         final int level;
         final SegmentNode node;
 
