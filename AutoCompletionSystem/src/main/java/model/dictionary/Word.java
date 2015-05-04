@@ -46,16 +46,10 @@ public class Word {
     private void calculateTotalWeight() {
         initPercentages();
         if (userFrequency <= 0) {
-            double normalizeDivision = 1;
-            frequencyPercentage += userFrequencyPercentage * (frequencyPercentage / normalizeDivision);
-            userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
-            userFrequencyPercentage = 0;
+            normalizeUserFrequency();
         }
         if (userActuality <= 0) {
-            double normalizeDivision = 1;
-            frequencyPercentage += userActualityPercentage * (frequencyPercentage / normalizeDivision);
-            userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
-            userActualityPercentage = 0;
+            normalizeUserActuality();
         }
         totalWeight = (int) (frequency * frequencyPercentage + userFrequency * userFrequencyPercentage + userActuality * userActualityPercentage);
     }
@@ -64,6 +58,20 @@ public class Word {
         frequencyPercentage = Properties.WEIGHT_FREQUENCY;
         userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER;
         userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER;
+    }
+
+    private void normalizeUserFrequency() {
+        double normalizeDivision = 1;
+        frequencyPercentage += userFrequencyPercentage * (frequencyPercentage / normalizeDivision);
+        userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
+        userFrequencyPercentage = 0;
+    }
+
+    private void normalizeUserActuality() {
+        double normalizeDivision = 1;
+        frequencyPercentage += userActualityPercentage * (frequencyPercentage / normalizeDivision);
+        userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
+        userActualityPercentage = 0;
     }
 
     @Override

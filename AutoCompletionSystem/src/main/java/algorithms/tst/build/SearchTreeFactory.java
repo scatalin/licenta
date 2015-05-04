@@ -14,6 +14,10 @@ import java.util.Random;
  */
 public class SearchTreeFactory {
 
+    public static SearchTree buildTst() {
+        return new TernarySearchTreeRecursive();
+    }
+
     public static SearchTree buildTst(Dictionary dictionary) {
         SearchTree tst = new TernarySearchTreeRecursive();
         tst.load(dictionary.getWords(), true);

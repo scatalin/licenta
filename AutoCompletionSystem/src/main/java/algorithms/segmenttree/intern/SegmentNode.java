@@ -2,6 +2,7 @@ package algorithms.segmenttree.intern;
 
 import algorithms.SearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
+import algorithms.tst.build.SearchTreeFactory;
 
 /**
  * Created by gstan on 13.03.2015.
@@ -76,7 +77,7 @@ public class SegmentNode {
     }
 
     public void createTst() {
-        tst = new TernarySearchTreeRecursive();
+        tst = SearchTreeFactory.buildTst();
     }
 
     public boolean isLeaf() {
