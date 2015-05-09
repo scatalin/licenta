@@ -24,6 +24,9 @@ public enum FileProperties {
     SUCCESSFUL_THRESHOLD("autocompletion.success.threshold"),
     TEST_WORD_DEPTH("test.run.word.depth"),
     TEST_WORD_START("test.run.word.start"),
+    TEST_DECAY_ALPHA_BEGIN("test.decay.alpha.begin"),
+    TEST_DECAY_ALPHA_END("test.decay.alpha.end"),
+    TEST_DECAY_T_MAXIMUM("test.decay.t.maximum"),
     FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SEGMENT_SIZE("segment.size"),
@@ -33,7 +36,8 @@ public enum FileProperties {
     SEGMENT_TREE_OUTPUT_FILE_NAME("segment.tree.file.output.name"),
     WEIGHT_FREQUENCY("weight.frequency.rate"),
     WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),
-    WEIGHT_ACTUALITY_USER("weight.actuality.user.rate");
+    WEIGHT_ACTUALITY_USER("weight.actuality.user.rate"),
+    DECAY_ALPHA("decay.alpha");
 
 
     private final String value;

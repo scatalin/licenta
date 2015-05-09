@@ -131,6 +131,18 @@ public class PropertiesParser {
                     Properties.TEST_WORD_START = Integer.parseInt(tokens[1]);
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.TEST_DECAY_ALPHA_BEGIN.getValue())) {
+                    Properties.TEST_DECAY_ALPHA_BEGIN = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.TEST_DECAY_ALPHA_END.getValue())) {
+                    Properties.TEST_DECAY_ALPHA_END = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.TEST_DECAY_T_MAXIMUM.getValue())) {
+                    Properties.TEST_DECAY_T_MAXIMUM = Double.parseDouble(tokens[1]);
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.AUTOCOMPLETION_THRESHOLD.getValue())) {
                     Properties.AUTOCOMPLETION_THRESHOLD = Integer.parseInt(tokens[1]);
                     continue;
@@ -145,15 +157,22 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.SEGMENT_TREE_OUTPUT_FILE_NAME.getValue())) {
                     Properties.SEGMENT_TREE_OUTPUT_FILE_NAME = tokens[1];
+                    continue;
                 }
                 if (tokens[0].equals(FileProperties.WEIGHT_FREQUENCY.getValue())) {
                     Properties.WEIGHT_FREQUENCY = Double.parseDouble(tokens[1]);
+                    continue;
                 }
                 if (tokens[0].equals(FileProperties.WEIGHT_FREQUENCY_USER.getValue())) {
                     Properties.WEIGHT_FREQUENCY_USER = Double.parseDouble(tokens[1]);
+                    continue;
                 }
                 if (tokens[0].equals(FileProperties.WEIGHT_ACTUALITY_USER.getValue())) {
                     Properties.WEIGHT_ACTUALITY_USER = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_ALPHA.getValue())) {
+                    Properties.DECAY_ALPHA = Double.parseDouble(tokens[1]);
                 }
             }
         }

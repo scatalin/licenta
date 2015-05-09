@@ -30,5 +30,9 @@ public class Properties {
     public static double WEIGHT_FREQUENCY;
     public static double WEIGHT_FREQUENCY_USER;
     public static double WEIGHT_ACTUALITY_USER;
+    public static double TEST_DECAY_ALPHA_BEGIN;
+    public static double TEST_DECAY_ALPHA_END;
+    public static double TEST_DECAY_T_MAXIMUM;
+    public static double DECAY_ALPHA;
 }
 
