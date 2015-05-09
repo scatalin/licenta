@@ -14,8 +14,6 @@ import java.util.List;
 @SuppressWarnings("FieldCanBeLocal")
 public class TstPrettyPrinterTest {
 
-    private SearchTree tst;
-    private Dictionary dictionary;
     private static String word1 = "asd";
     private static String word2 = "as";
     private static String word3 = "fr";
@@ -32,6 +30,8 @@ public class TstPrettyPrinterTest {
     private static String[] words1;
     private static String[] words2;
     private static List<Word> wordsList;
+    private SearchTree tst;
+    private Dictionary dictionary;
 
     @BeforeClass
     public static void setUpClass() throws Exception {

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Catalin on 5/9/2015 .
@@ -48,17 +49,16 @@ public class Window extends JFrame {
         panel.setFileName(name);
     }
 
-    public void drawPoints(){
+    public void drawPoints() {
         panel.drawImage();
     }
 
     class DrawingJPanel extends JPanel {
 
-        private java.util.List<Point> points;
+        private List<Point> points;
         private Point topLeft;
         private Point bottomLeft;
         private Point bottomRight;
-        private Point topRight;
         private BufferedImage paintImage;
         private String fileName;
 
@@ -73,7 +73,6 @@ public class Window extends JFrame {
             topLeft = new Point(10, 10);
             bottomRight = new Point(570, 340);
             bottomLeft = new Point(10, 340);
-            topRight = new Point(570, 10);
             paintImage = getBufferedImage();
             points = new ArrayList<>();
         }
@@ -103,12 +102,12 @@ public class Window extends JFrame {
 
         private void drawPoints(Graphics image) {
             Point previousPoint = null;
-            for(Point point : points){
-                if(previousPoint == null){
+            for (Point point : points) {
+                if (previousPoint == null) {
                     previousPoint = point;
                     continue;
                 }
-                image.drawLine(previousPoint.x,previousPoint.y,point.x,point.y);
+                image.drawLine(previousPoint.x, previousPoint.y, point.x, point.y);
                 previousPoint = point;
             }
         }
@@ -119,7 +118,7 @@ public class Window extends JFrame {
             int distance = (bottomRight.x - bottomLeft.x) / 8;
             int x = 5;
             for (int i = 0; i <= 7; i++) {
-                image.drawString(i+"", x + (i * distance), 350);
+                image.drawString(i + "", x + (i * distance), 350);
             }
             image.drawString("1", 2, 20);
         }
@@ -136,7 +135,7 @@ public class Window extends JFrame {
 
         public void save() {
             try {
-                ImageIO.write(paintImage, "PNG", new File(fileName+".png"));
+                ImageIO.write(paintImage, "PNG", new File(fileName + ".png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,10 +144,5 @@ public class Window extends JFrame {
         public void setFileName(String fileName) {
             this.fileName = fileName;
         }
-
-        public String getFileName() {
-            return fileName;
-        }
     }
-
 }

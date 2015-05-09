@@ -19,17 +19,13 @@ import java.util.List;
  */
 public class SystemTenFoldingTesting {
 
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File allReportFile;
-    private final File rotationTestDir;
 
     private SearchTree tree;
 
     private FilesProcessor filesProcessor;
 
     private int numberOfFiles;
-
-    private DictionaryProcessor dictionaryProcessor;
 
     public SystemTenFoldingTesting() {
 
@@ -38,12 +34,12 @@ public class SystemTenFoldingTesting {
             System.out.println("all report file does not exist " + allReportFile + ";");
         }
 
-        rotationTestDir = new File(Properties.TEST_ROTATION_DIRECTORY);
+        File rotationTestDir = new File(Properties.TEST_ROTATION_DIRECTORY);
         if (!rotationTestDir.exists() && !rotationTestDir.isDirectory()) {
             System.out.println("test files directory does not exist: " + rotationTestDir + ";");
         }
 
-        dictionaryProcessor = new DictionaryProcessor();
+        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor();
         filesProcessor = new FilesProcessor(dictionaryProcessor, Properties.TEST_ROTATION_DIRECTORY);
         numberOfFiles = filesProcessor.getNumberOfFiles();
 
@@ -64,9 +60,9 @@ public class SystemTenFoldingTesting {
         //for all sizes of training domain
         for (int noTrainingFiles = 1; noTrainingFiles < numberOfFiles; noTrainingFiles++) {
 
-            List<List<Statistics>> trainingStatistics = new ArrayList<List<Statistics>>();
+            List<List<Statistics>> trainingStatistics = new ArrayList<>();
             for (int i = 0; i <= Properties.TEST_WORD_DEPTH; i++) {
-                trainingStatistics.add(new ArrayList<Statistics>());
+                trainingStatistics.add(new ArrayList<>());
             }
 
             //todo read all input files and hand over to delegates, word processor and phrase processor
@@ -120,7 +116,7 @@ public class SystemTenFoldingTesting {
                             String prefix = word.substring(0, Math.min(currentRun, word.length()));
 
                             List<Word> completedWords = tree.getNextTopK(prefix);
-                            fillStatistics(trainingDictionary, statistics, word, prefix, prefix.length(), completedWords);
+                            fillStatistics(statistics, word, prefix.length(), completedWords);
                         }
                     }
 
@@ -139,13 +135,12 @@ public class SystemTenFoldingTesting {
         }
     }
 
-    private void fillStatistics(Dictionary trainingDictionary, Statistics statistics, String word, String prefix, int prefixLength, List<Word> completedWords) {
-        int found = -1;
+    private void fillStatistics(Statistics statistics, String word, int prefixLength, List<Word> completedWords) {
         if (completedWords.isEmpty()) {
             statistics.interrogationStatistic(prefixLength, -2);
-//            System.out.println("not found prefix " + prefix + ":" + word + trainingDictionary.getWordsWithPrefix(prefix));
             return;
         }
+        int found = -1;
         for (int i = 0; i < completedWords.size(); i++) {
             Word aWord = completedWords.get(i);
             if (aWord.getWord().equals(word)) {

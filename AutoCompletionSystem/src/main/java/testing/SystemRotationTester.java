@@ -43,9 +43,9 @@ public class SystemRotationTester {
             System.out.println("test files directory does not exist: " + rotationTestDir + ";");
         }
 
-        statisticsList = new ArrayList<List<Statistics>>(Properties.TEST_WORD_DEPTH + 1);
+        statisticsList = new ArrayList<>(Properties.TEST_WORD_DEPTH + 1);
         for (int currentRun = 0; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
-            statisticsList.add(new ArrayList<Statistics>());
+            statisticsList.add(new ArrayList<>());
         }
 
         dictionaryProcessor = new DictionaryProcessor();
@@ -115,8 +115,6 @@ public class SystemRotationTester {
                 }
                 // for threshold
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -225,8 +223,6 @@ public class SystemRotationTester {
         for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
             List<Statistics> statistics = statisticsList.get(currentRun);
             Statistics averageStatistic = new Statistics("", currentRun, 0, 0);
-            Statistics minimumStatistic;
-            Statistics maximumStatistic;
             long totalTotal = 0;
             long totalSuccessful = 0;
             long totalOutRange = 0;

@@ -8,13 +8,13 @@ import java.util.Map;
  */
 public class SegmentTreeData {
 
-    private final Map<String, Integer> data;
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    private final Map<String, Integer> data;
     private final int size;
 
     public SegmentTreeData(int size) {
         this.size = size;
-        data = new HashMap<String, Integer>();
+        data = new HashMap<>();
     }
 
     public void parseInterval() {

@@ -12,7 +12,7 @@ public class AutoCompletionHeap<T extends HeapNode> {
     private List<T> items;
 
     public AutoCompletionHeap() {
-        items = new ArrayList<T>();
+        items = new ArrayList<>();
     }
 
     private void shiftUp() {

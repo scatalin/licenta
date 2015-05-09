@@ -6,7 +6,6 @@ import system.Properties;
 import utils.FileManager;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,19 +14,17 @@ import java.util.List;
 public class SystemTester {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
-    private final File reportFile;
     private final File allReportFile;
     private final File testDir;
     private final String processedDirectory;
     private final FileManager manager;
     private SearchTree segmentTree;
-    private List<Statistics> statisticsList;
 
     public SystemTester(SearchTree segmentTree) {
 
         this.segmentTree = segmentTree;
 
-        reportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
+        File reportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
         if (!reportFile.exists() && !reportFile.isFile()) {
             System.out.println("report file does not exist " + reportFile + ";");
         }
@@ -51,8 +48,6 @@ public class SystemTester {
             System.out.println("test files directory does not exist: " + testDir + ";");
         }
 
-        statisticsList = new ArrayList<Statistics>();
-
         manager = new FileManager();
     }
 
@@ -74,7 +69,6 @@ public class SystemTester {
 
                     //todo insert here dictionary size
                     Statistics statistics = new Statistics(file.getName(), currentRun, 0, 0);
-                    statisticsList.add(statistics);
 
                     BufferedReader reader = new BufferedReader(new FileReader(file));
                     String line = reader.readLine();
@@ -122,8 +116,6 @@ public class SystemTester {
                 if (move) {
                     manager.moveFile(file, processedDirectory);
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

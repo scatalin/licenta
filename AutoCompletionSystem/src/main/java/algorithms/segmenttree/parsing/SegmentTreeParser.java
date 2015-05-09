@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SegmentTreeParser {
     private final SegmentNode root;
+    private final TreeParser parser;
     private List<SearchTree> leafs;
-    private TreeParser parser;
 
     public SegmentTreeParser(SegmentNode root) {
         this.root = root;
@@ -22,7 +22,7 @@ public class SegmentTreeParser {
     }
 
     public List<SearchTree> findAllTst() {
-        leafs = new ArrayList<SearchTree>();
+        leafs = new ArrayList<>();
         recursiveFindAll(root);
         return leafs;
     }

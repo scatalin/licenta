@@ -19,7 +19,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
     }
 
     private TstNode recursiveInsert(TstNode node, String s) {
-        if (s.length() == 0) {
+        if (s.isEmpty()) {
             wasEndWord = true;
             return node;
         }

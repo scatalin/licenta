@@ -19,17 +19,16 @@ import java.util.List;
  */
 public abstract class AbstractTernarySearchTree implements SearchTree {
 
-    TstNode root;
-    private AutoCompletionHeap<HeapNode> heap;
-    private List<Word> foundSmallWeightWords;
-    private List<Word> foundWords;
-    private int maxWeight;
+    private final AutoCompletionHeap<HeapNode> heap;
+    private final List<Word> foundSmallWeightWords;
+    private final List<Word> foundWords;
+    protected TstNode root;
     private int k;
 
     AbstractTernarySearchTree() {
-        heap = new AutoCompletionHeap<HeapNode>();
-        foundSmallWeightWords = new ArrayList<Word>();
-        foundWords = new ArrayList<Word>();
+        heap = new AutoCompletionHeap<>();
+        foundSmallWeightWords = new ArrayList<>();
+        foundWords = new ArrayList<>();
         k = 5;
     }
 
@@ -68,7 +67,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
     }
 
     protected void seachFurther(String prefix, int limit) {
-        while (!heap.isEmpty() && foundWords.size() < limit) {
+        while (!heap.isEmpty() && (foundWords.size() < limit)) {
             HeapNode item = heap.delete();
             if (item == null) {
                 return;
@@ -76,7 +75,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             if (item.getNode() == null) {
                 continue;
             }
-            maxWeight = item.getNode().getWeight();
+            int maxWeight = item.getNode().getWeight();
             if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
                 continue;
             }
@@ -107,7 +106,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
                 heap.insert(newNode);
             }
         }
-        while (foundWords.size() < limit && !foundSmallWeightWords.isEmpty()) {
+        while ((foundWords.size() < limit) && !foundSmallWeightWords.isEmpty()) {
             foundWords.add(foundSmallWeightWords.remove(0));
         }
     }

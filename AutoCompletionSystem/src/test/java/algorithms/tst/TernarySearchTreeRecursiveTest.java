@@ -9,7 +9,6 @@ import org.junit.Test;
 @SuppressWarnings("FieldCanBeLocal")
 public class TernarySearchTreeRecursiveTest {
 
-    private SearchTree tst;
     private static String word1 = "asd";
     private static String word2 = "as";
     private static String word3 = "fr";
@@ -21,6 +20,7 @@ public class TernarySearchTreeRecursiveTest {
     private static String[] words;
     private static String[] words1;
     private static String[] words2;
+    private SearchTree tst;
 
     @BeforeClass
     public static void setUpClass() throws Exception {

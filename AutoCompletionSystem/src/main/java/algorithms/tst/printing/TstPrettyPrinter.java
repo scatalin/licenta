@@ -13,14 +13,13 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter {
     private static final TstNode LEFT_SON = new TstNode('/', -1);
     private static final TstNode MIDDLE_SON = new TstNode('|', -1);
     private static final TstNode RIGHT_SON = new TstNode('\\', -1);
-
+    private final TstNode root;
+    private final TreeParser parser;
     private TstNode[][] matrix;
     //    private Character[][] dummyMatrix;
     private DimensionsInfo rootInfo;
     private int x;
     private int y;
-    private final TstNode root;
-    private final TreeParser parser;
 
     public TstPrettyPrinter(TstNode root) {
         this.root = root;
@@ -53,12 +52,11 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter {
     }
 
     private void populateMatrix(TstNode node, int line, int column) {
-        DimensionsInfo middle, right, left;
         try {
             if (node == null) {
                 return;
             }
-            middle = parser.calculateDimensions(node.getMiddleChild());
+            DimensionsInfo middle = parser.calculateDimensions(node.getMiddleChild());
             if (middle == null) {
                 middle = new DimensionsInfo();
             }
@@ -68,12 +66,12 @@ public class TstPrettyPrinter extends AbstractPrettyPrinter {
                 populateMatrix(node.getMiddleChild(), line, column + 2);
             }
             if (node.getRightChild() != null) {
-                right = parser.calculateDimensions(node.getRightChild());
+                DimensionsInfo right = parser.calculateDimensions(node.getRightChild());
                 matrix[line - middle.rightDimension - right.leftDimension - 1][column + 1] = RIGHT_SON;
                 populateMatrix(node.getRightChild(), line - middle.rightDimension - right.leftDimension - 1, column + 2);
             }
             if (node.getLeftChild() != null) {
-                left = parser.calculateDimensions(node.getLeftChild());
+                DimensionsInfo left = parser.calculateDimensions(node.getLeftChild());
                 matrix[line + middle.leftDimension + left.rightDimension + 1][column + 1] = LEFT_SON;
                 populateMatrix(node.getLeftChild(), line + middle.leftDimension + left.rightDimension + 1, column + 2);
             }

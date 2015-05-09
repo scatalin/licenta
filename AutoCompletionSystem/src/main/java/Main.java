@@ -70,7 +70,6 @@ public class Main {
     }
 
     void start() {
-        Window w = null;
         SegmentTree tree = new SegmentTree();
         SearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
@@ -81,6 +80,7 @@ public class Main {
 
         String command = "";
 
+        Window w = null;
         while (!command.equals("exit")) {
             System.out.println("enter command:");
             command = scanner.nextLine();

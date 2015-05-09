@@ -35,9 +35,9 @@ public class Statistics {
         this.currentRun = currentRun;
         this.dictionarySize = dictionarySize;
         this.noTrainingFiles = noTrainingFiles;
-        statistics = new ArrayList<StatisticEntry>();
-        successfulPositions = new ArrayList<Integer>(Properties.AUTOCOMPLETION_K_SIZE + 1);
-        for (int i = 0; i < Properties.AUTOCOMPLETION_K_SIZE + 1; i++) {
+        statistics = new ArrayList<>();
+        successfulPositions = new ArrayList<>(Properties.AUTOCOMPLETION_K_SIZE + 1);
+        for (int i = 0; i < (Properties.AUTOCOMPLETION_K_SIZE + 1); i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
@@ -98,7 +98,7 @@ public class Statistics {
                 .append(currentRun).append("\n");
         stringBuilder.append("number of test words: ").append(total).append("\n");
         stringBuilder.append("found within ").append(Properties.SUCCESS_THRESHOLD).append(" positions: ").append(successful)
-                .append("=").append((int) ((double) successful / total * 100)).append("%").append("\n");
+                .append("=").append((int) (((double) successful / total) * 100)).append("%").append("\n");
         stringBuilder.append("precision: ").append(precision).append("\n");
         stringBuilder.append("recall: ").append(recall).append("\n");
         stringBuilder.append("out of range: ").append(outRange).append("\n");
@@ -106,7 +106,7 @@ public class Statistics {
         stringBuilder.append("word not in tree: ").append(wordNotInTree).append("\n");
 
         if (file) {
-            for (int i = 1; i < Properties.AUTOCOMPLETION_K_SIZE + 1; i++) {
+            for (int i = 1; i < (Properties.AUTOCOMPLETION_K_SIZE + 1); i++) {
                 stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
             }
         }
@@ -114,7 +114,7 @@ public class Statistics {
     }
 
     public void beginWordStatistics(String word) {
-        if (currentEntry != null && currentEntry.positionFound != 0) {
+        if ((currentEntry != null) && (currentEntry.positionFound != 0)) {
             statistics.add(currentEntry);
             currentEntry = new StatisticEntry();
         }

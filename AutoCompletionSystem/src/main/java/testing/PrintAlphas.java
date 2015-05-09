@@ -26,12 +26,12 @@ public class PrintAlphas {
                 decay.setT(t);
                 double value = decay.getValue();
                 value *= 330d;
-                w.addPoint(new Point((int) (t * 80) + 10, (int) (340 - (value + 10) + 10)));
+                w.addPoint(new Point((int) (t * 80) + 10, (int) ((340 - (value + 10)) + 10)));
             }
             w.drawPoints();
-            String s = ((int) (i * 100))+"";
-            while(s.length()<3){
-                s = "0"+s;
+            String s = ((int) (i * 100)) + "";
+            while (s.length() < 3) {
+                s = "0" + s;
             }
             w.setFileName(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR
                     + Properties.DECAY_SUBDIRECTORY_OUTPUT_NAME + Properties.SYSTEM_PATH_SEPARATOR

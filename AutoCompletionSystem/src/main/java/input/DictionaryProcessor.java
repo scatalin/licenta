@@ -22,10 +22,6 @@ public class DictionaryProcessor {
         this(dictionary, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
 
-    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName) {
-        this(dictionary, dictionaryFileName, Properties.DICTIONARY_DIRECTORY);
-    }
-
     public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName, String dictionaryDirectory) {
         this.dictionary = dictionary;
 
@@ -57,7 +53,7 @@ public class DictionaryProcessor {
     }
 
     public void saveDictionary() {
-        try (PrintWriter writer = new PrintWriter(dictionaryFile);) {
+        try (PrintWriter writer = new PrintWriter(dictionaryFile)) {
             dictionaryFile.delete();
             dictionaryFile.createNewFile();
 

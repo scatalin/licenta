@@ -4,8 +4,8 @@ package algorithms.segmenttree.intern;
  * Created by Catalin on 3/14/2015 .
  */
 public class Interval {
-    public int leftLimit = 0;
-    public int rightLimit = 0;
+    public int leftLimit;
+    public int rightLimit;
 
     public Interval(int leftLimit, int rightLimit) {
         this.leftLimit = leftLimit;

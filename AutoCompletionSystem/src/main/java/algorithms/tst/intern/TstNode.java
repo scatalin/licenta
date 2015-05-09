@@ -34,8 +34,12 @@ public class TstNode implements Comparable<TstNode> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TstNode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof TstNode)) {
+            return false;
+        }
 
         TstNode tstNode = (TstNode) o;
 
@@ -110,12 +114,12 @@ public class TstNode implements Comparable<TstNode> {
         return endWordWeight;
     }
 
-    public int getSpecificWeight() {
-        return endWord ? endWordWeight : weight;
-    }
-
     public void setEndWordWeight(int endWordWeight) {
         this.endWordWeight = endWordWeight;
+    }
+
+    public int getSpecificWeight() {
+        return endWord ? endWordWeight : weight;
     }
 
     @Override
@@ -123,7 +127,7 @@ public class TstNode implements Comparable<TstNode> {
         return Integer.valueOf(this.getWeight()).compareTo(o.getWeight());
     }
 
-    public int compareWordsWeights(TstNode o) {
-        return Integer.valueOf(this.getSpecificWeight()).compareTo(o.getSpecificWeight());
-    }
+//    public int compareWordsWeights(TstNode o) {
+//        return Integer.valueOf(this.getSpecificWeight()).compareTo(o.getSpecificWeight());
+//    }
 }

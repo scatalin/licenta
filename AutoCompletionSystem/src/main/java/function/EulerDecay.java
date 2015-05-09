@@ -6,7 +6,7 @@ package function;
 public class EulerDecay extends AbstractExponential {
 
     private static final double euler = 2.71828d;
-    private double alpha;
+    private final double alpha;
     private double t;
 
     public EulerDecay(double alpha) {
@@ -18,12 +18,12 @@ public class EulerDecay extends AbstractExponential {
         this.alpha = alpha;
     }
 
-    public double getValue(){
-        super.setExponent(-alpha*t);
+    public double getValue() {
+        super.setExponent(-alpha * t);
         return super.calculateValue();
     }
 
-    public void setT(double t){
+    public void setT(double t) {
         this.t = t;
     }
 

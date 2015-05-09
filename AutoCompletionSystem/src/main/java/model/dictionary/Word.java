@@ -6,7 +6,7 @@ import system.Properties;
  * Created by Catalin on 3/9/2015 .
  */
 public class Word {
-    private String word;
+    private final String word;
     private int totalWeight;
     private int frequency;
     private int userFrequency;
@@ -39,10 +39,6 @@ public class Word {
         return totalWeight;
     }
 
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-
     private void calculateTotalWeight() {
         initPercentages();
         if (userFrequency <= 0) {
@@ -51,7 +47,7 @@ public class Word {
         if (userActuality <= 0) {
             normalizeUserActuality();
         }
-        totalWeight = (int) (frequency * frequencyPercentage + userFrequency * userFrequencyPercentage + userActuality * userActualityPercentage);
+        totalWeight = (int) ((frequency * frequencyPercentage) + (userFrequency * userFrequencyPercentage) + (userActuality * userActualityPercentage));
     }
 
     private void initPercentages() {
@@ -76,21 +72,21 @@ public class Word {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Word)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Word)) {
+            return false;
+        }
 
         Word word1 = (Word) o;
 
-        return !(word != null ? !word.equals(word1.word) : word1.word != null);
+        return !((word != null) ? !word.equals(word1.word) : (word1.word != null));
     }
 
     @Override
     public int hashCode() {
-        return word != null ? word.hashCode() : 0;
-    }
-
-    public void increaseFrequency() {
-        frequency++;
+        return (word != null) ? word.hashCode() : 0;
     }
 
     public void increaseFrequency(int increment) {

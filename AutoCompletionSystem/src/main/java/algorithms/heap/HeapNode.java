@@ -9,10 +9,6 @@ public class HeapNode {
     protected TstNode node;
     private String builtWord;
 
-    public HeapNode(TstNode node) {
-        this(node, "");
-    }
-
     public HeapNode(TstNode node, String startWord) {
         this.node = node;
         builtWord = startWord;
@@ -20,10 +16,6 @@ public class HeapNode {
 
     public String getBuiltWord() {
         return builtWord;
-    }
-
-    public void setNode(TstNode node) {
-        this.node = node;
     }
 
     public void addCharacter(Character character) {
@@ -34,11 +26,20 @@ public class HeapNode {
         return node;
     }
 
+    public void setNode(TstNode node) {
+        this.node = node;
+    }
+
     public int compareTo(HeapNode parent) {
         return node.compareTo(parent.getNode());
     }
 
     public HeapNode clone() {
+        try {
+            super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         return new HeapNode(node, builtWord);
     }
 

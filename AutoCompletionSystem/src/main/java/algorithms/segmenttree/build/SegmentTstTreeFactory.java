@@ -24,12 +24,12 @@ public class SegmentTstTreeFactory {
 
 
     public static void buildRandomSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
-        List<Word> words = new ArrayList<Word>(dictionary.getWords());
+        List<Word> words = new ArrayList<>(dictionary.getWords());
         int middlePosition = words.size() / 2;
         Word word = words.remove(middlePosition);
         segmentTree.insert(word);
         Random random = new Random();
-        while (words.size() > 0) {
+        while (!words.isEmpty()) {
             int position = random.nextInt(words.size());
             word = words.remove(position);
             segmentTree.insert(word);

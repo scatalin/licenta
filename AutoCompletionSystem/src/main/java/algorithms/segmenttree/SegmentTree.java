@@ -17,17 +17,13 @@ import java.util.List;
  */
 public class SegmentTree implements SearchTree {
 
+    private final int size;
     private SegmentNode root;
-    private int size;
     private SegmentTreeData data;
 
     public SegmentTree() {
         this.root = new SegmentNode();
         size = Properties.SEGMENT_SIZE;
-    }
-
-    public void setMaximumSize(int size) {
-        this.size = size;
     }
 
     public void buildSegmentTree() {
@@ -47,13 +43,12 @@ public class SegmentTree implements SearchTree {
             return 1;
         }
 
-        int maxDepth = 0;
-
         Interval leftInterval = new Interval();
         leftInterval.leftLimit = interval.leftLimit;
         leftInterval.rightLimit = middle;
         node.setLeftChild(new SegmentNode(leftInterval));
         int leftDepth = recursiveBuildSegmentTree(node.getLeftChild(), leftInterval);
+        int maxDepth = 0;
         if (maxDepth < leftDepth) {
             maxDepth = leftDepth;
         }
@@ -84,7 +79,7 @@ public class SegmentTree implements SearchTree {
             int left = node.getLeftLimit();
             int right = node.getRightLimit();
             int middle = left + ((right - left) / 2);
-            recursiveInsert(position <= middle ? node.getLeftChild() : node.getRightChild(), word, position);
+            recursiveInsert((position <= middle) ? node.getLeftChild() : node.getRightChild(), word, position);
         }
     }
 
@@ -103,9 +98,7 @@ public class SegmentTree implements SearchTree {
         if (reset) {
             recursiveReset(root);
         }
-        for (Word word : words) {
-            insert(word);
-        }
+        words.forEach(this::insert);
     }
 
     private void recursiveReset(SegmentNode node) {
@@ -130,7 +123,7 @@ public class SegmentTree implements SearchTree {
             int left = node.getLeftLimit();
             int right = node.getRightLimit();
             int middle = left + ((right - left) / 2);
-            return recursiveGetNextTopK(position <= middle ? node.getLeftChild() : node.getRightChild(), prefix, position);
+            return recursiveGetNextTopK((position <= middle) ? node.getLeftChild() : node.getRightChild(), prefix, position);
         }
     }
 

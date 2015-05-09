@@ -40,12 +40,12 @@ public class SegmentNode {
         this.interval.rightLimit = rightLimit;
     }
 
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
     public int getDepth() {
         return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     public SegmentNode getLeftChild() {
@@ -81,7 +81,7 @@ public class SegmentNode {
     }
 
     public boolean isLeaf() {
-        return interval.rightLimit - interval.leftLimit == 0;
+        return (interval.rightLimit - interval.leftLimit) == 0;
     }
 
     public SearchTree getTree() {

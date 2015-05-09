@@ -4,7 +4,10 @@ import model.dictionary.Dictionary;
 import system.Properties;
 import utils.FileManager;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,13 +50,9 @@ public class FilesProcessor {
         manager = new FileManager();
     }
 
-    public FilesProcessor(String inputDirectory) {
-        this(null, inputDirectory, Properties.PROCESSED_FILES_DIRECTORY);
-    }
-
     public int getNumberOfFiles() {
         File[] listFileNames = inputDir.listFiles();
-        return listFileNames != null ? listFileNames.length : 0;
+        return (listFileNames != null) ? listFileNames.length : 0;
     }
 
     public void processInputFiles(boolean move, int skip) {
@@ -104,7 +103,7 @@ public class FilesProcessor {
     }
 
     public List<Dictionary> createDictionariesFromFiles() {
-        List<Dictionary> dictionaries = new ArrayList<Dictionary>();
+        List<Dictionary> dictionaries = new ArrayList<>();
 
         File[] listFileNames = inputDir.listFiles();
 
@@ -137,8 +136,6 @@ public class FilesProcessor {
                 dictionary.removeNonWords();
                 dictionaries.add(dictionary);
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
