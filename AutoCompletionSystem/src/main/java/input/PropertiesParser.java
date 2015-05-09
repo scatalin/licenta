@@ -173,6 +173,14 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.DECAY_ALPHA.getValue())) {
                     Properties.DECAY_ALPHA = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_FILE_OUTPUT_NAME.getValue())) {
+                    Properties.DECAY_FILE_OUTPUT_NAME = tokens[1];
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_SUBDIRECTORY_OUTPUT_NAME.getValue())) {
+                    Properties.DECAY_SUBDIRECTORY_OUTPUT_NAME = tokens[1];
                 }
             }
         }

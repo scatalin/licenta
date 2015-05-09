@@ -37,7 +37,9 @@ public enum FileProperties {
     WEIGHT_FREQUENCY("weight.frequency.rate"),
     WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),
     WEIGHT_ACTUALITY_USER("weight.actuality.user.rate"),
-    DECAY_ALPHA("decay.alpha");
+    DECAY_ALPHA("decay.alpha"),
+    DECAY_FILE_OUTPUT_NAME("decay.file.output.name"),
+    DECAY_SUBDIRECTORY_OUTPUT_NAME("decay.subdirectory.output.name");
 
 
     private final String value;

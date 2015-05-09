@@ -34,5 +34,7 @@ public class Properties {
     public static double TEST_DECAY_ALPHA_END;
     public static double TEST_DECAY_T_MAXIMUM;
     public static double DECAY_ALPHA;
+    public static String DECAY_FILE_OUTPUT_NAME;
+    public static String DECAY_SUBDIRECTORY_OUTPUT_NAME;
 }
 

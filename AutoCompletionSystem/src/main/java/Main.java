@@ -10,7 +10,9 @@ import input.DictionaryProcessor;
 import input.FilesProcessor;
 import input.PropertiesParser;
 import model.dictionary.Dictionary;
+import printing.Window;
 import system.Properties;
+import testing.PrintAlphas;
 import testing.SystemRotationTester;
 import testing.SystemTenFoldingTesting;
 import testing.SystemTester;
@@ -25,6 +27,8 @@ import java.util.Scanner;
 public class Main {
 
     private static final String RESET = "reset";
+    private static final String DRAW = "draw";
+    private static final String DRAW_ALL = "draw all";
     private static final String PROCESS_FILES_NO_MOVE = "input";
     private static final String PROCESS_FILES_MOVE = "input m";
     private static final String TEST_SYSTEM_ROTATION = "test all";
@@ -66,6 +70,7 @@ public class Main {
     }
 
     void start() {
+        Window w = null;
         SegmentTree tree = new SegmentTree();
         SearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
@@ -87,11 +92,24 @@ public class Main {
                     dictionary = new Dictionary();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
                     dictionaryProcessor.readDictionary();
+                    if (w != null) {
+                        w.dispose();
+                    }
                 } catch (IOException e) {
                     System.out.println("System cannot restart");
                     e.printStackTrace();
                     System.exit(0);
                 }
+                continue;
+            }
+            if (command.equals(DRAW)) {
+                w = new Window();
+                w.save();
+                continue;
+            }
+            if (command.equals(DRAW_ALL)) {
+                PrintAlphas pa = new PrintAlphas();
+                pa.printAlphas();
                 continue;
             }
             if (command.equals(DICTIONARY_IMPORT)) {
