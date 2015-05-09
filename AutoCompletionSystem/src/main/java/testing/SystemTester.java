@@ -14,29 +14,25 @@ import java.util.List;
  */
 public class SystemTester {
 
+    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File reportFile;
     private final File allReportFile;
-
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File testDir;
     private final String processedDirectory;
-
-    private SearchTree segmentTree;
-
-    private List<Statistics> statisticsList;
-
     private final FileManager manager;
+    private SearchTree segmentTree;
+    private List<Statistics> statisticsList;
 
     public SystemTester(SearchTree segmentTree) {
 
         this.segmentTree = segmentTree;
 
-        reportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
+        reportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.REPORT_OUTPUT_FILE_NAME);
         if (!reportFile.exists() && !reportFile.isFile()) {
             System.out.println("report file does not exist " + reportFile + ";");
         }
 
-        allReportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
+        allReportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
         if (!allReportFile.exists() && !allReportFile.isFile()) {
             System.out.println("all report file does not exist " + allReportFile + ";");
         }

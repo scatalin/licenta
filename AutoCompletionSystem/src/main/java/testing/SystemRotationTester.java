@@ -33,7 +33,7 @@ public class SystemRotationTester {
 
     public SystemRotationTester() {
 
-        allReportFile = new File(Properties.DICTIONARY_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
+        allReportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
         if (!allReportFile.exists() && !allReportFile.isFile()) {
             System.out.println("all report file does not exist " + allReportFile + ";");
         }

@@ -59,6 +59,10 @@ public class PropertiesParser {
                     Properties.TEST_ROTATION_DIRECTORY = tokens[1];
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.RESULT_FILES_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
+                    Properties.RESULT_DIRECTORY = tokens[1];
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
                     continue;
@@ -77,6 +81,10 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.TEST_ROTATION_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
                     Properties.TEST_ROTATION_DIRECTORY = tokens[1];
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.RESULT_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
+                    Properties.RESULT_DIRECTORY = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.DICTIONARY_FILE_NAME.getValue())) {
