@@ -3,7 +3,7 @@ package testing;
 import algorithms.SearchTree;
 import dictionary.Word;
 import system.Properties;
-import utils.FileManager;
+import input.utils.FileManager;
 
 import java.io.*;
 import java.util.List;

@@ -2,7 +2,7 @@ package input;
 
 import dictionary.Dictionary;
 import system.Properties;
-import utils.FileManager;
+import input.utils.FileManager;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package utils;
+package input.utils;
 
 import java.io.File;
 
