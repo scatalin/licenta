@@ -5,11 +5,11 @@ import algorithms.tst.intern.TstNode;
 /**
  * Created by Catalin on 3/28/2015 .
  */
-public class HeapNode {
+public class HeapTreeNode implements Comparable {
     protected TstNode node;
     private String builtWord;
 
-    public HeapNode(TstNode node, String startWord) {
+    public HeapTreeNode(TstNode node, String startWord) {
         this.node = node;
         builtWord = startWord;
     }
@@ -30,17 +30,17 @@ public class HeapNode {
         this.node = node;
     }
 
-    public int compareTo(HeapNode parent) {
-        return node.compareTo(parent.getNode());
+    public int compareTo(Object parent) {
+        return node.compareTo(((HeapTreeNode) parent).getNode());
     }
 
-    public HeapNode clone() {
+    public HeapTreeNode clone() {
         try {
             super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        return new HeapNode(node, builtWord);
+        return new HeapTreeNode(node, builtWord);
     }
 
     @Override

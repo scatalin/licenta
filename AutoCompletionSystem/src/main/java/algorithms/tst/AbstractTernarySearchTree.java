@@ -1,8 +1,8 @@
 package algorithms.tst;
 
 import algorithms.SearchTree;
-import algorithms.heap.AutoCompletionHeap;
-import algorithms.heap.HeapNode;
+import algorithms.heap.MaxHeap;
+import algorithms.heap.HeapTreeNode;
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
 import algorithms.utils.PrettyPrinter;
@@ -19,14 +19,14 @@ import java.util.List;
  */
 public abstract class AbstractTernarySearchTree implements SearchTree {
 
-    private final AutoCompletionHeap<HeapNode> heap;
+    private final MaxHeap<HeapTreeNode> heap;
     private final List<Word> foundSmallWeightWords;
     private final List<Word> foundWords;
     protected TstNode root;
     private int k;
 
     AbstractTernarySearchTree() {
-        heap = new AutoCompletionHeap<>();
+        heap = new MaxHeap<>();
         foundSmallWeightWords = new ArrayList<>();
         foundWords = new ArrayList<>();
         k = 5;
@@ -56,7 +56,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
         heap.clearHeap();
         foundWords.clear();
         foundSmallWeightWords.clear();
-        heap.insert(new HeapNode(root, ""));
+        heap.insert(new HeapTreeNode(root, ""));
     }
 
     @Override
@@ -68,40 +68,40 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
 
     protected void seachFurther(String prefix, int limit) {
         while (!heap.isEmpty() && (foundWords.size() < limit)) {
-            HeapNode item = heap.delete();
+            HeapTreeNode item = heap.delete();
             if (item == null) {
                 return;
             }
             if (item.getNode() == null) {
                 continue;
             }
-            int maxWeight = item.getNode().getWeight();
+            int maxWeight = item.getNode().getSubtreesWeight();
             if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
                 continue;
             }
             String word = item.getBuiltWord() + item.getNode().getCharacter();
             if (item.getNode().isEndWord() && word.startsWith(prefix)) {
                 //todo add a heap for found words (specific weight stuff)
-                foundSmallWeightWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getEndWordWeight()));
+                foundSmallWeightWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getWordWeight()));
                 Collections.sort(foundSmallWeightWords, new WordFrequencyComparator());
-                if (foundSmallWeightWords.get(0).getFrequency() >= maxWeight) {
+                if (foundSmallWeightWords.get(0).getWeight() >= maxWeight) {
                     foundWords.add(foundSmallWeightWords.remove(0));
                 }
             }
             //todo prune the search paths
             if (item.getNode().getLeftChild() != null) {
-                HeapNode newNode = item.clone();
+                HeapTreeNode newNode = item.clone();
                 newNode.setNode(item.getNode().getLeftChild());
                 heap.insert(newNode);
             }
             if (item.getNode().getMiddleChild() != null) {
-                HeapNode newNode = item.clone();
+                HeapTreeNode newNode = item.clone();
                 newNode.setNode(item.getNode().getMiddleChild());
                 newNode.addCharacter(item.getNode().getCharacter());
                 heap.insert(newNode);
             }
             if (item.getNode().getRightChild() != null) {
-                HeapNode newNode = item.clone();
+                HeapTreeNode newNode = item.clone();
                 newNode.setNode(item.getNode().getRightChild());
                 heap.insert(newNode);
             }
@@ -126,7 +126,14 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
                 iter.remove();
             }
         }
-        heap.clearInvalidPaths(prefix);
+        Iterator<HeapTreeNode> it = heap.iterator();
+        while (it.hasNext()) {
+            HeapTreeNode item = it.next();
+            if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
+                it.remove();
+            }
+        }
+
     }
 
     @Override

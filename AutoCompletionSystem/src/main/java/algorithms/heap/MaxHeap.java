@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Created by gstan on 27.03.2015.
  */
-public class AutoCompletionHeap<T extends HeapNode> {
+public class MaxHeap<T extends Comparable> {
 
     private List<T> items;
 
-    public AutoCompletionHeap() {
+    public MaxHeap() {
         items = new ArrayList<>();
     }
 
@@ -67,7 +67,7 @@ public class AutoCompletionHeap<T extends HeapNode> {
     }
 
     public T delete() {
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             return null;
         }
         if (items.size() == 1) {
@@ -88,21 +88,11 @@ public class AutoCompletionHeap<T extends HeapNode> {
     }
 
     private int rightChild(int k) {
-        return 2 * k + 2;
+        return (2 * k) + 2;
     }
 
     private int leftChild(int k) {
-        return 2 * k + 1;
-    }
-
-    public void clearInvalidPaths(String prefix) {
-        Iterator<T> it = items.iterator();
-        while (it.hasNext()) {
-            T item = it.next();
-            if (!item.getBuiltWord().startsWith(prefix) && !prefix.startsWith(item.getBuiltWord())) {
-                it.remove();
-            }
-        }
+        return (2 * k) + 1;
     }
 
     public boolean isEmpty() {
@@ -114,5 +104,9 @@ public class AutoCompletionHeap<T extends HeapNode> {
         return "AutoCompletionHeap{" +
                 "items=" + items +
                 '}';
+    }
+
+    public Iterator<T> iterator() {
+        return items.iterator();
     }
 }
