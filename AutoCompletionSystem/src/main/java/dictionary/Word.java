@@ -1,4 +1,4 @@
-package model.dictionary;
+package dictionary;
 
 import system.Properties;
 
@@ -103,6 +103,6 @@ public class Word implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        return Word.wordFrequencyComparator.compare(this,((Word)o));
+        return Word.wordFrequencyComparator.compare(this, ((Word) o));
     }
 }

@@ -1,4 +1,4 @@
-package model.dictionary;
+package dictionary;
 
 import java.util.Comparator;
 

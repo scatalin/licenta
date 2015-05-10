@@ -1,4 +1,6 @@
-package model.dictionary;
+package dictionary;
+
+import algorithms.heap.MaxHeap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +12,7 @@ import java.util.List;
  */
 public class Dictionary {
 
-    private final List<Word> words;
+    private MaxHeap<Word> wordsHeap;
     private String fileName;
 
     public Dictionary() {
@@ -19,23 +21,24 @@ public class Dictionary {
 
     public Dictionary(String fileName) {
         this.fileName = fileName;
-        words = new ArrayList<>();
+        wordsHeap = new MaxHeap<>();
     }
 
-    public void addWord(String word, int weight) {
-        words.add(new Word(word, weight));
+    public void addDictionaryWord(String word, int weight) {
+        integrateWord(word, weight);
     }
 
-    public void addWord(String word) {
-        integrateWord(new Word(word), 1);
+    public void addDictionaryWord(String word) {
+        addDictionaryWord(word, 1);
     }
 
-    public void addWord(Word word) {
-        integrateWord(word, word.getWeight());
+    public void addDictionaryWord(Word word) {
+        addDictionaryWord(word.getWord(), word.getWeight());
     }
 
+    //todo: this should not exist
     public void sortDictionaryAlphabetically() {
-        Collections.sort(words, new Comparator<Word>() {
+        Collections.sort(wordsHeap.getItems(), new Comparator<Word>() {
             // word comparator
             @Override
             public int compare(Word o1, Word o2) {
@@ -45,17 +48,18 @@ public class Dictionary {
         });
     }
 
+    //todo: this should not exist
     public void sortDictionaryByWeight() {
-        Collections.sort(words, new WordFrequencyComparator());
+        Collections.sort(wordsHeap.getItems(), new WordFrequencyComparator());
     }
 
     public List<Word> getWords() {
-        return words;
+        return wordsHeap.getItems();
     }
 
     public void removeNonWords() {
-        for (int i = 0; i < words.size(); i++) {
-            Word word = words.get(i);
+        for (int i = 0; i < wordsHeap.getItems().size(); i++) {
+            Word word = wordsHeap.get(i);
             if (word.getWord().isEmpty() || word.getWord().equals(" ")) {
                 words.remove(word);
                 i--;
@@ -75,19 +79,21 @@ public class Dictionary {
         return "d=" + words.size() + " " + words;
     }
 
-    private void integrateWord(Word word, int increment) {
-        int index = words.lastIndexOf(word);
-        if (index == -1) {
-            words.add(word);
+    private void integrateWord(String word, int increment) {
+        if(!isValidWord()){
             return;
         }
-        Word existentWord = words.get(index);
+        int index = wordsHeap.getItems().lastIndexOf(word);
+        if (index == -1) {
+            wordsHeap.insert(new Word(word, increment));
+            return;
+        }
+        Word existentWord = wordsHeap.getItems().get(index);
         existentWord.increaseFrequency(increment);
     }
 
     /**
      * For further use
-     *
      */
     @Deprecated
     public List<Word> getWordsWithPrefix(String word) {
