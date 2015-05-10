@@ -31,7 +31,7 @@ public class Dictionary {
     }
 
     public void addWord(Word word) {
-        integrateWord(word, word.getFrequency());
+        integrateWord(word, word.getWeight());
     }
 
     public void sortDictionaryAlphabetically() {
@@ -71,12 +71,8 @@ public class Dictionary {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public String toString() {
-        return "d=" + words.size() + " " + words.toString();
+        return "d=" + words.size() + " " + words;
     }
 
     private void integrateWord(Word word, int increment) {
@@ -92,12 +88,10 @@ public class Dictionary {
     /**
      * For further use
      *
-     * @param word
-     * @return
      */
     @Deprecated
     public List<Word> getWordsWithPrefix(String word) {
-        List<Word> toReturn = new ArrayList<Word>();
+        List<Word> toReturn = new ArrayList<>();
         for (Word word1 : words) {
             if (word1.getWord().startsWith(word)) {
                 toReturn.add(word1);

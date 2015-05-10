@@ -5,36 +5,39 @@ import system.Properties;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word {
+public class Word implements Comparable{
+
+    private static final WordFrequencyComparator wordFrequencyComparator = new WordFrequencyComparator();
+
     private final String word;
     private int totalWeight;
-    private int frequency;
+    private int dictionaryFrequency;
     private int userFrequency;
     private int userActuality;
-    private double frequencyPercentage;
+    private double dictionaryFrequencyPercentage;
     private double userFrequencyPercentage;
     private double userActualityPercentage;
 
-    public Word(String word, int frequency, int userFrequency, int userActuality) {
+    public Word(String word, int dictionaryFrequency, int userFrequency, int userActuality) {
         this.word = word;
-        this.frequency = frequency;
+        this.dictionaryFrequency = dictionaryFrequency;
         this.userFrequency = userFrequency;
         this.userActuality = userActuality;
     }
 
-    public Word(String word, int frequency) {
-        this(word, frequency, 0, 0);
+    public Word(String word, int dictionaryFrequency) {
+        this(word, dictionaryFrequency, 0, 0);
     }
 
     public Word(String word) {
-        this(word, 1);
+        this(word, 1, 0, 0);
     }
 
     public String getWord() {
         return word;
     }
 
-    public int getFrequency() {
+    public int getWeight() {
         calculateTotalWeight();
         return totalWeight;
     }
@@ -47,25 +50,25 @@ public class Word {
         if (userActuality <= 0) {
             normalizeUserActuality();
         }
-        totalWeight = (int) ((frequency * frequencyPercentage) + (userFrequency * userFrequencyPercentage) + (userActuality * userActualityPercentage));
+        totalWeight = (int) ((dictionaryFrequency * dictionaryFrequencyPercentage) + (userFrequency * userFrequencyPercentage) + (userActuality * userActualityPercentage));
     }
 
     private void initPercentages() {
-        frequencyPercentage = Properties.WEIGHT_FREQUENCY;
+        dictionaryFrequencyPercentage = Properties.WEIGHT_FREQUENCY;
         userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER;
         userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER;
     }
 
     private void normalizeUserFrequency() {
         double normalizeDivision = 1;
-        frequencyPercentage += userFrequencyPercentage * (frequencyPercentage / normalizeDivision);
+        dictionaryFrequencyPercentage += userFrequencyPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
         userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
         userFrequencyPercentage = 0;
     }
 
     private void normalizeUserActuality() {
         double normalizeDivision = 1;
-        frequencyPercentage += userActualityPercentage * (frequencyPercentage / normalizeDivision);
+        dictionaryFrequencyPercentage += userActualityPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
         userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
         userActualityPercentage = 0;
     }
@@ -90,11 +93,16 @@ public class Word {
     }
 
     public void increaseFrequency(int increment) {
-        frequency += increment;
+        dictionaryFrequency += increment;
     }
 
     @Override
     public String toString() {
-        return word + "=" + frequency;
+        return word + "=" + dictionaryFrequency;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return Word.wordFrequencyComparator.compare(this,((Word)o));
     }
 }

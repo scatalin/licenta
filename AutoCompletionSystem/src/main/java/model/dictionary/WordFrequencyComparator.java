@@ -10,6 +10,6 @@ public class WordFrequencyComparator implements Comparator<Word> {
     @Override
     public int compare(Word o1, Word o2) {
         //sortare descrescatoare
-        return o2.getFrequency() - o1.getFrequency();
+        return o2.getWeight() - o1.getWeight();
     }
 }

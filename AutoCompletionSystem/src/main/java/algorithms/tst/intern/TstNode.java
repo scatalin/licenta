@@ -6,25 +6,21 @@ package algorithms.tst.intern;
 public class TstNode implements Comparable<TstNode> {
 
     private Character character;
-    private int weight;
-    private int endWordWeight;
+    private int subtreesWeight;
+    private int wordWeight;
     private boolean endWord;
     private TstNode leftChild;
     private TstNode middleChild;
     private TstNode rightChild;
 
-    public TstNode() {
-        this(' ', 0);
-    }
-
     public TstNode(Character character) {
         this(character, 0);
     }
 
-    public TstNode(Character character, int weight) {
+    public TstNode(Character character, int subtreesWeight) {
         this.character = character;
-        this.weight = weight;
-        this.endWordWeight = weight;
+        this.subtreesWeight = subtreesWeight;
+        this.wordWeight = subtreesWeight;
         endWord = false;
     }
 
@@ -55,7 +51,7 @@ public class TstNode implements Comparable<TstNode> {
     public String toString() {
         return "TstNode{" +
                 "ch=" + character +
-                ", W='" + weight + '\'' +
+                ", W='" + subtreesWeight + '\'' +
                 ", lC=" + leftChild +
                 ", mC=" + middleChild +
                 ", rC=" + rightChild +
@@ -102,29 +98,29 @@ public class TstNode implements Comparable<TstNode> {
         this.endWord = true;
     }
 
-    public int getWeight() {
-        return weight;
+    public int getSubtreesWeight() {
+        return subtreesWeight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setSubtreesWeight(int subtreesWeight) {
+        this.subtreesWeight = subtreesWeight;
     }
 
-    public int getEndWordWeight() {
-        return endWordWeight;
+    public int getWordWeight() {
+        return wordWeight;
     }
 
-    public void setEndWordWeight(int endWordWeight) {
-        this.endWordWeight = endWordWeight;
+    public void setWordWeight(int wordWeight) {
+        this.wordWeight = wordWeight;
     }
 
     public int getSpecificWeight() {
-        return endWord ? endWordWeight : weight;
+        return endWord ? wordWeight : subtreesWeight;
     }
 
     @Override
     public int compareTo(TstNode o) {
-        return Integer.valueOf(this.getWeight()).compareTo(o.getWeight());
+        return Integer.valueOf(this.getSubtreesWeight()).compareTo(o.getSubtreesWeight());
     }
 
 //    public int compareWordsWeights(TstNode o) {

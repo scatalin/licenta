@@ -78,7 +78,7 @@ public class TstPrettyPrinterTest {
         tst = new TernarySearchTreeRecursive();
         dictionary = new Dictionary();
         for (Word word : wordsList) {
-            dictionary.addWord(word.getWord(), word.getFrequency());
+            dictionary.addWord(word.getWord(), word.getWeight());
         }
         dictionary.sortDictionaryByWeight();
     }
