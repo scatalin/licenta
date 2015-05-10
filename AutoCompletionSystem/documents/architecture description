@@ -1,0 +1,40 @@
+pana acum, cuvintele mele insemnau in felul urmator
+Word = string + frecventa default
+Dictionary = lista de Word / trebuie transformata in heap de cuvinte sortate dupa weight
+tree = arborele de cuvinte.
+
+ce ar trebui sa se updateze in momentul in care trebuie updatat un cuvant?
+
+weight-ul din arbore
+    search cuvantul in arbore. aici ce updatez?
+        cu arhitectura momentana, nu se updateaza modelul construit.
+
+weight-ul din dictionar
+    daca ramane cu lista, trebuie cautat cu un binary search tree. dictionarul trebuie mentinut ordonat alfabetic.
+    la constructia tree-ului sort dupa weighturi si fac arborele. duplicate dictionar ca sa nu pierd sortarea alfabetica
+
+    daca il transform in heap, fac heap dupa weights. asadar trebuie sa tin minte weight-ul vechi, sa il caut si sa il updatez.
+    sa refac structura heap-ului din punctul in care updatez
+    la constructia tree-ului, duplic
+
+se porneste functia de degradare.
+    se contorizeaza inca o interogare la toate cuvintele, sau o interogare globala. fiecare cuvant isi are memorata diferenta
+    de interogari fata de interogarea globala. fiecare cuvant trebuie adaugat intr-un scheduler cu joburi, ordonate dupa nivele
+    care la fiecare interogare updateaza indici la diferite cuvinte de pe un anumit nivel.
+
+se porneste un checking daca trebuie remodificat modelul
+    cum facem acest checking?
+    pe dictionar sau pe tree?
+        pe arhitectura momentana nu se poate face checkul pe tree
+        cum ar functiona pe dictionar?
+            ar trebui sa construiesc un heap cu cuvintele.
+            daca cuvantul isi modifica nivelul, sa masor weight-ul nivelului.
+            sa refac structura modelului in functie de cate cuvinte isi schimba nivelul. sa am o functie de cost.
+            dupa un threshold sa schimb modelul.
+            grija ca trebuie sa schimb modelul repede daca un user foloseste un cuvant nou, ca sa il vada mai incolo.
+    aceasta abordare este pe accesari
+
+    o abordare pe timp:
+
+    la fiecare x timp:
+    refa modelul. punct
