@@ -4,8 +4,8 @@ import algorithms.SearchTree;
 import algorithms.segmenttree.SegmentTree;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
-import model.dictionary.Dictionary;
-import model.dictionary.Word;
+import dictionary.Dictionary;
+import dictionary.Word;
 import system.Properties;
 
 import java.io.File;

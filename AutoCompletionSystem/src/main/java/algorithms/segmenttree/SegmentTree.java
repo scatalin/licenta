@@ -7,7 +7,7 @@ import algorithms.segmenttree.intern.SegmentTreeData;
 import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.utils.PrettyPrinter;
-import model.dictionary.Word;
+import dictionary.Word;
 import system.Properties;
 
 import java.util.List;

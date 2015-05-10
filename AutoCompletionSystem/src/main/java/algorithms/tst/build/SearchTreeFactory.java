@@ -2,8 +2,8 @@ package algorithms.tst.build;
 
 import algorithms.SearchTree;
 import algorithms.tst.TernarySearchTreeRecursive;
-import model.dictionary.Dictionary;
-import model.dictionary.Word;
+import dictionary.Dictionary;
+import dictionary.Word;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package algorithms.tst;
 
 import algorithms.tst.intern.TstNode;
-import model.dictionary.Word;
+import dictionary.Word;
 
 /**
  * Created by Catalin on 2/21/2015.

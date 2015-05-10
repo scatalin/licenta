@@ -1,8 +1,9 @@
 package dictionary;
 
 import algorithms.heap.MaxHeap;
+import dictionary.validators.LengthLessThanThresholdValidator;
+import dictionary.validators.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

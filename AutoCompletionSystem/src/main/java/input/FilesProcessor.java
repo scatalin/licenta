@@ -1,6 +1,6 @@
 package input;
 
-import model.dictionary.Dictionary;
+import dictionary.Dictionary;
 import system.Properties;
 import utils.FileManager;
 

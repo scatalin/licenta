@@ -1,8 +1,8 @@
 package algorithms.segmenttree.build;
 
 import algorithms.segmenttree.SegmentTree;
-import model.dictionary.Dictionary;
-import model.dictionary.Word;
+import dictionary.Dictionary;
+import dictionary.Word;
 
 import java.util.ArrayList;
 import java.util.List;

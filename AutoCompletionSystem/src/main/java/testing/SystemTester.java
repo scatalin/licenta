@@ -1,7 +1,7 @@
 package testing;
 
 import algorithms.SearchTree;
-import model.dictionary.Word;
+import dictionary.Word;
 import system.Properties;
 import utils.FileManager;
 

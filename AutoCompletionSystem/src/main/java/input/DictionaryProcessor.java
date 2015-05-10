@@ -1,7 +1,7 @@
 package input;
 
-import model.dictionary.Dictionary;
-import model.dictionary.Word;
+import dictionary.Dictionary;
+import dictionary.Word;
 import system.Properties;
 
 import java.io.*;
@@ -44,7 +44,7 @@ public class DictionaryProcessor {
             String line = reader.readLine();
             while (line != null) {
                 String[] tokens = line.split("=");
-                dictionary.addWord(tokens[0], Integer.parseInt(tokens[1]));
+                dictionary.addDictionaryWord(tokens[0], Integer.parseInt(tokens[1]));
                 line = reader.readLine();
             }
         } catch (IOException e) {

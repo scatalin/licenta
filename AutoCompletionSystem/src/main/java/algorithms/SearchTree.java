@@ -1,6 +1,6 @@
 package algorithms;
 
-import model.dictionary.Word;
+import dictionary.Word;
 
 import java.util.List;
 

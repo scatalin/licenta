@@ -9,7 +9,7 @@ import algorithms.utils.FilePrinter;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 import input.PropertiesParser;
-import model.dictionary.Dictionary;
+import dictionary.Dictionary;
 import printing.Window;
 import system.Properties;
 import testing.PrintAlphas;

@@ -6,8 +6,8 @@ import algorithms.heap.HeapTreeNode;
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
 import algorithms.utils.PrettyPrinter;
-import model.dictionary.Word;
-import model.dictionary.WordFrequencyComparator;
+import dictionary.Word;
+import dictionary.WordFrequencyComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
