@@ -1,6 +1,6 @@
 pana acum, cuvintele mele insemnau in felul urmator
 Word = string + frecventa default
-Dictionary = lista de Word / trebuie transformata in heap de cuvinte sortate dupa weight
+Dictionary = transformata in heap de cuvinte sortate dupa weight
 tree = arborele de cuvinte.
 
 ce ar trebui sa se updateze in momentul in care trebuie updatat un cuvant?
@@ -10,12 +10,12 @@ weight-ul din arbore
         cu arhitectura momentana, nu se updateaza modelul construit.
 
 weight-ul din dictionar
-    daca ramane cu lista, trebuie cautat cu un binary search tree. dictionarul trebuie mentinut ordonat alfabetic.
-    la constructia tree-ului sort dupa weighturi si fac arborele. duplicate dictionar ca sa nu pierd sortarea alfabetica
+    //daca ramane cu lista, trebuie cautat cu un binary search tree. dictionarul trebuie mentinut ordonat alfabetic.
+    //la constructia tree-ului sort dupa weighturi si fac arborele. duplicate dictionar ca sa nu pierd sortarea alfabetica
 
     daca il transform in heap, fac heap dupa weights. asadar trebuie sa tin minte weight-ul vechi, sa il caut si sa il updatez.
     sa refac structura heap-ului din punctul in care updatez
-    la constructia tree-ului, duplic
+    la constructia tree-ului, duplic. done
 
 se porneste functia de degradare.
     se contorizeaza inca o interogare la toate cuvintele, sau o interogare globala. fiecare cuvant isi are memorata diferenta

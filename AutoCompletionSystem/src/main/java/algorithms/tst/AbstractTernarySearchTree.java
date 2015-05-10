@@ -1,8 +1,8 @@
 package algorithms.tst;
 
 import algorithms.SearchTree;
-import algorithms.heap.MaxHeap;
 import algorithms.heap.HeapTreeNode;
+import algorithms.heap.MaxHeap;
 import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
 import algorithms.utils.PrettyPrinter;
@@ -62,16 +62,16 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
     @Override
     public List<Word> getNextTopK(String prefix) {
         clearInvalidPaths(prefix);
-        seachFurther(prefix, k);
+        searchFurther(prefix);
         return foundWords;
     }
 
-    protected void seachFurther(String prefix, int limit) {
-        while (!heap.isEmpty() && (foundWords.size() < limit)) {
+    private void searchFurther(String prefix) {
+        if (heap.peek() == null) {
+            return;
+        }
+        while (!heap.isEmpty() && (foundWords.size() < k)) {
             HeapTreeNode item = heap.delete();
-            if (item == null) {
-                return;
-            }
             if (item.getNode() == null) {
                 continue;
             }
@@ -106,7 +106,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
                 heap.insert(newNode);
             }
         }
-        while ((foundWords.size() < limit) && !foundSmallWeightWords.isEmpty()) {
+        while ((foundWords.size() < k) && !foundSmallWeightWords.isEmpty()) {
             foundWords.add(foundSmallWeightWords.remove(0));
         }
     }

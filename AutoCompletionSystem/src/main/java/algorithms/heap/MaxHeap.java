@@ -76,6 +76,13 @@ public class MaxHeap<T extends Comparable> {
         return hold;
     }
 
+    public T peek() {
+        if (items.size() == 1) {
+            return items.get(0);
+        }
+        return null;
+    }
+
     public void clearHeap() {
         items.clear();
     }
