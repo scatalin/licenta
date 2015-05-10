@@ -57,7 +57,7 @@ public class DictionaryProcessor {
             dictionaryFile.delete();
             dictionaryFile.createNewFile();
 
-            for (Word word : dictionary.getWords()) {
+            for (Word word : dictionary.getAlphabeticallyWords()) {
                 writer.println(word);
             }
             writer.flush();

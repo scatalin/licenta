@@ -13,13 +13,12 @@ import java.util.Random;
  */
 public class SegmentTstTreeFactory {
 
-    public static void buildSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
-        segmentTree.load(dictionary.getWords(), true);
+    public static void buildSegmentTst(SegmentTree segmentTree, List<Word> dictionary) {
+        segmentTree.load(dictionary, true);
     }
 
     public static void buildWeightedSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
-        dictionary.sortDictionaryByWeight();
-        buildSegmentTst(segmentTree, dictionary);
+        buildSegmentTst(segmentTree, dictionary.getWordsSortedByWeight());
     }
 
 

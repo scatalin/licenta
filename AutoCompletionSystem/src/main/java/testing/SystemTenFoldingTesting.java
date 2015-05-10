@@ -53,7 +53,6 @@ public class SystemTenFoldingTesting {
         List<Dictionary> dictionaries = filesProcessor.createDictionariesFromFiles();
         for (Dictionary dictionary : dictionaries) {
 
-            dictionary.sortDictionaryByWeight();
             System.out.println("dictionary for the file" + dictionary.getFileName() + " " + dictionary);
         }
 
@@ -85,19 +84,17 @@ public class SystemTenFoldingTesting {
                     //concatenate the rest of the dictionaries
                     Dictionary addDictionary = dictionaries.get(index);
                     for (Word word : addDictionary.getWords()) {
-                        trainingDictionary.addWord(word);
+                        trainingDictionary.addDictionaryWord(word);
                     }
 
                     count++;
                 }
 
-                trainingDictionary.sortDictionaryByWeight();
-
                 //construct the tree with the training Dictionary
 
                 tree.reset();
                 tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
-                tree.load(trainingDictionary.getWords(), true);
+                tree.load(trainingDictionary.getWordsSortedByWeight(), true);
                 int dictionarySize = trainingDictionary.getNumberOfWords();
 
                 Dictionary testDictionary = dictionaries.get(testFileIndex);

@@ -15,6 +15,7 @@ public class Dictionary {
 
     private MaxHeap<Word> wordsHeap;
     private String fileName;
+    private Validator validator;
 
     public Dictionary() {
         this("");
@@ -23,10 +24,11 @@ public class Dictionary {
     public Dictionary(String fileName) {
         this.fileName = fileName;
         wordsHeap = new MaxHeap<>();
+        validator = new LengthLessThanThresholdValidator();
     }
 
     public void addDictionaryWord(String word, int weight) {
-        integrateWord(word, weight);
+        integrateDictionaryWord(word, weight);
     }
 
     public void addDictionaryWord(String word) {
@@ -37,9 +39,15 @@ public class Dictionary {
         addDictionaryWord(word.getWord(), word.getWeight());
     }
 
-    //todo: this should not exist
-    public void sortDictionaryAlphabetically() {
-        Collections.sort(wordsHeap.getItems(), new Comparator<Word>() {
+    public List<Word> getWordsSortedByWeight() {
+        List<Word> words = wordsHeap.duplicateItems();
+        Collections.sort(words, new WordFrequencyComparator());
+        return words;
+    }
+
+    public List<Word> getAlphabeticallyWords() {
+        List<Word> words = wordsHeap.duplicateItems();
+        Collections.sort(words, new Comparator<Word>() {
             // word comparator
             @Override
             public int compare(Word o1, Word o2) {
@@ -47,29 +55,15 @@ public class Dictionary {
                 return o1.getWord().compareTo(o2.getWord());
             }
         });
-    }
-
-    //todo: this should not exist
-    public void sortDictionaryByWeight() {
-        Collections.sort(wordsHeap.getItems(), new WordFrequencyComparator());
+        return words;
     }
 
     public List<Word> getWords() {
         return wordsHeap.getItems();
     }
 
-    public void removeNonWords() {
-        for (int i = 0; i < wordsHeap.getItems().size(); i++) {
-            Word word = wordsHeap.get(i);
-            if (word.getWord().isEmpty() || word.getWord().equals(" ")) {
-                words.remove(word);
-                i--;
-            }
-        }
-    }
-
     public int getNumberOfWords() {
-        return words.size();
+        return wordsHeap.getItems().size();
     }
 
     public String getFileName() {
@@ -77,34 +71,23 @@ public class Dictionary {
     }
 
     public String toString() {
-        return "d=" + words.size() + " " + words;
+        return "d=" + wordsHeap.getItems().size() + " " + wordsHeap.getItems();
     }
 
-    private void integrateWord(String word, int increment) {
-        if(!isValidWord()){
+    private void integrateDictionaryWord(String word, int increment) {
+        if (!validator.isValid(word)) {
             return;
         }
-        int index = wordsHeap.getItems().lastIndexOf(word);
+        Word checkWord = new Word(word);
+        int index = wordsHeap.getItems().lastIndexOf(checkWord);
         if (index == -1) {
             wordsHeap.insert(new Word(word, increment));
             return;
         }
         Word existentWord = wordsHeap.getItems().get(index);
         existentWord.increaseFrequency(increment);
-    }
-
-    /**
-     * For further use
-     */
-    @Deprecated
-    public List<Word> getWordsWithPrefix(String word) {
-        List<Word> toReturn = new ArrayList<>();
-        for (Word word1 : words) {
-            if (word1.getWord().startsWith(word)) {
-                toReturn.add(word1);
-            }
-        }
-        return toReturn;
+        //todo add a check here for model remaking
+        wordsHeap.shiftUp(index);
     }
 }
 

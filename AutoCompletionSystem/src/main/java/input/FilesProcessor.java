@@ -80,7 +80,7 @@ public class FilesProcessor {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
                         if (word.length() > 1) {
-                            dictionary.getDictionary().addWord(word.toLowerCase());
+                            dictionary.getDictionary().addDictionaryWord(word.toLowerCase());
                         }
                     }
                     line = reader.readLine();
@@ -97,8 +97,6 @@ public class FilesProcessor {
             }
         }
 
-        dictionary.getDictionary().removeNonWords();
-        dictionary.getDictionary().sortDictionaryAlphabetically();
         dictionary.saveDictionary();
     }
 
@@ -125,7 +123,7 @@ public class FilesProcessor {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
                         if (word.length() > 2) {
-                            dictionary.addWord(word.toLowerCase());
+                            dictionary.addDictionaryWord(word.toLowerCase());
                         }
                     }
                     line = reader.readLine();
@@ -133,7 +131,6 @@ public class FilesProcessor {
 
                 reader.close();
 
-                dictionary.removeNonWords();
                 dictionaries.add(dictionary);
 
             } catch (IOException e) {

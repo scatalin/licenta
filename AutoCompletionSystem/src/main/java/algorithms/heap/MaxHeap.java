@@ -15,8 +15,7 @@ public class MaxHeap<T extends Comparable> {
         items = new ArrayList<>();
     }
 
-    private void shiftUp() {
-        int k = items.size() - 1;
+    public int shiftUp(int k) {
         while (k > 0) {
             int p = parent(k);
             T item = items.get(k);
@@ -32,18 +31,15 @@ public class MaxHeap<T extends Comparable> {
                 break;
             }
         }
+        return k;
     }
 
     public void insert(T item) {
         items.add(item);
-        shiftUp();
-//        if (item.getNode().isEndWord()) {
-//            foundWords.add(new Word(item.getBuiltWord(), item.getNode().getEndWordWeight()));
-//        }
+        shiftUp(items.size() - 1);
     }
 
-    private void shiftDown() {
-        int k = 0;
+    public int shiftDown(int k) {
         int l = leftChild(k);
         while (l < items.size()) {
             int max = l;
@@ -64,6 +60,7 @@ public class MaxHeap<T extends Comparable> {
                 break;
             }
         }
+        return k;
     }
 
     public T delete() {
@@ -75,7 +72,7 @@ public class MaxHeap<T extends Comparable> {
         }
         T hold = items.get(0);
         items.set(0, items.remove(items.size() - 1));
-        shiftDown();
+        shiftDown(0);
         return hold;
     }
 
@@ -108,5 +105,13 @@ public class MaxHeap<T extends Comparable> {
 
     public Iterator<T> iterator() {
         return items.iterator();
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
+
+    public List<T> duplicateItems() {
+        return new ArrayList<>(items);
     }
 }

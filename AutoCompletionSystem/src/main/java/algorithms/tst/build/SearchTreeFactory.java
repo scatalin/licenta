@@ -18,15 +18,14 @@ public class SearchTreeFactory {
         return new TernarySearchTreeRecursive();
     }
 
-    public static SearchTree buildTst(Dictionary dictionary) {
+    public static SearchTree buildTst(List<Word> dictionary) {
         SearchTree tst = new TernarySearchTreeRecursive();
-        tst.load(dictionary.getWords(), true);
+        tst.load(dictionary, true);
         return tst;
     }
 
     public static SearchTree buildWeightedTst(Dictionary dictionary) {
-        dictionary.sortDictionaryByWeight();
-        return buildTst(dictionary);
+        return buildTst(dictionary.getWordsSortedByWeight());
     }
 
     public static SearchTree buildRandomTst(Dictionary dictionary) {

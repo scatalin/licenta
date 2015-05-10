@@ -89,7 +89,7 @@ public class SystemRotationTester {
                         String[] words = line.split(WORD_SEPARATION_REGEX);
                         for (String word : words) {
                             if (word.length() > 1) {
-                                dictionary.addWord(word);
+                                dictionary.addDictionaryWord(word);
                             }
                             word = word.toLowerCase();
                             if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
@@ -107,8 +107,6 @@ public class SystemRotationTester {
 
                     statistics.makeAverages();
 
-                    dictionary.removeNonWords();
-                    dictionary.sortDictionaryByWeight();
                     System.out.println("dictionary of the file " + toTestFile.getName() + dictionary);
                     reader.close();
                     System.out.println("file " + toTestFile.getName() + " was tested for threshold + " + currentRun);
@@ -154,8 +152,7 @@ public class SystemRotationTester {
 
         tree.reset();
         tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
-        dictionary.sortDictionaryByWeight();
-        tree.load(dictionary.getWords(), true);
+        tree.load(dictionary.getWordsSortedByWeight(), true);
 
         return dictionary.getNumberOfWords();
     }
@@ -167,7 +164,6 @@ public class SystemRotationTester {
         List<Dictionary> dictionaries = filesProcessor.createDictionariesFromFiles();
         for (Dictionary dictionary : dictionaries) {
 
-            dictionary.sortDictionaryByWeight();
             System.out.println("dictionary for the file" + dictionary.getFileName() + " " + dictionary);
         }
 
@@ -213,8 +209,7 @@ public class SystemRotationTester {
     private int initTreeInMemory(Dictionary dictionary) {
         tree.reset();
         tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
-        dictionary.sortDictionaryByWeight();
-        tree.load(dictionary.getWords(), true);
+        tree.load(dictionary.getWordsSortedByWeight(), true);
         return dictionary.getNumberOfWords();
     }
 
