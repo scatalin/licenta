@@ -83,6 +83,23 @@ public class SegmentTree implements SearchTree {
         }
     }
 
+    @Override
+    public void update(String word, int weight) {
+        int position = data.getInterval(word.substring(0, 1));
+        recursiveUpdate(root, word, weight, position);
+    }
+
+    private void recursiveUpdate(SegmentNode node, String word, int weight, int position) {
+        if (node.isLeaf()) {
+            node.getTree().update(word, weight);
+        } else {
+            int left = node.getLeftLimit();
+            int right = node.getRightLimit();
+            int middle = left + ((right - left) / 2);
+            recursiveUpdate((position <= middle) ? node.getLeftChild() : node.getRightChild(), word, weight, position);
+        }
+    }
+
     public String printTree() {
         PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
         return printer.prettyPrint();

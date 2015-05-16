@@ -26,4 +26,6 @@ public interface SearchTree {
     Object getRoot();
 
     void reset();
+
+    void update(String word, int weight);
 }

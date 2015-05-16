@@ -105,4 +105,8 @@ public class Word implements Comparable{
     public int compareTo(Object o) {
         return Word.wordFrequencyComparator.compare(this, ((Word) o));
     }
+
+    public void setWeight(int dictionaryFrequency) {
+        this.dictionaryFrequency = dictionaryFrequency;
+    }
 }
