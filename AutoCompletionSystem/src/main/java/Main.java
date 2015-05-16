@@ -1,5 +1,5 @@
 import algorithms.SearchTree;
-import algorithms.segmenttree.SegmentTree;
+import algorithms.segmenttree.SegmentTreeLinear;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.segmenttree.parsing.SegmentTreeParser;
@@ -72,7 +72,7 @@ public class Main {
     }
 
     void start() {
-        SearchTree tree = new SegmentTree();
+        SearchTree tree = new SegmentTreeLinear();
         SearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
@@ -89,7 +89,7 @@ public class Main {
             if (command.equals(RESET)) {
                 try {
                     PropertiesParser.propertiesFileRead();
-                    tree = new SegmentTree();
+                    tree = new SegmentTreeLinear();
                     tst = new TernarySearchTreeRecursive();
                     dictionary = new Dictionary();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
@@ -190,7 +190,7 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {
-                tree = new SegmentTree();
+                tree = new SegmentTreeLinear();
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {

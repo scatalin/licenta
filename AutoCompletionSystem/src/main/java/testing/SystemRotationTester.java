@@ -1,11 +1,11 @@
 package testing;
 
 import algorithms.SearchTree;
-import algorithms.segmenttree.SegmentTree;
-import input.DictionaryProcessor;
-import input.FilesProcessor;
+import algorithms.segmenttree.SegmentTreeLinear;
 import dictionary.Dictionary;
 import dictionary.Word;
+import input.DictionaryProcessor;
+import input.FilesProcessor;
 import system.Properties;
 
 import java.io.*;
@@ -52,7 +52,7 @@ public class SystemRotationTester {
         filesProcessor = new FilesProcessor(dictionaryProcessor, Properties.TEST_ROTATION_DIRECTORY);
         numberOfRuns = filesProcessor.getNumberOfFiles();
 
-        tree = new SegmentTree();
+        tree = new SegmentTreeLinear();
     }
 
     public void testSystemByRotation() throws FileNotFoundException {

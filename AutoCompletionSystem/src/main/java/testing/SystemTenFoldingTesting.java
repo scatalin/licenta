@@ -1,11 +1,11 @@
 package testing;
 
 import algorithms.SearchTree;
-import algorithms.segmenttree.SegmentTree;
-import input.DictionaryProcessor;
-import input.FilesProcessor;
+import algorithms.segmenttree.SegmentTreeLinear;
 import dictionary.Dictionary;
 import dictionary.Word;
+import input.DictionaryProcessor;
+import input.FilesProcessor;
 import system.Properties;
 
 import java.io.File;
@@ -43,7 +43,7 @@ public class SystemTenFoldingTesting {
         filesProcessor = new FilesProcessor(dictionaryProcessor, Properties.TEST_ROTATION_DIRECTORY);
         numberOfFiles = filesProcessor.getNumberOfFiles();
 
-        tree = new SegmentTree();
+        tree = new SegmentTreeLinear();
     }
 
     public void testSystem() throws FileNotFoundException {
