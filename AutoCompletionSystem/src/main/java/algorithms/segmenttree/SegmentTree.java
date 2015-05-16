@@ -90,7 +90,9 @@ public class SegmentTree implements SearchTree {
         if (reset) {
             recursiveReset(root);
         }
-        words.forEach(this::insert);
+        for (Word word : words) {
+            insert(word);
+        }
     }
 
     private void recursiveReset(SegmentNode node) {

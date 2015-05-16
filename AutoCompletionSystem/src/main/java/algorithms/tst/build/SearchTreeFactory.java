@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class SearchTreeFactory {
 
-    public static SearchTree buildTst() {
+    public static SearchTree createTst() {
         return new TernarySearchTreeRecursive();
     }
 

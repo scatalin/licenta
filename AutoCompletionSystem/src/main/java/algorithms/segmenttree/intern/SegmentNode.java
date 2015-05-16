@@ -1,7 +1,6 @@
 package algorithms.segmenttree.intern;
 
 import algorithms.SearchTree;
-import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.SearchTreeFactory;
 
 /**
@@ -20,7 +19,6 @@ public class SegmentNode {
 
     public SegmentNode(Interval interval) {
         this.interval = interval;
-        tst = new TernarySearchTreeRecursive();
     }
 
     public int getLeftLimit() {
@@ -60,11 +58,11 @@ public class SegmentNode {
     }
 
     public void createTst() {
-        tst = SearchTreeFactory.buildTst();
+        tst = SearchTreeFactory.createTst();
     }
 
     public boolean isLeaf() {
-        return (interval.rightLimit - interval.leftLimit) == 0;
+        return interval.rightLimit == interval.leftLimit;
     }
 
     public SearchTree getTree() {
