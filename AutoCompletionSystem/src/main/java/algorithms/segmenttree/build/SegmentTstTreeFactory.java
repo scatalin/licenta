@@ -1,6 +1,6 @@
 package algorithms.segmenttree.build;
 
-import algorithms.segmenttree.SegmentTree;
+import algorithms.SearchTree;
 import dictionary.Dictionary;
 import dictionary.Word;
 
@@ -13,16 +13,16 @@ import java.util.Random;
  */
 public class SegmentTstTreeFactory {
 
-    public static void buildSegmentTst(SegmentTree segmentTree, List<Word> dictionary) {
+    public static void buildSegmentTst(SearchTree segmentTree, List<Word> dictionary) {
         segmentTree.load(dictionary, true);
     }
 
-    public static void buildWeightedSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
+    public static void buildWeightedSegmentTst(SearchTree segmentTree, Dictionary dictionary) {
         buildSegmentTst(segmentTree, dictionary.getWordsSortedByWeight());
     }
 
 
-    public static void buildRandomSegmentTst(SegmentTree segmentTree, Dictionary dictionary) {
+    public static void buildRandomSegmentTst(SearchTree segmentTree, Dictionary dictionary) {
         List<Word> words = new ArrayList<>(dictionary.getWords());
         int middlePosition = words.size() / 2;
         Word word = words.remove(middlePosition);

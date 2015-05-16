@@ -4,7 +4,6 @@ import algorithms.SearchTree;
 import algorithms.segmenttree.intern.Interval;
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.segmenttree.intern.SegmentTreeData;
-import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Word;
@@ -86,16 +85,6 @@ public class SegmentTree implements SearchTree {
         }
     }
 
-    public String printTree() {
-        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
-        return printer.prettyPrint();
-    }
-
-    public String printSubtrees() {
-        PrettyPrinter printer = new NestedTstPrettyPrinter(root);
-        return printer.prettyPrint();
-    }
-
     @Override
     public void load(List<Word> words, boolean reset) {
         if (reset) {
@@ -160,7 +149,8 @@ public class SegmentTree implements SearchTree {
 
     @Override
     public String print() {
-        return printSubtrees();
+        PrettyPrinter printer = new SegmentTreePrettyPrinter(root);
+        return printer.prettyPrint();
     }
 
     @Override

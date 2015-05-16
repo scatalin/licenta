@@ -3,13 +3,15 @@ import algorithms.segmenttree.SegmentTree;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
 import algorithms.segmenttree.intern.SegmentNode;
 import algorithms.segmenttree.parsing.SegmentTreeParser;
+import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.SearchTreeFactory;
 import algorithms.utils.FilePrinter;
+import algorithms.utils.PrettyPrinter;
+import dictionary.Dictionary;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 import input.PropertiesParser;
-import dictionary.Dictionary;
 import printing.Window;
 import system.Properties;
 import testing.PrintAlphas;
@@ -70,7 +72,7 @@ public class Main {
     }
 
     void start() {
-        SegmentTree tree = new SegmentTree();
+        SearchTree tree = new SegmentTree();
         SearchTree tst = new TernarySearchTreeRecursive();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
@@ -183,7 +185,8 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_PRINT)) {
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, tree.printSubtrees());
+                PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentNode) tree.getRoot());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, printer.prettyPrint());
                 continue;
             }
             if (command.equals(SEGMENT_BUILD)) {
@@ -191,7 +194,7 @@ public class Main {
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, tree.printTree());
+                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, tree.print());
                 continue;
             }
             if (command.equals(SEGMENT_COUNT)) {
