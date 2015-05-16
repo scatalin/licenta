@@ -38,6 +38,21 @@ public class SegmentTreeParser {
         }
     }
 
+    public int getDepth(){
+        return recursiveGetDepth(root);
+    }
+
+    private int recursiveGetDepth(SegmentNode node) {
+        if (node.isLeaf()) {
+            return 1;
+        }
+
+        int depthLeft = recursiveGetDepth(node.getLeftChild());
+        int depthRight = recursiveGetDepth(node.getRightChild());
+
+        return Math.max(depthLeft,depthRight)+1;
+    }
+
     public int countNodes() {
         return recursiveCountNodes(root);
     }

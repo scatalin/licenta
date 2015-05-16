@@ -12,7 +12,6 @@ public class SegmentNode {
     private final Interval interval;
     private SegmentNode leftChild;
     private SegmentNode rightChild;
-    private int depth;
     private SearchTree tst;
 
     public SegmentNode() {
@@ -28,24 +27,8 @@ public class SegmentNode {
         return interval.leftLimit;
     }
 
-    public void setLeftLimit(int leftLimit) {
-        this.interval.leftLimit = leftLimit;
-    }
-
     public int getRightLimit() {
         return interval.rightLimit;
-    }
-
-    public void setRightLimit(int rightLimit) {
-        this.interval.rightLimit = rightLimit;
-    }
-
-    public int getDepth() {
-        return depth;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
     }
 
     public SegmentNode getLeftChild() {

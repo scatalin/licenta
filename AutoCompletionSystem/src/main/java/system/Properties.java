@@ -36,5 +36,6 @@ public class Properties {
     public static double DECAY_ALPHA;
     public static String DECAY_FILE_OUTPUT_NAME;
     public static String DECAY_SUBDIRECTORY_OUTPUT_NAME;
+    public static String ALPHABET;
 }
 

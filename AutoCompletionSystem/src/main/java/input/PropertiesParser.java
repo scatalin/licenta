@@ -115,8 +115,9 @@ public class PropertiesParser {
                     Properties.FORCED_SYSTEM_PATH_SEPARATOR = tokens[1];
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.SEGMENT_SIZE.getValue())) {
-                    Properties.SEGMENT_SIZE = Integer.parseInt(tokens[1]);
+                if (tokens[0].equals(FileProperties.SYSTEM_ALPHABET.getValue())) {
+                    Properties.ALPHABET = tokens[1];
+                    Properties.SEGMENT_SIZE = Properties.ALPHABET.length();
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.SUCCESSFUL_THRESHOLD.getValue())) {

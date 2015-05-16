@@ -178,7 +178,6 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_WEIGHTED_BUILD)) {
-                tree.buildSegmentTree();
                 tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
                 SegmentTstTreeFactory.buildWeightedSegmentTst(tree, dictionary);
                 continue;
@@ -189,7 +188,6 @@ public class Main {
             }
             if (command.equals(SEGMENT_BUILD)) {
                 tree = new SegmentTree();
-                tree.buildSegmentTree();
                 continue;
             }
             if (command.equals(SEGMENT_PRINT)) {

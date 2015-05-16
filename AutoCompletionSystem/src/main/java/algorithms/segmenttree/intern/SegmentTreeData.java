@@ -1,5 +1,7 @@
 package algorithms.segmenttree.intern;
 
+import system.Properties;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,13 +10,14 @@ import java.util.Map;
  */
 public class SegmentTreeData {
 
-    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    private static final String ALPHABET = Properties.ALPHABET;
     private final Map<String, Integer> data;
     private final int size;
 
     public SegmentTreeData(int size) {
         this.size = size;
         data = new HashMap<>();
+        parseInterval();
     }
 
     public void parseInterval() {
@@ -23,7 +26,7 @@ public class SegmentTreeData {
         }
     }
 
-    public int getInterval(String s) {
+    public int getPosition(String s) {
         return data.get(s);
     }
 }

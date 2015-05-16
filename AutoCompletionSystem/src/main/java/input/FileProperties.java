@@ -29,7 +29,7 @@ public enum FileProperties {
     TEST_DECAY_T_MAXIMUM("test.decay.t.maximum"),
     FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
-    SEGMENT_SIZE("segment.size"),
+    SYSTEM_ALPHABET("system.alphabet"),
     AUTOCOMPLETION_THRESHOLD("autocompletion.minimum.characters"),
     AUTOCOMPLETION_K_SIZE("autocompletion.k.size"),
     SEGMENT_OUTPUT_FILE_NAME("segment.file.output.name"),

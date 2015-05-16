@@ -17,58 +17,44 @@ import java.util.List;
  */
 public class SegmentTree implements SearchTree {
 
-    private final int size;
+    private int size = Properties.SEGMENT_SIZE;
     private SegmentNode root;
     private SegmentTreeData data;
 
     public SegmentTree() {
         this.root = new SegmentNode();
-        size = Properties.SEGMENT_SIZE;
+        buildSegmentTree();
     }
 
-    public void buildSegmentTree() {
-        root = new SegmentNode();
-        root.setLeftLimit(0);
-        root.setRightLimit(size);
+    private void buildSegmentTree() {
+        root = new SegmentNode(new Interval(0,size));
         data = new SegmentTreeData(size);
-        data.parseInterval();
         recursiveBuildSegmentTree(root, new Interval(0, size));
     }
 
-    private int recursiveBuildSegmentTree(SegmentNode node, Interval interval) {
-        node.setDepth(1);
+    private void recursiveBuildSegmentTree(SegmentNode node, Interval interval) {
         int middle = interval.leftLimit + ((interval.rightLimit - interval.leftLimit) / 2);
         if (interval.leftLimit == interval.rightLimit) {
             node.createTst();
-            return 1;
+            return;
         }
 
         Interval leftInterval = new Interval();
         leftInterval.leftLimit = interval.leftLimit;
         leftInterval.rightLimit = middle;
         node.setLeftChild(new SegmentNode(leftInterval));
-        int leftDepth = recursiveBuildSegmentTree(node.getLeftChild(), leftInterval);
-        int maxDepth = 0;
-        if (maxDepth < leftDepth) {
-            maxDepth = leftDepth;
-        }
+        recursiveBuildSegmentTree(node.getLeftChild(), leftInterval);
 
         Interval rightInterval = new Interval();
         rightInterval.leftLimit = middle + 1;
         rightInterval.rightLimit = interval.rightLimit;
         node.setRightChild(new SegmentNode(rightInterval));
-        int rightDepth = recursiveBuildSegmentTree(node.getRightChild(), rightInterval);
-        if (maxDepth < rightDepth) {
-            maxDepth = rightDepth;
-        }
-
-        node.setDepth(maxDepth + 1);
-        return node.getDepth();
+        recursiveBuildSegmentTree(node.getRightChild(), rightInterval);
     }
 
     @Override
     public void insert(Word word) {
-        int position = data.getInterval(word.getWord().substring(0, 1));
+        int position = data.getPosition(word.getWord().substring(0, 1));
         recursiveInsert(root, word, position);
     }
 
@@ -85,7 +71,7 @@ public class SegmentTree implements SearchTree {
 
     @Override
     public void update(String word, int weight) {
-        int position = data.getInterval(word.substring(0, 1));
+        int position = data.getPosition(word.substring(0, 1));
         recursiveUpdate(root, word, weight, position);
     }
 
@@ -129,7 +115,7 @@ public class SegmentTree implements SearchTree {
 
     @Override
     public List<Word> getNextTopK(String prefix) {
-        int position = data.getInterval(prefix.substring(0, 1));
+        int position = data.getPosition(prefix.substring(0, 1));
         return recursiveGetNextTopK(root, prefix, position);
     }
 
@@ -192,19 +178,4 @@ public class SegmentTree implements SearchTree {
         recursiveReset(root);
         buildSegmentTree();
     }
-
-//    public int search(String s) {
-//        return recursiveSearch(root, s, position);
-//        int position = data.getInterval(s.substring(0, 1));
-//    }
-//
-//    private int recursiveSearch(SegmentNode node, String s, int position) {
-//        if (node.isLeaf()) {
-//            return node.getTree().search(s);
-//        } else {
-//            int left = node.getLeftLimit();
-//            int right = node.getRightLimit();
-//            int middle = left + ((right - left) / 2);
-//            return recursiveSearch(position <= middle ? node.getLeftChild() : node.getRightChild(), s, position);
-//        }
 }

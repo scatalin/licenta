@@ -1,6 +1,7 @@
 package algorithms.segmenttree.printing;
 
 import algorithms.segmenttree.intern.SegmentNode;
+import algorithms.segmenttree.parsing.SegmentTreeParser;
 import algorithms.utils.AbstractPrettyPrinter;
 
 import java.util.ArrayList;
@@ -64,7 +65,8 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
     @Override
     protected void initPrint() {
         matrix = new ArrayList<>();
-        for (int i = 0; i < root.getDepth(); i++) {
+        SegmentTreeParser parser = new SegmentTreeParser(root);
+        for (int i = 0; i < parser.getDepth(); i++) {
             matrix.add(new ArrayList<>());
         }
     }
