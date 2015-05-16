@@ -1,6 +1,8 @@
 package dictionary;
 
 import algorithms.heap.MaxHeap;
+import dictionary.inserting.DefaultDictionaryWeightUpdate;
+import dictionary.inserting.WeightUpdate;
 import dictionary.validators.LengthLessThanThresholdValidator;
 import dictionary.validators.Validator;
 
@@ -16,6 +18,7 @@ public class Dictionary {
     private MaxHeap<Word> wordsHeap;
     private String fileName;
     private Validator validator;
+    private WeightUpdate updater;
 
     public Dictionary() {
         this("");
@@ -25,6 +28,7 @@ public class Dictionary {
         this.fileName = fileName;
         wordsHeap = new MaxHeap<>();
         validator = new LengthLessThanThresholdValidator();
+        updater = new DefaultDictionaryWeightUpdate();
     }
 
     public void addDictionaryWord(String word, int weight) {
@@ -85,9 +89,13 @@ public class Dictionary {
             return;
         }
         Word existentWord = wordsHeap.getItems().get(index);
-        existentWord.increaseFrequency(increment);
+        updater.updateWeight(existentWord, increment);
         //todo add a check here for model remaking
         wordsHeap.shiftUp(index);
+    }
+
+    public void setUpdater(WeightUpdate updater) {
+        this.updater = updater;
     }
 }
 
