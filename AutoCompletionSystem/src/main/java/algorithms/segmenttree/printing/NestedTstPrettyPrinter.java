@@ -1,8 +1,7 @@
 package algorithms.segmenttree.printing;
 
 import algorithms.SearchTree;
-import algorithms.segmenttree.intern.SegmentNode;
-import algorithms.segmenttree.parsing.SegmentTreeParser;
+import algorithms.segmenttree.SegmentTreeLinear;
 import algorithms.utils.AbstractPrettyPrinter;
 
 import java.util.List;
@@ -12,17 +11,16 @@ import java.util.List;
  */
 public class NestedTstPrettyPrinter extends AbstractPrettyPrinter {
 
-    private final SegmentNode root;
+    private final SegmentTreeLinear tree;
     private List<SearchTree> trees;
 
-    public NestedTstPrettyPrinter(SegmentNode root) {
-        this.root = root;
+    public NestedTstPrettyPrinter(SegmentTreeLinear tree) {
+        this.tree = tree;
     }
 
     @Override
     protected void initPrint() {
-        SegmentTreeParser parser = new SegmentTreeParser(root);
-        trees = parser.findAllTst();
+        trees = tree.getTrees();
     }
 
     @Override

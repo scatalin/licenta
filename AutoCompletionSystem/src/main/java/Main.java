@@ -1,8 +1,6 @@
 import algorithms.SearchTree;
 import algorithms.segmenttree.SegmentTreeLinear;
 import algorithms.segmenttree.build.SegmentTstTreeFactory;
-import algorithms.segmenttree.intern.SegmentNode;
-import algorithms.segmenttree.parsing.SegmentTreeParser;
 import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.tst.TernarySearchTreeRecursive;
 import algorithms.tst.build.SearchTreeFactory;
@@ -56,7 +54,6 @@ public class Main {
     private static final String TREE_PRINT = "tree p";
     private static final String SEGMENT_BUILD = "sgm b";
     private static final String SEGMENT_PRINT = "sgm p";
-    private static final String SEGMENT_COUNT = "sgm c";
 
     public static void main(String[] args) {
         try {
@@ -185,7 +182,7 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_PRINT)) {
-                PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentNode) tree.getRoot());
+                PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentTreeLinear)tree);
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, printer.prettyPrint());
                 continue;
             }
@@ -195,11 +192,6 @@ public class Main {
             }
             if (command.equals(SEGMENT_PRINT)) {
                 FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, tree.print());
-                continue;
-            }
-            if (command.equals(SEGMENT_COUNT)) {
-                SegmentTreeParser parser = new SegmentTreeParser((SegmentNode) tree.getRoot());
-                System.out.println(parser.countNodes());
                 continue;
             }
             if (command.equals(TEST_SYSTEM_ROTATION)) {

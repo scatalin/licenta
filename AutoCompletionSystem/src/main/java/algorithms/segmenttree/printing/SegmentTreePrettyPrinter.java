@@ -1,84 +1,38 @@
 package algorithms.segmenttree.printing;
 
-import algorithms.segmenttree.intern.SegmentNode;
-import algorithms.segmenttree.parsing.SegmentTreeParser;
+import algorithms.segmenttree.SegmentTreeLinear;
+import algorithms.segmenttree.intern.SegmentTreeData;
 import algorithms.utils.AbstractPrettyPrinter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Catalin on 3/13/2015 .
  */
 public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
 
-    private final SegmentNode root;
-    private List<List<SegmentElement>> matrix;
+    private SegmentTreeData data;
     private StringBuilder stringBuilder;
 
-    public SegmentTreePrettyPrinter(SegmentNode root) {
-        this.root = root;
+    public SegmentTreePrettyPrinter(SegmentTreeLinear tree) {
+        this.data = tree.getData();
     }
 
     @Override
     protected void constructString(StringBuilder stringBuilder) {
         this.stringBuilder = stringBuilder;
-        recursiveConstructMatrix(root, 0);
-        for (List<SegmentElement> line : matrix) {
-            for (SegmentElement node : line) {
-                if (node.node != null) {
-                    addIndentation(node.level - 1, 0);
-                    stringBuilder.append(node.node);
-                    addIndentation(node.level - 1, 1);
-                } else {
-                    addIndentation(1, 0);
-                }
-            }
-            stringBuilder.append("\n");
+
+        for (String character : data.getAlphabet()) {
+            stringBuilder.append(character).append(":").append(data.getPosition(character));
+            addIndentation();
         }
+        stringBuilder.append("\n");
     }
 
-    private void addIndentation(int depth, int extra) {
-        double size = Math.pow(2, depth);
-        size -= extra;
-        for (int i = 0; i < size; i++) {
-            stringBuilder.append("       ");
-        }
-    }
 
-    private void recursiveConstructMatrix(SegmentNode node, int level) {
-        if (node == null) {
-            if (level == (matrix.size() - 1)) {
-                addNonExistentSon();
-            }
-            return;
-        }
-        matrix.get(level).add(new SegmentElement(matrix.size() - level, node));
-        recursiveConstructMatrix(node.getLeftChild(), level + 1);
-        recursiveConstructMatrix(node.getRightChild(), level + 1);
-    }
-
-    private void addNonExistentSon() {
-        matrix.get(matrix.size() - 1).add(new SegmentElement(0, null));
+    private void addIndentation() {
+        stringBuilder.append("       ");
     }
 
     @Override
     protected void initPrint() {
-        matrix = new ArrayList<>();
-        SegmentTreeParser parser = new SegmentTreeParser(root);
-        for (int i = 0; i < parser.getDepth(); i++) {
-            matrix.add(new ArrayList<>());
-        }
     }
-
-    private class SegmentElement {
-        final int level;
-        final SegmentNode node;
-
-        public SegmentElement(int level, SegmentNode node) {
-            this.level = level;
-            this.node = node;
-        }
-    }
-
 }

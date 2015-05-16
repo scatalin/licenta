@@ -2,7 +2,9 @@ package algorithms.segmenttree;
 
 import algorithms.SearchTree;
 import algorithms.segmenttree.intern.SegmentTreeData;
+import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.tst.build.SearchTreeFactory;
+import algorithms.utils.PrettyPrinter;
 import dictionary.Word;
 import system.Properties;
 
@@ -76,7 +78,8 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public String print() {
-        return "";
+        PrettyPrinter printer = new SegmentTreePrettyPrinter(this);
+        return printer.prettyPrint();
     }
 
     @Override
@@ -92,5 +95,13 @@ public class SegmentTreeLinear implements SearchTree {
     @Override
     public void reset() {
         resetAll();
+    }
+
+    public List<SearchTree> getTrees(){
+        return trees;
+    }
+
+    public SegmentTreeData getData(){
+        return data;
     }
 }

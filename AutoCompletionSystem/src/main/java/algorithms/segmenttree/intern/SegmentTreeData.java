@@ -4,6 +4,7 @@ import system.Properties;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by gstan on 16.03.2015.
@@ -28,5 +29,9 @@ public class SegmentTreeData {
 
     public int getPosition(String s) {
         return data.get(s);
+    }
+
+    public Set<String> getAlphabet(){
+        return data.keySet();
     }
 }
