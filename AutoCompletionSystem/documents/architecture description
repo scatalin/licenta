@@ -7,7 +7,7 @@ ce ar trebui sa se updateze in momentul in care trebuie updatat un cuvant?
 
 weight-ul din arbore
     search cuvantul in arbore. aici ce updatez?
-        cu arhitectura momentana, nu se updateaza modelul construit.
+        cu arhitectura momentana, se poate updata modelul, dar nu se poate rearanja arborele
 
 weight-ul din dictionar
     //daca ramane cu lista, trebuie cautat cu un binary search tree. dictionarul trebuie mentinut ordonat alfabetic.
