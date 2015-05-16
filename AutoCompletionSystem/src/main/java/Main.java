@@ -132,7 +132,7 @@ public class Main {
                 continue;
             }
             if (command.equals(TST_BUILD)) {
-                tst = SearchTreeFactory.buildTst(dictionary);
+                tst = SearchTreeFactory.buildTst(dictionary.getWords());
                 continue;
             }
             if (command.equals(TST_RANDOM_BUILD)) {
@@ -170,7 +170,7 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_BUILD)) {
-                SegmentTstTreeFactory.buildSegmentTst(tree, dictionary);
+                SegmentTstTreeFactory.buildSegmentTst(tree, dictionary.getWords());
                 continue;
             }
             if (command.equals(TREE_RANDOM_BUILD)) {
