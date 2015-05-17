@@ -21,9 +21,9 @@ public class SegmentTreeLinear implements SearchTree {
 
     public SegmentTreeLinear() {
         int size = Properties.SEGMENT_SIZE;
-        trees = new ArrayList<>(size +1);
+        trees = new ArrayList<>(size + 1);
         data = new SegmentTreeData(size);
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             trees.add(TernarySearchTreeFactory.createTst());
         }
     }
@@ -51,7 +51,7 @@ public class SegmentTreeLinear implements SearchTree {
     }
 
     private void resetAll() {
-        for(SearchTree tree : trees){
+        for (SearchTree tree : trees) {
             tree.reset();
         }
     }
@@ -64,14 +64,14 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public void setNumberOfSuggestions(int numberOfSuggestions) {
-        for(SearchTree tree:trees){
+        for (SearchTree tree : trees) {
             tree.setNumberOfSuggestions(numberOfSuggestions);
         }
     }
 
     @Override
     public void resetCompletion() {
-        for(SearchTree tree:trees){
+        for (SearchTree tree : trees) {
             tree.resetCompletion();
         }
     }
@@ -87,11 +87,11 @@ public class SegmentTreeLinear implements SearchTree {
         resetAll();
     }
 
-    public List<SearchTree> getTrees(){
+    public List<SearchTree> getTrees() {
         return trees;
     }
 
-    public SegmentTreeData getData(){
+    public SegmentTreeData getData() {
         return data;
     }
 }

@@ -31,7 +31,7 @@ public class SegmentTreeData {
         return data.get(s);
     }
 
-    public Set<String> getAlphabet(){
+    public Set<String> getAlphabet() {
         return data.keySet();
     }
 }

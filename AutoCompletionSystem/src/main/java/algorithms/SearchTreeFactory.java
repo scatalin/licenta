@@ -12,7 +12,7 @@ public class SearchTreeFactory {
         return new TernarySearchTreeRecursive();
     }
 
-    public static SearchTree createCompletionTree(){
+    public static SearchTree createCompletionTree() {
         return new SegmentTreeLinear();
     }
 }

@@ -67,15 +67,14 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
 
     @Override
     public List<String> getSuggestions(String prefix) {
-        if(toReset){
+        if (toReset) {
             resetSearching();
-        }
-        else {
+        } else {
             clearInvalidPaths(prefix);
         }
         searchFurther(prefix);
         List<String> suggestions = new ArrayList<>(foundWords.size());
-        for(Word word: foundWords){
+        for (Word word : foundWords) {
             suggestions.add(word.getWord());
         }
         return suggestions;

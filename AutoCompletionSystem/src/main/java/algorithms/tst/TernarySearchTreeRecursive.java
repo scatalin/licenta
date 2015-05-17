@@ -67,7 +67,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
             return;
         }
         if (node == null) {
-           return;
+            return;
         }
         if (toInsertWeight > node.getSubtreesWeight()) {
             node.setSubtreesWeight(toInsertWeight);

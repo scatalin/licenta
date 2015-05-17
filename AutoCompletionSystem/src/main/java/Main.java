@@ -163,7 +163,7 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_PRINT)) {
-                PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentTreeLinear)tree);
+                PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentTreeLinear) tree);
                 FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, printer.prettyPrint());
                 continue;
             }

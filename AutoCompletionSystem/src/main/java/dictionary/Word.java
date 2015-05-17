@@ -5,7 +5,7 @@ import system.Properties;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word implements Comparable{
+public class Word implements Comparable {
 
     private static final WordFrequencyComparator wordFrequencyComparator = new WordFrequencyComparator();
 
@@ -40,6 +40,10 @@ public class Word implements Comparable{
     public int getWeight() {
         calculateTotalWeight();
         return totalWeight;
+    }
+
+    public void setWeight(int dictionaryFrequency) {
+        this.dictionaryFrequency = dictionaryFrequency;
     }
 
     private void calculateTotalWeight() {
@@ -104,9 +108,5 @@ public class Word implements Comparable{
     @Override
     public int compareTo(Object o) {
         return Word.wordFrequencyComparator.compare(this, ((Word) o));
-    }
-
-    public void setWeight(int dictionaryFrequency) {
-        this.dictionaryFrequency = dictionaryFrequency;
     }
 }

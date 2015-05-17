@@ -5,7 +5,7 @@ import dictionary.Word;
 /**
  * Created by Catalin on 5/16/2015 .
  */
-public class DefaultDictionaryWeightUpdate implements WeightUpdate{
+public class DefaultDictionaryWeightUpdate implements WeightUpdate {
 
     public DefaultDictionaryWeightUpdate() {
     }
