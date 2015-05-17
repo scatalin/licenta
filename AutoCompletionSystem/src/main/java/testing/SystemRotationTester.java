@@ -146,9 +146,9 @@ public class SystemRotationTester {
 
     private int initTree(int run) {
         Dictionary dictionary = new Dictionary();
-        dictionaryProcessor.setDictionary(dictionary);
+        dictionaryProcessor = new DictionaryProcessor(dictionary);
 
-        filesProcessor.processInputFiles(false, run);
+        filesProcessor.processInputFiles(run);
 
         tree.reset();
         tree.setK(Properties.AUTOCOMPLETION_K_SIZE);

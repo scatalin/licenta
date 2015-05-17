@@ -43,10 +43,6 @@ public class PropertiesParser {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
-                    Properties.PROCESSED_FILES_DIRECTORY = tokens[1];
-                    continue;
-                }
                 if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
                     Properties.DICTIONARY_DIRECTORY = tokens[1];
                     continue;
@@ -65,10 +61,6 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
-                    continue;
-                }
-                if (tokens[0].equals(FileProperties.PROCESSED_FILES_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
-                    Properties.PROCESSED_FILES_DIRECTORY = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.DICTIONARY_DIRECTORY_LINUX.getValue()) && Properties.SYSTEM.equals(LINUX)) {
@@ -95,8 +87,8 @@ public class PropertiesParser {
                     Properties.DICTIONARY_TEST_FILE_NAME = tokens[1];
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.TST_OUTPUT_FILE_NAME.getValue())) {
-                    Properties.TST_OUTPUT_FILE_NAME = tokens[1];
+                if (tokens[0].equals(FileProperties.TST_TREE_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.TST_TREE_OUTPUT_FILE_NAME = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.REPORT_OUTPUT_FILE_NAME.getValue())) {
@@ -152,12 +144,8 @@ public class PropertiesParser {
                     Properties.AUTOCOMPLETION_K_SIZE = Integer.parseInt(tokens[1]);
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.SEGMENT_OUTPUT_FILE_NAME.getValue())) {
-                    Properties.SEGMENT_OUTPUT_FILE_NAME = tokens[1];
-                    continue;
-                }
-                if (tokens[0].equals(FileProperties.SEGMENT_TREE_OUTPUT_FILE_NAME.getValue())) {
-                    Properties.SEGMENT_TREE_OUTPUT_FILE_NAME = tokens[1];
+                if (tokens[0].equals(FileProperties.COMPLETION_TREE_OUTPUT_FILE_NAME.getValue())) {
+                    Properties.COMPLETION_TREE_OUTPUT_FILE_NAME = tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.WEIGHT_FREQUENCY.getValue())) {

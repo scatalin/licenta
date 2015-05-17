@@ -2,7 +2,6 @@ package input;
 
 import dictionary.Dictionary;
 import system.Properties;
-import input.utils.FileManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,35 +18,19 @@ public class FilesProcessor {
 
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File inputDir;
-    private final String processedDirectory;
 
     private final DictionaryProcessor dictionary;
 
-    private final FileManager manager;
-
     public FilesProcessor(DictionaryProcessor dictionary) {
-        this(dictionary, Properties.INPUT_FILES_DIRECTORY, Properties.PROCESSED_FILES_DIRECTORY);
+        this(dictionary, Properties.INPUT_FILES_DIRECTORY);
     }
 
     public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory) {
-        this(dictionary, inputDirectory, Properties.PROCESSED_FILES_DIRECTORY);
-    }
-
-    public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory, String processedDirectory) {
         this.dictionary = dictionary;
-        this.processedDirectory = processedDirectory;
-
         inputDir = new File(inputDirectory);
         if (!inputDir.exists() && !inputDir.isDirectory()) {
             System.out.println("input files directory does not exist: " + inputDir + ";");
         }
-
-        File processedDir = new File(this.processedDirectory);
-        if (!processedDir.exists() && !processedDir.isDirectory()) {
-            System.out.println("processed files directory does not exist: " + processedDir + ";");
-        }
-
-        manager = new FileManager();
     }
 
     public int getNumberOfFiles() {
@@ -55,7 +38,7 @@ public class FilesProcessor {
         return (listFileNames != null) ? listFileNames.length : 0;
     }
 
-    public void processInputFiles(boolean move, int skip) {
+    public void processInputFiles(int skip) {
         dictionary.readDictionary();
         File[] listFileNames = inputDir.listFiles();
 
@@ -87,10 +70,6 @@ public class FilesProcessor {
                 }
 
                 reader.close();
-                if (move) {
-                    manager.moveFile(file, processedDirectory);
-                    System.out.println("file " + file.getName() + " was moved to processed directory");
-                }
 
             } catch (IOException e) {
                 e.printStackTrace();

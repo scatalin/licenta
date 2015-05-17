@@ -3,7 +3,6 @@ package testing;
 import algorithms.SearchTree;
 import dictionary.Word;
 import system.Properties;
-import input.utils.FileManager;
 
 import java.io.*;
 import java.util.List;
@@ -16,8 +15,6 @@ public class SystemTester {
     private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File allReportFile;
     private final File testDir;
-    private final String processedDirectory;
-    private final FileManager manager;
     private SearchTree segmentTree;
 
     public SystemTester(SearchTree segmentTree) {
@@ -34,24 +31,15 @@ public class SystemTester {
             System.out.println("all report file does not exist " + allReportFile + ";");
         }
 
-        processedDirectory = Properties.PROCESSED_FILES_DIRECTORY;
-
-        File processedDir = new File(processedDirectory);
-        if (!processedDir.exists() && !processedDir.isDirectory()) {
-            System.out.println("processed files directory does not exist: " + processedDir + ";");
-        }
-
         String inputDirectory = Properties.TEST_FILES_DIRECTORY;
 
         testDir = new File(inputDirectory);
         if (!testDir.exists() && !testDir.isDirectory()) {
             System.out.println("test files directory does not exist: " + testDir + ";");
         }
-
-        manager = new FileManager();
     }
 
-    public void testSystem(boolean move) throws FileNotFoundException {
+    public void testSystem() throws FileNotFoundException {
         File[] listFileNames = testDir.listFiles();
 
         if (listFileNames == null) {
@@ -112,10 +100,6 @@ public class SystemTester {
                     System.out.println("file " + file.getName() + " was tested");
                 }
                 // for threshold
-
-                if (move) {
-                    manager.moveFile(file, processedDirectory);
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

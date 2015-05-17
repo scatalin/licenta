@@ -5,9 +5,8 @@ package system;
  */
 public class Properties {
     public static String RESULT_DIRECTORY;
-    public static String SEGMENT_TREE_OUTPUT_FILE_NAME;
+    public static String COMPLETION_TREE_OUTPUT_FILE_NAME;
     public static String SYSTEM;
-    public static String SEGMENT_OUTPUT_FILE_NAME;
     public static int SEGMENT_SIZE;
     public static String SYSTEM_PATH_SEPARATOR;
     public static String DICTIONARY_DIRECTORY;
@@ -16,8 +15,7 @@ public class Properties {
     public static String INPUT_FILES_DIRECTORY;
     public static String TEST_FILES_DIRECTORY;
     public static String TEST_ROTATION_DIRECTORY;
-    public static String PROCESSED_FILES_DIRECTORY;
-    public static String TST_OUTPUT_FILE_NAME;
+    public static String TST_TREE_OUTPUT_FILE_NAME;
     public static String REPORT_OUTPUT_FILE_NAME;
     public static boolean IS_FORCED_SUPPORTED_OS;
     public static String FORCED_SYSTEM_PATH_SEPARATOR;

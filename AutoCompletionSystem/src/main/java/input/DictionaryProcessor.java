@@ -15,7 +15,7 @@ public class DictionaryProcessor {
     private Dictionary dictionary;
 
     public DictionaryProcessor() {
-        this(null, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
+        this(new Dictionary(), Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
 
     public DictionaryProcessor(Dictionary dictionary) {
@@ -56,9 +56,14 @@ public class DictionaryProcessor {
         try (PrintWriter writer = new PrintWriter(dictionaryFile)) {
             dictionaryFile.delete();
             dictionaryFile.createNewFile();
-
+            int count = 0;
             for (Word word : dictionary.getAlphabeticallyWords()) {
                 writer.println(word);
+                count++;
+                if (count > 100) {
+                    writer.flush();
+                    count = 0;
+                }
             }
             writer.flush();
         } catch (IOException e) {
@@ -70,7 +75,4 @@ public class DictionaryProcessor {
         return dictionary;
     }
 
-    public void setDictionary(Dictionary dictionary) {
-        this.dictionary = dictionary;
-    }
 }
