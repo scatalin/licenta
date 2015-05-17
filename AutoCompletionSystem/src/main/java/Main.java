@@ -1,9 +1,9 @@
 import algorithms.SearchTree;
+import algorithms.SearchTreeFactory;
 import algorithms.segmenttree.SegmentTreeLinear;
-import algorithms.segmenttree.build.SegmentTstTreeFactory;
+import algorithms.segmenttree.build.SegmentTstTreeBuilder;
 import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
-import algorithms.tst.TernarySearchTreeRecursive;
-import algorithms.tst.build.SearchTreeFactory;
+import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.FilePrinter;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Dictionary;
@@ -29,17 +29,14 @@ public class Main {
     private static final String RESET = "reset";
     private static final String DRAW = "draw";
     private static final String DRAW_ALL = "draw all";
-    private static final String PROCESS_FILES_NO_MOVE = "input";
-    private static final String PROCESS_FILES_MOVE = "input m";
+    private static final String PROCESS_FILES = "input";
     private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_ROTATION_IN_MEMORY = "test all m";
     private static final String TEST_SYSTEM_TEN_FOLD = "test new";
-    private static final String TEST_SYSTEM_PERCENTAGES_MOVE = "test p m";
-    private static final String TEST_SYSTEM_PERCENTAGES_NO_MOVE = "test p";
+    private static final String TEST_SYSTEM_PERCENTAGES = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
     private static final String TST_BUILD = "tst b";
-    private static final String TST_RANDOM_BUILD = "tst rb";
     private static final String TST_WEIGHTED_BUILD = "tst wb";
     private static final String TST_PRINT = "tst p";
     private static final String TST_SET_K = "tst sk";
@@ -49,11 +46,8 @@ public class Main {
     private static final String TREE_GET_NEXT_K = "tree gnk";
     private static final String TREE_GET_K = "tree gk";
     private static final String TREE_BUILD = "tree b";
-    private static final String TREE_RANDOM_BUILD = "tree rb";
     private static final String TREE_WEIGHTED_BUILD = "tree wb";
     private static final String TREE_PRINT = "tree p";
-    private static final String SEGMENT_BUILD = "sgm b";
-    private static final String SEGMENT_PRINT = "sgm p";
 
     public static void main(String[] args) {
         try {
@@ -69,8 +63,8 @@ public class Main {
     }
 
     void start() {
-        SearchTree tree = new SegmentTreeLinear();
-        SearchTree tst = new TernarySearchTreeRecursive();
+        SearchTree tree = SearchTreeFactory.createCompletionTree();
+        SearchTree tst = SearchTreeFactory.createTst();
         Dictionary dictionary = new Dictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
         dictionaryProcessor.readDictionary();
@@ -86,8 +80,8 @@ public class Main {
             if (command.equals(RESET)) {
                 try {
                     PropertiesParser.propertiesFileRead();
-                    tree = new SegmentTreeLinear();
-                    tst = new TernarySearchTreeRecursive();
+                    tree = SearchTreeFactory.createCompletionTree();
+                    tst = SearchTreeFactory.createTst();
                     dictionary = new Dictionary();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
                     dictionaryProcessor.readDictionary();
@@ -115,14 +109,9 @@ public class Main {
                 dictionaryProcessor.readDictionary();
                 continue;
             }
-            if (command.equals(PROCESS_FILES_MOVE)) {
+            if (command.equals(PROCESS_FILES)) {
                 FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles(true, -1);
-                continue;
-            }
-            if (command.equals(PROCESS_FILES_NO_MOVE)) {
-                FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles(false, -1);
+                filesProcessor.processInputFiles(-1);
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
@@ -131,15 +120,11 @@ public class Main {
                 continue;
             }
             if (command.equals(TST_BUILD)) {
-                tst = SearchTreeFactory.buildTst(dictionary.getWords());
-                continue;
-            }
-            if (command.equals(TST_RANDOM_BUILD)) {
-                tst = SearchTreeFactory.buildRandomTst(dictionary);
+                tst = TernarySearchTreeFactory.buildTst(dictionary.getWords());
                 continue;
             }
             if (command.equals(TST_WEIGHTED_BUILD)) {
-                tst = SearchTreeFactory.buildWeightedTst(dictionary);
+                tst = TernarySearchTreeFactory.buildWeightedTst(dictionary);
                 continue;
             }
             if (command.equals(TST_PRINT)) {
@@ -169,29 +154,17 @@ public class Main {
                 continue;
             }
             if (command.equals(TREE_BUILD)) {
-                SegmentTstTreeFactory.buildSegmentTst(tree, dictionary.getWords());
-                continue;
-            }
-            if (command.equals(TREE_RANDOM_BUILD)) {
-                SegmentTstTreeFactory.buildRandomSegmentTst(tree, dictionary);
+                tree = SegmentTstTreeBuilder.buildSegmentTst(dictionary);
                 continue;
             }
             if (command.equals(TREE_WEIGHTED_BUILD)) {
+                tree = SegmentTstTreeBuilder.buildWeightedSegmentTst(dictionary);
                 tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
-                SegmentTstTreeFactory.buildWeightedSegmentTst(tree, dictionary);
                 continue;
             }
             if (command.equals(TREE_PRINT)) {
                 PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentTreeLinear)tree);
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_TREE_FILE, printer.prettyPrint());
-                continue;
-            }
-            if (command.equals(SEGMENT_BUILD)) {
-                tree = new SegmentTreeLinear();
-                continue;
-            }
-            if (command.equals(SEGMENT_PRINT)) {
-                FilePrinter.printTstToFile(FilePrinter.SEGMENT_FILE, tree.print());
+                FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, printer.prettyPrint());
                 continue;
             }
             if (command.equals(TEST_SYSTEM_ROTATION)) {
@@ -221,19 +194,10 @@ public class Main {
                 }
                 continue;
             }
-            if (command.equals(TEST_SYSTEM_PERCENTAGES_MOVE)) {
+            if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
                 SystemTester tester = new SystemTester(tree);
                 try {
-                    tester.testSystem(true);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                continue;
-            }
-            if (command.equals(TEST_SYSTEM_PERCENTAGES_NO_MOVE)) {
-                SystemTester tester = new SystemTester(tree);
-                try {
-                    tester.testSystem(false);
+                    tester.testSystem();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

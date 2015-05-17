@@ -3,7 +3,7 @@ package algorithms.segmenttree;
 import algorithms.SearchTree;
 import algorithms.segmenttree.intern.SegmentTreeData;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
-import algorithms.tst.build.SearchTreeFactory;
+import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Word;
 import system.Properties;
@@ -24,7 +24,7 @@ public class SegmentTreeLinear implements SearchTree {
         trees = new ArrayList<>(size +1);
         data = new SegmentTreeData(size);
         for(int i = 0; i < size; i++){
-            trees.add(SearchTreeFactory.createTst());
+            trees.add(TernarySearchTreeFactory.createTst());
         }
     }
 
