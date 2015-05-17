@@ -182,7 +182,7 @@ public class SystemRotationTester {
                 Statistics statistics = new Statistics(toTestDictionary.getFileName(), currentRun, dictionarySize, 0);
                 statisticsList.get(currentRun).add(statistics);
 
-                for (Word w : toTestDictionary.getWords()) {
+                for (Word w : toTestDictionary.asList()) {
                     String word = w.getWord().toLowerCase();
                     if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                         statistics.beginWordStatistics(word);

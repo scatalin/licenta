@@ -115,12 +115,12 @@ public class Main {
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
-                System.out.println("dictionarul are " + dictionary.getWords().size() + " cuvinte");
-                System.out.println(dictionary.getWords());
+                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
+                System.out.println(dictionary.asList());
                 continue;
             }
             if (command.equals(TST_BUILD)) {
-                tst = TernarySearchTreeFactory.buildTst(dictionary.getWords());
+                tst = TernarySearchTreeFactory.buildTst(dictionary.asList());
                 continue;
             }
             if (command.equals(TST_WEIGHTED_BUILD)) {

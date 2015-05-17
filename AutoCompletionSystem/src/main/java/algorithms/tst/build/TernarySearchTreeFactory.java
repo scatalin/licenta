@@ -19,7 +19,7 @@ public class TernarySearchTreeFactory {
 
     public static SearchTree buildTst(List<Word> dictionary) {
         SearchTree tst = SearchTreeFactory.createTst();
-        tst.load(dictionary, true);
+        tst.load(dictionary, false);
         return tst;
     }
 

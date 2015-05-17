@@ -1,11 +1,14 @@
 package dictionary;
 
+import algorithms.Data;
+import algorithms.SearchTreeFactory;
 import algorithms.heap.MaxHeap;
 import dictionary.inserting.DefaultDictionaryWeightUpdate;
 import dictionary.inserting.WeightUpdate;
 import dictionary.validators.LengthLessThanThresholdValidator;
 import dictionary.validators.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,10 +18,14 @@ import java.util.List;
  */
 public class Dictionary {
 
-    private MaxHeap<Word> wordsHeap;
+    //todo separate the heap as it is separated in segment tree. necessary for model reconstruction.
+    private List<MaxHeap<Word>> words;
+    private Data data;
     private String fileName;
     private Validator validator;
     private WeightUpdate updater;
+    private List<Word> wordsList;
+    private boolean changed;
 
     public Dictionary() {
         this("");
@@ -26,9 +33,14 @@ public class Dictionary {
 
     public Dictionary(String fileName) {
         this.fileName = fileName;
-        wordsHeap = new MaxHeap<>();
+        data = SearchTreeFactory.createData();
+        words = new ArrayList<>(data.getSize());
+        for(int i = 0; i<data.getSize(); i++){
+            words.add(new MaxHeap<>());
+        }
         validator = new LengthLessThanThresholdValidator();
         updater = new DefaultDictionaryWeightUpdate();
+        changed = true;
     }
 
     public void addDictionaryWord(String word, int weight) {
@@ -44,14 +56,24 @@ public class Dictionary {
     }
 
     public List<Word> getWordsSortedByWeight() {
-        List<Word> words = wordsHeap.duplicateItems();
-        Collections.sort(words, new WordFrequencyComparator());
-        return words;
+        List<Word> toReturnWords = asList();
+        Collections.sort(toReturnWords, new WordFrequencyComparator());
+        return toReturnWords;
+    }
+
+    public List<Word> asList() {
+        if(changed){
+            wordsList = new ArrayList<>();
+            for(MaxHeap<Word> heap : words){
+                wordsList.addAll(heap.duplicateItems());
+            }
+        }
+        return wordsList;
     }
 
     public List<Word> getAlphabeticallyWords() {
-        List<Word> words = wordsHeap.duplicateItems();
-        Collections.sort(words, new Comparator<Word>() {
+        List<Word> toReturnWords = asList();
+        Collections.sort(toReturnWords, new Comparator<Word>() {
             // word comparator
             @Override
             public int compare(Word o1, Word o2) {
@@ -59,15 +81,15 @@ public class Dictionary {
                 return o1.getWord().compareTo(o2.getWord());
             }
         });
+        return toReturnWords;
+    }
+
+    public List<MaxHeap<Word>> getData() {
         return words;
     }
 
-    public List<Word> getWords() {
-        return wordsHeap.getItems();
-    }
-
     public int getNumberOfWords() {
-        return wordsHeap.getItems().size();
+        return asList().size();
     }
 
     public String getFileName() {
@@ -75,27 +97,38 @@ public class Dictionary {
     }
 
     public String toString() {
-        return "d=" + wordsHeap.getItems().size() + " " + wordsHeap.getItems();
+        return "d=" + asList().size() + " " + asList();
     }
 
     private void integrateDictionaryWord(String word, int increment) {
         if (!validator.isValid(word)) {
             return;
         }
+        changed = true;
         Word checkWord = new Word(word);
-        int index = wordsHeap.getItems().lastIndexOf(checkWord);
+
+        int position = data.getPosition(word);
+        List<Word> items = words.get(position).getItems();
+
+        int index = items.lastIndexOf(checkWord);
         if (index == -1) {
-            wordsHeap.insert(new Word(word, increment));
+            words.get(position).insert(new Word(word, increment));
             return;
         }
-        Word existentWord = wordsHeap.getItems().get(index);
+
+        Word existentWord = items.get(index);
         updater.updateWeight(existentWord, increment);
-        //todo add a check here for model remaking
-        wordsHeap.shiftUp(index);
+        words.get(position).shiftUp(index);
     }
 
     public void setUpdater(WeightUpdate updater) {
         this.updater = updater;
+    }
+
+    public void clear() {
+        for(MaxHeap<Word> heap: words){
+            heap.clearHeap();
+        }
     }
 }
 

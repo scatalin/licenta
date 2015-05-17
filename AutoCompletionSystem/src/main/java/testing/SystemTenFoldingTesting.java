@@ -83,7 +83,7 @@ public class SystemTenFoldingTesting {
                     }
                     //concatenate the rest of the dictionaries
                     Dictionary addDictionary = dictionaries.get(index);
-                    for (Word word : addDictionary.getWords()) {
+                    for (Word word : addDictionary.asList()) {
                         trainingDictionary.addDictionaryWord(word);
                     }
 
@@ -105,7 +105,7 @@ public class SystemTenFoldingTesting {
 
                     Statistics statistics = new Statistics(testDictionary.getFileName(), currentRun, dictionarySize, noTrainingFiles);
 
-                    for (Word w : testDictionary.getWords()) {
+                    for (Word w : testDictionary.asList()) {
                         String word = w.getWord().toLowerCase();
                         if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                             statistics.beginWordStatistics(word);

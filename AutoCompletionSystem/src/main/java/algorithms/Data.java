@@ -1,4 +1,4 @@
-package algorithms.segmenttree.intern;
+package algorithms;
 
 import system.Properties;
 
@@ -9,20 +9,18 @@ import java.util.Set;
 /**
  * Created by gstan on 16.03.2015.
  */
-public class SegmentTreeData {
+public class Data {
 
     private static final String ALPHABET = Properties.ALPHABET;
     private final Map<String, Integer> data;
-    private final int size;
 
-    public SegmentTreeData(int size) {
-        this.size = size;
+    public Data() {
         data = new HashMap<>();
         parseInterval();
     }
 
     public void parseInterval() {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < ALPHABET.length(); i++) {
             data.put(String.valueOf(ALPHABET.charAt(i)), i);
         }
     }
@@ -33,5 +31,9 @@ public class SegmentTreeData {
 
     public Set<String> getAlphabet() {
         return data.keySet();
+    }
+
+    public int getSize() {
+        return ALPHABET.length();
     }
 }

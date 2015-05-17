@@ -1,7 +1,8 @@
 package algorithms.segmenttree;
 
 import algorithms.SearchTree;
-import algorithms.segmenttree.intern.SegmentTreeData;
+import algorithms.Data;
+import algorithms.SearchTreeFactory;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.PrettyPrinter;
@@ -17,12 +18,12 @@ import java.util.List;
 public class SegmentTreeLinear implements SearchTree {
 
     private List<SearchTree> trees;
-    private SegmentTreeData data;
+    private Data data;
 
     public SegmentTreeLinear() {
         int size = Properties.SEGMENT_SIZE;
         trees = new ArrayList<>(size + 1);
-        data = new SegmentTreeData(size);
+        data = SearchTreeFactory.createData();
         for (int i = 0; i < size; i++) {
             trees.add(TernarySearchTreeFactory.createTst());
         }
@@ -78,7 +79,7 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public String print() {
-        PrettyPrinter printer = new SegmentTreePrettyPrinter(this);
+        PrettyPrinter printer = new SegmentTreePrettyPrinter();
         return printer.prettyPrint();
     }
 
@@ -89,9 +90,5 @@ public class SegmentTreeLinear implements SearchTree {
 
     public List<SearchTree> getTrees() {
         return trees;
-    }
-
-    public SegmentTreeData getData() {
-        return data;
     }
 }

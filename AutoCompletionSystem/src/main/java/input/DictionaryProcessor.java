@@ -39,7 +39,7 @@ public class DictionaryProcessor {
 
     public void readDictionary() {
         try (BufferedReader reader = new BufferedReader(new FileReader(dictionaryFile))) {
-            dictionary.getWords().clear();
+            dictionary.clear();
 
             String line = reader.readLine();
             while (line != null) {

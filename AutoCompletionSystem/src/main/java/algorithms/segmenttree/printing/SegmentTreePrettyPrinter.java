@@ -1,7 +1,7 @@
 package algorithms.segmenttree.printing;
 
-import algorithms.segmenttree.SegmentTreeLinear;
-import algorithms.segmenttree.intern.SegmentTreeData;
+import algorithms.Data;
+import algorithms.SearchTreeFactory;
 import algorithms.utils.AbstractPrettyPrinter;
 
 /**
@@ -9,11 +9,11 @@ import algorithms.utils.AbstractPrettyPrinter;
  */
 public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
 
-    private SegmentTreeData data;
+    private Data data;
     private StringBuilder stringBuilder;
 
-    public SegmentTreePrettyPrinter(SegmentTreeLinear tree) {
-        this.data = tree.getData();
+    public SegmentTreePrettyPrinter() {
+        this.data = SearchTreeFactory.createData();
     }
 
     @Override

@@ -20,7 +20,7 @@ public class SegmentTstTreeBuilder {
 
     public static SearchTree buildSegmentTst(Dictionary dictionary) {
         SearchTree tree = SearchTreeFactory.createCompletionTree();
-        fillTreeWithWords(dictionary.getWords(), tree);
+        fillTreeWithWords(dictionary.asList(), tree);
         return tree;
     }
 
