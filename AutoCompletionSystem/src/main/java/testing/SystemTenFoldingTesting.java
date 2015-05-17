@@ -93,7 +93,7 @@ public class SystemTenFoldingTesting {
                 //construct the tree with the training Dictionary
 
                 tree.reset();
-                tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
+                tree.setNumberOfSuggestions(Properties.AUTOCOMPLETION_SUGGESTION_SIZE);
                 tree.load(trainingDictionary.getWordsSortedByWeight(), true);
                 int dictionarySize = trainingDictionary.getNumberOfWords();
 
@@ -109,10 +109,10 @@ public class SystemTenFoldingTesting {
                         String word = w.getWord().toLowerCase();
                         if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                             statistics.beginWordStatistics(word);
-                            tree.resetSearchK();
+                            tree.resetCompletion();
                             String prefix = word.substring(0, Math.min(currentRun, word.length()));
 
-                            List<Word> completedWords = tree.getNextTopK(prefix);
+                            List<String> completedWords = tree.getSuggestions(prefix);
                             fillStatistics(statistics, word, prefix.length(), completedWords);
                         }
                     }
@@ -132,15 +132,15 @@ public class SystemTenFoldingTesting {
         }
     }
 
-    private void fillStatistics(Statistics statistics, String word, int prefixLength, List<Word> completedWords) {
+    private void fillStatistics(Statistics statistics, String word, int prefixLength, List<String> completedWords) {
         if (completedWords.isEmpty()) {
             statistics.interrogationStatistic(prefixLength, -2);
             return;
         }
         int found = -1;
         for (int i = 0; i < completedWords.size(); i++) {
-            Word aWord = completedWords.get(i);
-            if (aWord.getWord().equals(word)) {
+            String aWord = completedWords.get(i);
+            if (aWord.equals(word)) {
                 found = i;
                 break;
             }

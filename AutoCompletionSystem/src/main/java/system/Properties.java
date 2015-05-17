@@ -20,7 +20,7 @@ public class Properties {
     public static boolean IS_FORCED_SUPPORTED_OS;
     public static String FORCED_SYSTEM_PATH_SEPARATOR;
     public static int AUTOCOMPLETION_THRESHOLD;
-    public static int AUTOCOMPLETION_K_SIZE;
+    public static int AUTOCOMPLETION_SUGGESTION_SIZE;
     public static String MEASURES_OUTPUT_FILE_NAME;
     public static int SUCCESS_THRESHOLD;
     public static int TEST_WORD_DEPTH;

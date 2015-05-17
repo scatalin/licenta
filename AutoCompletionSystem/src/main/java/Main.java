@@ -135,8 +135,8 @@ public class Main {
                 command = command.replace(TST_SET_K + " ", "");
                 try {
                     int k = Integer.parseInt(command);
-                    tst.setK(k);
-                    tst.resetSearchK();
+                    tst.setNumberOfSuggestions(k);
+                    tst.resetCompletion();
                 } catch (NumberFormatException e) {
                     System.out.println("no integer provided");
                 }
@@ -144,13 +144,13 @@ public class Main {
             }
             if (command.startsWith(TST_GET_K)) {
                 command = command.replace(TST_GET_K + " ", "");
-                tst.resetSearchK();
-                System.out.println(tst.getNextTopK(command));
+                tst.resetCompletion();
+                System.out.println(tst.getSuggestions(command));
                 continue;
             }
             if (command.startsWith(TST_GET_NEXT_K)) {
                 command = command.replace(TST_GET_NEXT_K + " ", "");
-                System.out.println(tst.getNextTopK(command));
+                System.out.println(tst.getSuggestions(command));
                 continue;
             }
             if (command.equals(TREE_BUILD)) {
@@ -159,7 +159,7 @@ public class Main {
             }
             if (command.equals(TREE_WEIGHTED_BUILD)) {
                 tree = SegmentTstTreeBuilder.buildWeightedSegmentTst(dictionary);
-                tree.setK(Properties.AUTOCOMPLETION_K_SIZE);
+                tree.setNumberOfSuggestions(Properties.AUTOCOMPLETION_SUGGESTION_SIZE);
                 continue;
             }
             if (command.equals(TREE_PRINT)) {
@@ -207,8 +207,8 @@ public class Main {
                 String number = command.replace(TREE_SET_K + " ", "");
                 try {
                     int k = Integer.parseInt(number);
-                    tree.setK(k);
-                    tree.resetSearchK();
+                    tree.setNumberOfSuggestions(k);
+                    tree.resetCompletion();
                 } catch (NumberFormatException e) {
                     System.out.println("no integer provided");
                 }
@@ -216,13 +216,13 @@ public class Main {
             }
             if (command.startsWith(TREE_GET_K)) {
                 String word = command.replace(TREE_GET_K + " ", "");
-                tree.resetSearchK();
-                System.out.println(tree.getNextTopK(word));
+                tree.resetCompletion();
+                System.out.println(tree.getSuggestions(word));
                 continue;
             }
             if (command.startsWith(TREE_GET_NEXT_K)) {
                 String word = command.replace(TREE_GET_NEXT_K + " ", "");
-                System.out.println(tree.getNextTopK(word));
+                System.out.println(tree.getSuggestions(word));
                 continue;
             }
             System.out.println("wrong use:");

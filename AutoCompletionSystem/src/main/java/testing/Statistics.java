@@ -36,8 +36,8 @@ public class Statistics {
         this.dictionarySize = dictionarySize;
         this.noTrainingFiles = noTrainingFiles;
         statistics = new ArrayList<>();
-        successfulPositions = new ArrayList<>(Properties.AUTOCOMPLETION_K_SIZE + 1);
-        for (int i = 0; i < (Properties.AUTOCOMPLETION_K_SIZE + 1); i++) {
+        successfulPositions = new ArrayList<>(Properties.AUTOCOMPLETION_SUGGESTION_SIZE + 1);
+        for (int i = 0; i < (Properties.AUTOCOMPLETION_SUGGESTION_SIZE + 1); i++) {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
@@ -106,7 +106,7 @@ public class Statistics {
         stringBuilder.append("word not in tree: ").append(wordNotInTree).append("\n");
 
         if (file) {
-            for (int i = 1; i < (Properties.AUTOCOMPLETION_K_SIZE + 1); i++) {
+            for (int i = 1; i < (Properties.AUTOCOMPLETION_SUGGESTION_SIZE + 1); i++) {
                 stringBuilder.append("position ").append(i).append(": ").append(successfulPositions.get(i)).append("\n");
             }
         }

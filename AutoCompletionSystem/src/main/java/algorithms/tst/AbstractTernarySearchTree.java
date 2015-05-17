@@ -24,6 +24,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
     private final List<Word> foundWords;
     protected TstNode root;
     private int k;
+    private boolean toReset;
 
     AbstractTernarySearchTree() {
         heap = new MaxHeap<>();
@@ -47,23 +48,37 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
     }
 
     @Override
-    public void setK(int k) {
-        this.k = k;
+    public void setNumberOfSuggestions(int numberOfSuggestions) {
+        this.k = numberOfSuggestions;
     }
 
     @Override
-    public void resetSearchK() {
+    public void resetCompletion() {
+        toReset = true;
+    }
+
+    private void resetSearching() {
         heap.clearHeap();
         foundWords.clear();
         foundSmallWeightWords.clear();
         heap.insert(new HeapTreeNode(root, ""));
+        toReset = false;
     }
 
     @Override
-    public List<Word> getNextTopK(String prefix) {
-        clearInvalidPaths(prefix);
+    public List<String> getSuggestions(String prefix) {
+        if(toReset){
+            resetSearching();
+        }
+        else {
+            clearInvalidPaths(prefix);
+        }
         searchFurther(prefix);
-        return foundWords;
+        List<String> suggestions = new ArrayList<>(foundWords.size());
+        for(Word word: foundWords){
+            suggestions.add(word.getWord());
+        }
+        return suggestions;
     }
 
     private void searchFurther(String prefix) {
@@ -81,7 +96,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             }
             String word = item.getBuiltWord() + item.getNode().getCharacter();
             if (item.getNode().isEndWord() && word.startsWith(prefix)) {
-                //todo add a heap for found words (specific weight stuff)
+                //todo add a heap for found words (specific weight stuff). study if necessary
                 foundSmallWeightWords.add(new Word(item.getBuiltWord() + item.getNode().getCharacter(), item.getNode().getWordWeight()));
                 Collections.sort(foundSmallWeightWords, new WordFrequencyComparator());
                 if (foundSmallWeightWords.get(0).getWeight() >= maxWeight) {
@@ -111,19 +126,19 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
         }
     }
 
-    protected void clearInvalidPaths(String prefix) {
-        Iterator<Word> iter = foundWords.iterator();
-        while (iter.hasNext()) {
-            Word word = iter.next();
+    private void clearInvalidPaths(String prefix) {
+        Iterator<Word> iterator = foundWords.iterator();
+        while (iterator.hasNext()) {
+            Word word = iterator.next();
             if (!word.getWord().startsWith(prefix)) {
-                iter.remove();
+                iterator.remove();
             }
         }
-        iter = foundSmallWeightWords.iterator();
-        while (iter.hasNext()) {
-            Word word = iter.next();
+        iterator = foundSmallWeightWords.iterator();
+        while (iterator.hasNext()) {
+            Word word = iterator.next();
             if (!word.getWord().startsWith(prefix)) {
-                iter.remove();
+                iterator.remove();
             }
         }
         Iterator<HeapTreeNode> it = heap.iterator();
@@ -134,16 +149,6 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
             }
         }
 
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return root == null;
-    }
-
-    @Override
-    public TstNode getRoot() {
-        return root;
     }
 
     @Override

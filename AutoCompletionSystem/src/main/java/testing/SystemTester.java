@@ -1,7 +1,6 @@
 package testing;
 
 import algorithms.SearchTree;
-import dictionary.Word;
 import system.Properties;
 
 import java.io.*;
@@ -67,16 +66,16 @@ public class SystemTester {
                             word = word.toLowerCase();
                             if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                                 statistics.beginWordStatistics(word);
-                                segmentTree.resetSearchK();
+                                segmentTree.resetCompletion();
                                 String prefix = word.substring(0, Math.min(currentRun, word.length()));
-                                List<Word> completedWords = segmentTree.getNextTopK(prefix);
+                                List<String> completedWords = segmentTree.getSuggestions(prefix);
                                 int found = -1;
                                 if (completedWords.isEmpty()) {
                                     statistics.interrogationStatistic(prefix.length(), found - 1);
                                 }
                                 for (int i = 0; i < completedWords.size(); i++) {
-                                    Word aWord = completedWords.get(i);
-                                    if (aWord.getWord().equals(word)) {
+                                    String aWord = completedWords.get(i);
+                                    if (aWord.equals(word)) {
                                         found = i;
                                         break;
                                     }

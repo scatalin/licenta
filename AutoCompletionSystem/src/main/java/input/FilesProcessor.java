@@ -54,7 +54,7 @@ public class FilesProcessor {
                 continue;
             }
 
-            System.out.println("processing file " + file.getName());
+            System.out.println("reading and process file " + file.getName());
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();
@@ -62,13 +62,10 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        if (word.length() > 1) {
-                            dictionary.getDictionary().addDictionaryWord(word.toLowerCase());
-                        }
+                        dictionary.getDictionary().addDictionaryWord(word.toLowerCase());
                     }
                     line = reader.readLine();
                 }
-
                 reader.close();
 
             } catch (IOException e) {
@@ -93,7 +90,7 @@ public class FilesProcessor {
         for (File file : listFileNames) {
             Dictionary dictionary = new Dictionary(file.getName());
 
-            System.out.println("processing file " + file.getName());
+            System.out.println("read and process file " + file.getName());
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = reader.readLine();
@@ -101,9 +98,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        if (word.length() > 2) {
-                            dictionary.addDictionaryWord(word.toLowerCase());
-                        }
+                        dictionary.addDictionaryWord(word.toLowerCase());
                     }
                     line = reader.readLine();
                 }

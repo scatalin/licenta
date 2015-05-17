@@ -57,22 +57,22 @@ public class SegmentTreeLinear implements SearchTree {
     }
 
     @Override
-    public List<Word> getNextTopK(String prefix) {
+    public List<String> getSuggestions(String prefix) {
         int position = data.getPosition(prefix.substring(0, 1));
-        return trees.get(position).getNextTopK(prefix);
+        return trees.get(position).getSuggestions(prefix);
     }
 
     @Override
-    public void setK(int k) {
+    public void setNumberOfSuggestions(int numberOfSuggestions) {
         for(SearchTree tree:trees){
-            tree.setK(k);
+            tree.setNumberOfSuggestions(numberOfSuggestions);
         }
     }
 
     @Override
-    public void resetSearchK() {
+    public void resetCompletion() {
         for(SearchTree tree:trees){
-            tree.resetSearchK();
+            tree.resetCompletion();
         }
     }
 
@@ -80,16 +80,6 @@ public class SegmentTreeLinear implements SearchTree {
     public String print() {
         PrettyPrinter printer = new SegmentTreePrettyPrinter(this);
         return printer.prettyPrint();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public Object getRoot() {
-        return null;
     }
 
     @Override

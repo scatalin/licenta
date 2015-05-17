@@ -141,7 +141,7 @@ public class PropertiesParser {
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.AUTOCOMPLETION_K_SIZE.getValue())) {
-                    Properties.AUTOCOMPLETION_K_SIZE = Integer.parseInt(tokens[1]);
+                    Properties.AUTOCOMPLETION_SUGGESTION_SIZE = Integer.parseInt(tokens[1]);
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.COMPLETION_TREE_OUTPUT_FILE_NAME.getValue())) {

@@ -11,21 +11,17 @@ public interface SearchTree {
 
     void load(List<Word> words, boolean reset);
 
-    List<Word> getNextTopK(String prefix);
-
-    void resetSearchK();
-
-    void setK(int k);
-
-    String print();
-
     void insert(Word word);
 
-    boolean isEmpty();
+    void setNumberOfSuggestions(int numberOfSuggestions);
 
-    Object getRoot();
+    void resetCompletion();
+
+    List<String> getSuggestions(String prefix);
+
+    void update(String word, int weight);
 
     void reset();
 
-    void update(String word, int weight);
+    String print();
 }
