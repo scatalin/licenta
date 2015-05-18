@@ -1,3 +1,5 @@
+package system;
+
 import algorithms.SearchTree;
 import algorithms.SearchTreeFactory;
 import algorithms.heap.MaxHeap;
@@ -7,6 +9,7 @@ import dictionary.inserting.UserWeightUpdate;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 import system.Properties;
+import system.AutoCompletionSystem;
 
 import java.util.Collections;
 import java.util.List;
