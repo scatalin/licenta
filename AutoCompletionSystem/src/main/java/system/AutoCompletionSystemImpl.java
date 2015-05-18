@@ -5,11 +5,8 @@ import algorithms.SearchTreeFactory;
 import algorithms.heap.MaxHeap;
 import dictionary.Dictionary;
 import dictionary.Word;
-import dictionary.inserting.UserWeightUpdate;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
-import system.Properties;
-import system.AutoCompletionSystem;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +21,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     private List<String> sugestions;
     private String lastPrefix;
 
-    AutoCompletionSystemImpl() {
+    public AutoCompletionSystemImpl() {
         searchTree = SearchTreeFactory.createCompletionTree();
         dictionary = new Dictionary();
         lastPrefix = "";
@@ -73,10 +70,21 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     @Override
     public void selectWord(String word) {
         //todo separate this in a job, search the word in dictionary, get weight and update it in the model
-        dictionary.setUpdater(new UserWeightUpdate());
-        int previousWeight = dictionary.addDictionaryWord(word);
+//        dictionary.setUpdater(new UserWeightUpdate());
+        int previousWeight = dictionary.addDictionaryWord(word,Properties.USER_WEIGHT);
         if(previousWeight > 0) {
-            searchTree.update(word, previousWeight + Properties.USER_WEIGHT);
+            searchTree.update(word, Math.min(previousWeight + Properties.USER_WEIGHT,Properties.WEIGHT_CEILING));
+        }
+    }
+
+
+    @Override
+    public void selectWordNotUpdating(String word) {
+        //todo separate this in a job, search the word in dictionary, get weight and update it in the model
+//        dictionary.setUpdater(new UserWeightUpdate());
+        int previousWeight = dictionary.addDictionaryWord(word,1);
+        if(previousWeight > 0) {
+            searchTree.update(word, Math.min(previousWeight,10000));
         }
     }
 }

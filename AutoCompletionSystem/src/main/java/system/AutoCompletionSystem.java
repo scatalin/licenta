@@ -22,4 +22,6 @@ public interface AutoCompletionSystem {
     List<String> getCompletion(String prefix);
 
     void selectWord(String word);
+
+    void selectWordNotUpdating(String word);
 }
