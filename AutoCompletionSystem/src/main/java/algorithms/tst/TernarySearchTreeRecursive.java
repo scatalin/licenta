@@ -58,35 +58,62 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
     public void update(String word, int weight) {
         this.toInsertWeight = weight;
         wasEndWord = false;
-        recursiveUpdate(root, word);
+        recursiveInsert(root, word);
     }
 
-    private void recursiveUpdate(TstNode node, String s) {
+//    private void recursiveUpdate(TstNode node, String s) {
+//        if (s.isEmpty()) {
+//            wasEndWord = true;
+//            return;
+//        }
+//        if (node == null) {
+//            return;
+//        }
+//        if (toInsertWeight > node.getSubtreesWeight()) {
+//            node.setSubtreesWeight(toInsertWeight);
+//        }
+//        int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
+//        if (comparisonResult < 0) {
+//            recursiveUpdate(node.getLeftChild(), s);
+//        }
+//        if (comparisonResult > 0) {
+//            recursiveUpdate(node.getRightChild(), s);
+//        }
+//        if (comparisonResult == 0) {
+//            recursiveUpdate(node.getMiddleChild(), s.substring(1));
+//        }
+//        if (wasEndWord) {
+//            wasEndWord = false;
+//            node.setWordWeight(toInsertWeight);
+//            node.setEndWord();
+//        }
+//    }
+
+    public boolean search(String word) {
+        return recursiveSearch(root,word);
+    }
+
+    private boolean recursiveSearch(TstNode node, String s) {
         if (s.isEmpty()) {
-            wasEndWord = true;
-            return;
+            return true;
         }
         if (node == null) {
-            return;
+            return false;
         }
         if (toInsertWeight > node.getSubtreesWeight()) {
             node.setSubtreesWeight(toInsertWeight);
         }
         int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
+        boolean result = false;
         if (comparisonResult < 0) {
-            node.setLeftChild(recursiveInsert(node.getLeftChild(), s));
+            result |= recursiveSearch(node.getLeftChild(), s);
         }
         if (comparisonResult > 0) {
-            node.setRightChild(recursiveInsert(node.getRightChild(), s));
+            result |= recursiveSearch(node.getRightChild(), s);
         }
         if (comparisonResult == 0) {
-            node.setMiddleChild(recursiveInsert(node.getMiddleChild(), s.substring(1)));
+            result |= recursiveSearch(node.getMiddleChild(), s.substring(1));
         }
-        if (wasEndWord) {
-            wasEndWord = false;
-            node.setWordWeight(toInsertWeight);
-            node.setEndWord();
-        }
-        return;
+        return result;
     }
 }
