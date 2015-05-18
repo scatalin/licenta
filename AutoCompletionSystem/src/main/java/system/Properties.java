@@ -37,5 +37,6 @@ public class Properties {
     public static String ALPHABET;
     public static int USER_WEIGHT;
     public static int ACTUALITY_WEIGHT;
+    public static int WEIGHT_CEILING;
 }
 
