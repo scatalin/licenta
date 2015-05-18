@@ -31,13 +31,13 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public void insert(Word word) {
-        int position = data.getPosition(word.getWord().substring(0, 1));
+        int position = data.getPosition(word.getWord());
         trees.get(position).insert(word);
     }
 
     @Override
     public void update(String word, int weight) {
-        int position = data.getPosition(word.substring(0, 1));
+        int position = data.getPosition(word);
         trees.get(position).update(word, weight);
     }
 
@@ -64,7 +64,7 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public List<String> getSuggestions(String prefix) {
-        int position = data.getPosition(prefix.substring(0, 1));
+        int position = data.getPosition(prefix);
         return trees.get(position).getSuggestions(prefix);
     }
 

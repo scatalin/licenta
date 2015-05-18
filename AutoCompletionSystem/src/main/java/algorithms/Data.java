@@ -26,7 +26,7 @@ public class Data {
     }
 
     public int getPosition(String s) {
-        return data.get(s);
+        return data.get(s.substring(0,1));
     }
 
     public Set<String> getAlphabet() {
