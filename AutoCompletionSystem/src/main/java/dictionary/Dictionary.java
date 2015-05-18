@@ -43,16 +43,16 @@ public class Dictionary {
         changed = true;
     }
 
-    public void addDictionaryWord(String word, int weight) {
-        integrateDictionaryWord(word, weight);
+    public int addDictionaryWord(String word, int weight) {
+        return integrateDictionaryWord(word, weight);
     }
 
-    public void addDictionaryWord(String word) {
-        addDictionaryWord(word, 1);
+    public int addDictionaryWord(String word) {
+        return addDictionaryWord(word, 1);
     }
 
-    public void addDictionaryWord(Word word) {
-        addDictionaryWord(word.getWord(), word.getWeight());
+    public int addDictionaryWord(Word word) {
+        return addDictionaryWord(word.getWord(), word.getWeight());
     }
 
     public List<Word> getWordsSortedByWeight() {
@@ -100,9 +100,9 @@ public class Dictionary {
         return "d=" + asList().size() + " " + asList();
     }
 
-    private void integrateDictionaryWord(String word, int increment) {
+    private int integrateDictionaryWord(String word, int increment) {
         if (!validator.isValid(word)) {
-            return;
+            return -1;
         }
         changed = true;
         Word checkWord = new Word(word);
@@ -113,12 +113,12 @@ public class Dictionary {
         int index = items.lastIndexOf(checkWord);
         if (index == -1) {
             words.get(position).insert(new Word(word, increment));
-            return;
+            return increment;
         }
 
-        Word existentWord = items.get(index);
-        updater.updateWeight(existentWord, increment);
+        int toReturnWeight = updater.updateWeight(items.get(index), increment);
         words.get(position).shiftUp(index, updater.updateModel());
+        return toReturnWeight;
     }
 
     public void setUpdater(WeightUpdate updater) {

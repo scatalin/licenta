@@ -33,6 +33,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
         k = 5;
     }
 
+    @Override
     public void load(List<Word> words, boolean reset) {
         if (reset) {
             root = null;
@@ -42,6 +43,12 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
         }
     }
 
+    @Override
+    public void load(List<Word> words) {
+        load(words,false);
+    }
+
+    @Override
     public String print() {
         PrettyPrinter printer = new TstPrettyPrinter(root);
         return printer.prettyPrint();

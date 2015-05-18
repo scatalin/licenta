@@ -8,13 +8,13 @@ import dictionary.Word;
 public class UserWeightUpdate implements WeightUpdate {
 
     @Override
-    public void updateWeight(Word word, int weight) {
-
+    public int updateWeight(Word word, int weight) {
+        return word.getWeight();
     }
 
     @Override
-    public void overrideWeight(Word word, int weight) {
-
+    public int overrideWeight(Word word, int weight) {
+        return word.getWeight();
     }
 
     @Override

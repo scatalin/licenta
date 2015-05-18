@@ -11,6 +11,8 @@ public interface SearchTree {
 
     void load(List<Word> words, boolean reset);
 
+    void load(List<Word> words);
+
     void insert(Word word);
 
     void setNumberOfSuggestions(int numberOfSuggestions);

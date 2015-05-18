@@ -51,6 +51,11 @@ public class SegmentTreeLinear implements SearchTree {
         }
     }
 
+    @Override
+    public void load(List<Word> words) {
+        load(words,false);
+    }
+
     private void resetAll() {
         for (SearchTree tree : trees) {
             tree.reset();

@@ -8,13 +8,17 @@ import dictionary.Word;
 public class DefaultDictionaryWeightUpdate implements WeightUpdate {
 
     @Override
-    public void updateWeight(Word word, int weight) {
+    public int updateWeight(Word word, int weight) {
+        int initialWeight = word.getWeight();
         word.increaseFrequency(weight);
+        return initialWeight;
     }
 
     @Override
-    public void overrideWeight(Word word, int weight) {
+    public int overrideWeight(Word word, int weight) {
+        int initialWeight = word.getWeight();
         word.setWeight(weight);
+        return initialWeight;
     }
 
     @Override
