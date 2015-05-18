@@ -30,6 +30,8 @@ public enum FileProperties {
     SYSTEM_ALPHABET("system.alphabet"),
     AUTOCOMPLETION_THRESHOLD("autocompletion.minimum.characters"),
     AUTOCOMPLETION_K_SIZE("autocompletion.suggestions.size"),
+    USER_WEIGHT("user.weight"),
+    ACTUALITY_WEIGHT("actuality.weight"),
     COMPLETION_TREE_OUTPUT_FILE_NAME("completion.tree.file.output.name"),
     WEIGHT_FREQUENCY("weight.frequency.rate"),
     WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),

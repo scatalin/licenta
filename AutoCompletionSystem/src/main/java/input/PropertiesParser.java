@@ -144,6 +144,14 @@ public class PropertiesParser {
                     Properties.AUTOCOMPLETION_SUGGESTION_SIZE = Integer.parseInt(tokens[1]);
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.USER_WEIGHT.getValue())) {
+                    Properties.USER_WEIGHT = Integer.parseInt(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.ACTUALITY_WEIGHT.getValue())) {
+                    Properties.ACTUALITY_WEIGHT = Integer.parseInt(tokens[1]);
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.COMPLETION_TREE_OUTPUT_FILE_NAME.getValue())) {
                     Properties.COMPLETION_TREE_OUTPUT_FILE_NAME = tokens[1];
                     continue;

@@ -35,5 +35,7 @@ public class Properties {
     public static String DECAY_FILE_OUTPUT_NAME;
     public static String DECAY_SUBDIRECTORY_OUTPUT_NAME;
     public static String ALPHABET;
+    public static int USER_WEIGHT;
+    public static int ACTUALITY_WEIGHT;
 }
 
