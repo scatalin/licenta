@@ -19,6 +19,7 @@ public class Statistics {
     private long total;
     private long successful;
     private long outRange;
+    private List<OutOfRange> outOfRangeList;
     private long noSuggestionsForPrefix;
     private long wordNotInTree;
     private double precision;
@@ -41,6 +42,7 @@ public class Statistics {
             successfulPositions.add(0);
         }
         currentEntry = new StatisticEntry();
+        outOfRangeList = new ArrayList<>();
     }
 
     public void makeAverages() {
@@ -51,6 +53,7 @@ public class Statistics {
                 if (entry.positionFound <= Properties.SUCCESS_THRESHOLD) {
                     successful++;
                 } else {
+                    outOfRangeList.add(new OutOfRange(entry.word,entry.positionFound,entry.weight));
                     outRange++;
                 }
                 successfulPositions.set(entry.positionFound, successfulPositions.get(entry.positionFound) + 1);
@@ -102,6 +105,7 @@ public class Statistics {
         stringBuilder.append("precision: ").append(precision).append("\n");
         stringBuilder.append("recall: ").append(recall).append("\n");
         stringBuilder.append("out of range: ").append(outRange).append("\n");
+//        stringBuilder.append(outOfRangeList).append("\n");
         stringBuilder.append("no suggestions for prefix: ").append(noSuggestionsForPrefix).append("\n");
         stringBuilder.append("word not in tree: ").append(wordNotInTree).append("\n");
 
@@ -121,11 +125,12 @@ public class Statistics {
         currentWord = word;
     }
 
-    public void interrogationStatistic(int prefixLength, int positionFound) {
+    public void interrogationStatistic(int prefixLength, int positionFound, int weight) {
         currentEntry.word = currentWord;
         currentEntry.charactersTyped = prefixLength;
         currentEntry.positionFound = positionFound;
         currentEntry.charactersSaved = currentWord.length() - prefixLength;
+        currentEntry.weight = weight;
         statistics.add(currentEntry);
         currentEntry = new StatisticEntry();
     }
@@ -199,12 +204,25 @@ public class Statistics {
         this.dictionarySize = dictionarySize;
     }
 
+    public void interrogationStatistic(int prefixLength, int i) {
+        interrogationStatistic(prefixLength,i,0);
+    }
+
+    public List<OutOfRange> getOutOfRange() {
+        return outOfRangeList;
+    }
+
+    public void addOutOfRange(List<OutOfRange> outOfRange) {
+        outOfRangeList.addAll(outOfRange);
+    }
+
     private class StatisticEntry {
 
         String word;
         int charactersTyped;
         int positionFound;
         int charactersSaved;
+        int weight;
 
         @Override
         public String toString() {
@@ -216,5 +234,26 @@ public class Statistics {
                     "}\n";
         }
 
+    }
+
+    private class OutOfRange {
+        String word;
+        private int weight;
+        int position;
+
+        public OutOfRange(String word, int positionFound, int weight) {
+            this.position = positionFound;
+            this.word = word;
+            this.weight = weight;
+        }
+
+        @Override
+        public String toString() {
+            return "OutOfRange{" +
+                    "word='" + word + '\'' +
+                    ", weight=" + weight +
+                    ", position=" + position +
+                    "}\n";
+        }
     }
 }
