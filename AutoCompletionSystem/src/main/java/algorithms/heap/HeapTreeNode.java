@@ -35,11 +35,6 @@ public class HeapTreeNode implements HeapNode {
     }
 
     public HeapTreeNode clone() {
-        try {
-            super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
         return new HeapTreeNode(node, builtWord);
     }
 

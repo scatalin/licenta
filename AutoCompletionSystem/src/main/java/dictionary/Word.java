@@ -8,8 +8,6 @@ import system.Properties;
  */
 public class Word implements HeapNode {
 
-    private static final WordFrequencyComparator wordFrequencyComparator = new WordFrequencyComparator();
-
     private final String word;
     private int heapLevel;
     private int totalWeight;
@@ -67,14 +65,14 @@ public class Word implements HeapNode {
     }
 
     private void normalizeUserFrequency() {
-        double normalizeDivision = 1;
+        double normalizeDivision = dictionaryFrequencyPercentage + userActualityPercentage;
         dictionaryFrequencyPercentage += userFrequencyPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
         userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
         userFrequencyPercentage = 0;
     }
 
     private void normalizeUserActuality() {
-        double normalizeDivision = 1;
+        double normalizeDivision = dictionaryFrequencyPercentage + userFrequencyPercentage;
         dictionaryFrequencyPercentage += userActualityPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
         userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
         userActualityPercentage = 0;
@@ -110,7 +108,8 @@ public class Word implements HeapNode {
 
     @Override
     public int compareTo(Object o) {
-        return Word.wordFrequencyComparator.compare(this, ((Word) o));
+        //sortare crescatoare
+        return this.getWeight() - ((Word) o).getWeight();
     }
 
     @Override

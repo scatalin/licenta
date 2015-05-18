@@ -48,7 +48,7 @@ public class MaxHeap<T extends HeapNode> {
     public void insert(T item) {
         int previousLevel = 0;
         if (!items.isEmpty()) {
-            previousLevel = items.get(items.size()).getLevel();
+            previousLevel = items.get(items.size() - 1).getLevel();
         }
         int sum = geometricSum(previousLevel);
         items.add(item);
