@@ -9,4 +9,6 @@ public interface WeightUpdate {
     void updateWeight(Word word, int weight);
 
     void overrideWeight(Word word, int weight);
+
+    boolean updateModel();
 }

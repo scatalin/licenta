@@ -18,8 +18,8 @@ public class SearchTreeFactory {
         return new SegmentTreeLinear();
     }
 
-    public static Data createData(){
-        if(data == null){
+    public static Data createData() {
+        if (data == null) {
             data = new Data();
         }
         return data;

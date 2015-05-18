@@ -1,15 +1,17 @@
 package dictionary;
 
+import algorithms.heap.HeapNode;
 import system.Properties;
 
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word implements Comparable {
+public class Word implements HeapNode {
 
     private static final WordFrequencyComparator wordFrequencyComparator = new WordFrequencyComparator();
 
     private final String word;
+    private int heapLevel;
     private int totalWeight;
     private int dictionaryFrequency;
     private int userFrequency;
@@ -23,6 +25,7 @@ public class Word implements Comparable {
         this.dictionaryFrequency = dictionaryFrequency;
         this.userFrequency = userFrequency;
         this.userActuality = userActuality;
+        heapLevel = 0;
     }
 
     public Word(String word, int dictionaryFrequency) {
@@ -108,5 +111,15 @@ public class Word implements Comparable {
     @Override
     public int compareTo(Object o) {
         return Word.wordFrequencyComparator.compare(this, ((Word) o));
+    }
+
+    @Override
+    public int getLevel() {
+        return heapLevel;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.heapLevel = level;
     }
 }

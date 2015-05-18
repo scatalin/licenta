@@ -1,7 +1,7 @@
 package algorithms.segmenttree;
 
-import algorithms.SearchTree;
 import algorithms.Data;
+import algorithms.SearchTree;
 import algorithms.SearchTreeFactory;
 import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
 import algorithms.tst.build.TernarySearchTreeFactory;

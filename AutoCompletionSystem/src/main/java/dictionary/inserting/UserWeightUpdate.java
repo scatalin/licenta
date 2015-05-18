@@ -16,4 +16,9 @@ public class UserWeightUpdate implements WeightUpdate {
     public void overrideWeight(Word word, int weight) {
 
     }
+
+    @Override
+    public boolean updateModel() {
+        return true;
+    }
 }

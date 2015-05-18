@@ -7,15 +7,23 @@ import java.util.List;
 /**
  * Created by gstan on 27.03.2015.
  */
-public class MaxHeap<T extends Comparable> {
-
+public class MaxHeap<T extends HeapNode> {
+    //todo : modify levels in shiftUp and shiftDown
     private List<T> items;
+    private CostCalculator cost;
 
     public MaxHeap() {
-        items = new ArrayList<>();
+        this(false);
     }
 
-    public int shiftUp(int k) {
+    public MaxHeap(boolean calculateCost) {
+        items = new ArrayList<>();
+        if (calculateCost) {
+            cost = new CostCalculator();
+        }
+    }
+
+    public int shiftUp(int k, boolean update) {
         while (k > 0) {
             int p = parent(k);
             T item = items.get(k);
@@ -23,6 +31,9 @@ public class MaxHeap<T extends Comparable> {
 
             if (item.compareTo(parent) > 0) {
                 //swap
+                if ((cost != null) && update) {
+                    cost.addModification(items.get(p).getLevel());
+                }
                 items.set(k, parent);
                 items.set(p, item);
                 //move up one level
@@ -35,11 +46,21 @@ public class MaxHeap<T extends Comparable> {
     }
 
     public void insert(T item) {
+        int previousLevel = 0;
+        if (!items.isEmpty()) {
+            previousLevel = items.get(items.size()).getLevel();
+        }
+        int sum = geometricSum(previousLevel);
         items.add(item);
-        shiftUp(items.size() - 1);
+        items.get(items.size() - 1).setLevel((items.size() > sum) ? (previousLevel + 1) : previousLevel);
+        shiftUp(items.size() - 1, false);
     }
 
-    public int shiftDown(int k) {
+    private int geometricSum(int previousLevel) {
+        return (int) (Math.pow(2, previousLevel) - 1);
+    }
+
+    public int shiftDown(int k, boolean update) {
         int l = leftChild(k);
         while (l < items.size()) {
             int max = l;
@@ -51,6 +72,9 @@ public class MaxHeap<T extends Comparable> {
             }
             if (items.get(k).compareTo(items.get(max)) < 0) {
                 //switch
+                if ((cost != null) && update) {
+                    cost.addModification(items.get(k).getLevel());
+                }
                 T temp = items.get(k);
                 items.set(k, items.get(max));
                 items.set(max, temp);
@@ -72,7 +96,8 @@ public class MaxHeap<T extends Comparable> {
         }
         T hold = items.get(0);
         items.set(0, items.remove(items.size() - 1));
-        shiftDown(0);
+        items.get(0).setLevel(0);
+        shiftDown(0, false);
         return hold;
     }
 

@@ -35,8 +35,8 @@ public class Dictionary {
         this.fileName = fileName;
         data = SearchTreeFactory.createData();
         words = new ArrayList<>(data.getSize());
-        for(int i = 0; i<data.getSize(); i++){
-            words.add(new MaxHeap<>());
+        for (int i = 0; i < data.getSize(); i++) {
+            words.add(new MaxHeap<>(true));
         }
         validator = new LengthLessThanThresholdValidator();
         updater = new DefaultDictionaryWeightUpdate();
@@ -62,9 +62,9 @@ public class Dictionary {
     }
 
     public List<Word> asList() {
-        if(changed){
+        if (changed) {
             wordsList = new ArrayList<>();
-            for(MaxHeap<Word> heap : words){
+            for (MaxHeap<Word> heap : words) {
                 wordsList.addAll(heap.duplicateItems());
             }
         }
@@ -118,7 +118,7 @@ public class Dictionary {
 
         Word existentWord = items.get(index);
         updater.updateWeight(existentWord, increment);
-        words.get(position).shiftUp(index);
+        words.get(position).shiftUp(index, updater.updateModel());
     }
 
     public void setUpdater(WeightUpdate updater) {
@@ -126,7 +126,7 @@ public class Dictionary {
     }
 
     public void clear() {
-        for(MaxHeap<Word> heap: words){
+        for (MaxHeap<Word> heap : words) {
             heap.clearHeap();
         }
     }

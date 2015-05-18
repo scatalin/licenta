@@ -16,4 +16,9 @@ public class DefaultDictionaryWeightUpdate implements WeightUpdate {
     public void overrideWeight(Word word, int weight) {
         word.setWeight(weight);
     }
+
+    @Override
+    public boolean updateModel() {
+        return false;
+    }
 }

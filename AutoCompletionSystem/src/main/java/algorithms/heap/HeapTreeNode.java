@@ -5,7 +5,7 @@ import algorithms.tst.intern.TstNode;
 /**
  * Created by Catalin on 3/28/2015 .
  */
-public class HeapTreeNode implements Comparable {
+public class HeapTreeNode implements HeapNode {
     protected TstNode node;
     private String builtWord;
 
@@ -50,5 +50,15 @@ public class HeapTreeNode implements Comparable {
                 ", n=" + node.getCharacter() + "|" + node.getSpecificWeight() +
                 (node.isEndWord() ? "|w" : "") +
                 '}';
+    }
+
+    @Override
+    public int getLevel() {
+        return 0;
+    }
+
+    @Override
+    public void setLevel(int level) {
+
     }
 }
