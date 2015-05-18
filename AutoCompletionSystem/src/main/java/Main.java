@@ -12,10 +12,7 @@ import input.FilesProcessor;
 import input.PropertiesParser;
 import printing.Window;
 import system.Properties;
-import testing.PrintAlphas;
-import testing.SystemRotationTester;
-import testing.SystemTenFoldingTesting;
-import testing.SystemTester;
+import testing.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,10 +29,14 @@ public class Main {
     private static final String PROCESS_FILES = "input";
     private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_ROTATION_IN_MEMORY = "test all m";
-    private static final String TEST_SYSTEM_TEN_FOLD = "test new";
+    private static final String TEST_SYSTEM_TEN_FOLD = "test ten fold";
+    private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM = "test tfs";
+    private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM_UPDATE = "test tfsu";
+    private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM_INSERTING = "test tfsi";
     private static final String TEST_SYSTEM_PERCENTAGES = "test p";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
+    private static final String DICTIONARY_DISPLAY_WEIGHTED = "dict dw";
     private static final String TST_BUILD = "tst b";
     private static final String TST_WEIGHTED_BUILD = "tst wb";
     private static final String TST_PRINT = "tst p";
@@ -119,6 +120,11 @@ public class Main {
                 System.out.println(dictionary.asList());
                 continue;
             }
+            if (command.equals(DICTIONARY_DISPLAY_WEIGHTED)) {
+                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
+                System.out.println(dictionary.getWordsSortedByWeight());
+                continue;
+            }
             if (command.equals(TST_BUILD)) {
                 tst = TernarySearchTreeFactory.buildTst(dictionary.asList());
                 continue;
@@ -189,6 +195,33 @@ public class Main {
                 SystemTenFoldingTesting tester = new SystemTenFoldingTesting();
                 try {
                     tester.testSystem();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            if (command.equals(TEST_SYSTEM_TEN_FOLD_SYSTEM)) {
+                RepeatedCompletionTenFoldingTesting tester = new RepeatedCompletionTenFoldingTesting();
+                try {
+                    tester.testSystemWithRotation();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            if (command.equals(TEST_SYSTEM_TEN_FOLD_SYSTEM_UPDATE)) {
+                RepeatedCompletionTenFoldingTesting tester = new RepeatedCompletionTenFoldingTesting();
+                try {
+                    tester.testSystemWithUpdate();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            if (command.equals(TEST_SYSTEM_TEN_FOLD_SYSTEM_INSERTING)) {
+                RepeatedCompletionTenFoldingTesting tester = new RepeatedCompletionTenFoldingTesting();
+                try {
+                    tester.testSystemWithoutUpdate();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
