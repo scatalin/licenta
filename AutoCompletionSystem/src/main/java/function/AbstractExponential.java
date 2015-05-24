@@ -5,12 +5,12 @@ package function;
  */
 public class AbstractExponential {
 
-    double coeficient;
+    double coefficient;
     double base;
     double exponent;
 
-    public AbstractExponential(double coeficient, double base, double exponent) {
-        this.coeficient = coeficient;
+    public AbstractExponential(double coefficient, double base, double exponent) {
+        this.coefficient = coefficient;
         this.base = base;
         this.exponent = exponent;
     }
@@ -20,6 +20,6 @@ public class AbstractExponential {
     }
 
     public double calculateValue() {
-        return coeficient * Math.pow(base, exponent);
+        return coefficient * Math.pow(base, exponent);
     }
 }

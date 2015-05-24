@@ -13,8 +13,8 @@ public class EulerDecay extends AbstractExponential {
         this(1, euler, alpha);
     }
 
-    private EulerDecay(double coeficient, double base, double alpha) {
-        super(coeficient, base, alpha);
+    private EulerDecay(double coefficient, double base, double alpha) {
+        super(coefficient, base, alpha);
         this.alpha = alpha;
     }
 
