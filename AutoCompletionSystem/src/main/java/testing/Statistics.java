@@ -53,7 +53,7 @@ public class Statistics {
                 if (entry.positionFound <= Properties.SUCCESS_THRESHOLD) {
                     successful++;
                 } else {
-                    outOfRangeList.add(new OutOfRange(entry.word,entry.positionFound,entry.weight));
+                    outOfRangeList.add(new OutOfRange(entry.word, entry.positionFound, entry.weight));
                     outRange++;
                 }
                 successfulPositions.set(entry.positionFound, successfulPositions.get(entry.positionFound) + 1);
@@ -90,15 +90,18 @@ public class Statistics {
 
     public String printStatistics(boolean file) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (file) {
-            stringBuilder.append("file ").append(fileName).append(" ");
-            stringBuilder.append("generated the following statistics").append("\n");
+        stringBuilder.append("file ").append(fileName).append(" ");
+        stringBuilder.append("generated the following statistics").append("\n");
+        if (noTrainingFiles > 0) {
+            stringBuilder.append("number of training files ")
+                    .append(noTrainingFiles).append(" with ");
         }
-        stringBuilder.append("number of training files ")
-                .append(noTrainingFiles).append(" with dictionary size ")
+        stringBuilder.append("dictionary size ")
                 .append(dictionarySize).append("\n");
-        stringBuilder.append("characters typed ")
-                .append(currentRun).append("\n");
+        if (currentRun > 0) {
+            stringBuilder.append("characters typed ")
+                    .append(currentRun).append("\n");
+        }
         stringBuilder.append("number of test words: ").append(total).append("\n");
         stringBuilder.append("found within ").append(Properties.SUCCESS_THRESHOLD).append(" positions: ").append(successful)
                 .append("=").append((int) (((double) successful / total) * 100)).append("%").append("\n");
@@ -205,7 +208,7 @@ public class Statistics {
     }
 
     public void interrogationStatistic(int prefixLength, int i) {
-        interrogationStatistic(prefixLength,i,0);
+        interrogationStatistic(prefixLength, i, 0);
     }
 
     public List<OutOfRange> getOutOfRange() {
@@ -238,8 +241,8 @@ public class Statistics {
 
     private class OutOfRange {
         String word;
-        private int weight;
         int position;
+        private int weight;
 
         public OutOfRange(String word, int positionFound, int weight) {
             this.position = positionFound;
