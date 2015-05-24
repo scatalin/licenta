@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class SystemRotationTester {
 
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File allReportFile;
     private final File rotationTestDir;
 
@@ -86,10 +85,10 @@ public class SystemRotationTester {
                     String line = reader.readLine();
 
                     while (line != null) {
-                        String[] words = line.split(WORD_SEPARATION_REGEX);
+                        String[] words = line.split(Properties.WORD_SEPARATION_REGEX);
                         for (String word : words) {
                             if (word.length() > 1) {
-                                dictionary.addDictionaryWord(word);
+                                dictionary.addDefaultWord(word);
                             }
                             word = word.toLowerCase();
                             if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {

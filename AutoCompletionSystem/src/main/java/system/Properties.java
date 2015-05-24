@@ -4,6 +4,7 @@ package system;
  * Created by Catalin on 2/21/2015 .
  */
 public class Properties {
+    public static final String WORD_SEPARATION_REGEX = "[^a-zA-ZăîâșțĂÎÂȘȚ]";
     public static String RESULT_DIRECTORY;
     public static String COMPLETION_TREE_OUTPUT_FILE_NAME;
     public static String SYSTEM;

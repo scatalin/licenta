@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class SystemTester {
 
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
     private final File allReportFile;
     private final File testDir;
     private SearchTree segmentTree;
@@ -61,7 +60,7 @@ public class SystemTester {
                     String line = reader.readLine();
 
                     while (line != null) {
-                        String[] words = line.split(WORD_SEPARATION_REGEX);
+                        String[] words = line.split(Properties.WORD_SEPARATION_REGEX);
                         for (String word : words) {
                             word = word.toLowerCase();
                             if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {

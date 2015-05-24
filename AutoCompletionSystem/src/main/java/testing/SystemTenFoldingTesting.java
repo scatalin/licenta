@@ -84,7 +84,7 @@ public class SystemTenFoldingTesting {
                     //concatenate the rest of the dictionaries
                     Dictionary addDictionary = dictionaries.get(index);
                     for (Word word : addDictionary.asList()) {
-                        trainingDictionary.addDictionaryWord(word);
+                        trainingDictionary.addDefaultWord(word);
                     }
 
                     count++;

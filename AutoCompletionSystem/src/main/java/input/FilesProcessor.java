@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class FilesProcessor {
 
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-ZăîâșțĂÎÂȘȚ]";
+
     private final File inputDir;
 
     private final DictionaryProcessor dictionary;
@@ -41,12 +41,12 @@ public class FilesProcessor {
         return (listFileNames != null) ? listFileNames.length : 0;
     }
 
-    public void processInputFiles(){
-        processInputFiles(-1,Properties.DIACRITICS);
+    public void processInputFiles() {
+        processInputFiles(-1, Properties.DIACRITICS);
     }
 
-    public void processInputFiles(int skip){
-        processInputFiles(skip,Properties.DIACRITICS);
+    public void processInputFiles(int skip) {
+        processInputFiles(skip, Properties.DIACRITICS);
     }
 
     public void processInputFiles(int skip, boolean filt) {
@@ -71,9 +71,9 @@ public class FilesProcessor {
                 String line = reader.readLine();
 
                 while (line != null) {
-                    String[] words = line.split(WORD_SEPARATION_REGEX);
+                    String[] words = line.split(Properties.WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.getDictionary().addDictionaryWord(filter.filterCharacters(word.toLowerCase(), filt));
+                        dictionary.getDictionary().addDefaultWord(filter.filterCharacters(word.toLowerCase(), filt));
                     }
                     line = reader.readLine();
                 }
@@ -111,9 +111,9 @@ public class FilesProcessor {
                 String line = reader.readLine();
 
                 while (line != null) {
-                    String[] words = line.split(WORD_SEPARATION_REGEX);
+                    String[] words = line.split(Properties.WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.addDictionaryWord(filter.filterCharacters(word.toLowerCase(), filt));
+                        dictionary.addDefaultWord(filter.filterCharacters(word.toLowerCase(), filt));
                     }
                     line = reader.readLine();
                 }
@@ -128,5 +128,42 @@ public class FilesProcessor {
         }
         return dictionaries;
     }
+
+    public void printSpecialCharacters() {
+        File[] listFileNames = inputDir.listFiles();
+        Map<Character, Integer> map = new HashMap<>();
+
+        if (listFileNames == null) {
+            System.out.println("an exception occurred while reading files from " + inputDir);
+            return;
+        }
+        //todo read all input files and hand over to delegates, word processor and phrase processor
+        for (File file : listFileNames) {
+            System.out.println("reading and process file " + file.getName());
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String line = reader.readLine();
+
+                while (line != null) {
+                    for (int j = 0; j < line.length(); j++) {
+                        char c = line.charAt(j);
+                        if (((c < 'a') || (c > 'z')) && ((c < 'A') || (c > 'Z'))) {
+                            map.put(c, 0);
+                        }
+                    }
+                    line = reader.readLine();
+                }
+                reader.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (Character c : map.keySet()) {
+            System.out.println(c + " " + (int) c);
+        }
+    }
+
 }
 

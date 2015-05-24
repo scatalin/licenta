@@ -81,7 +81,7 @@ public class RepeatedCompletionTenFoldingTesting {
                     //concatenate the rest of the dictionaries
                     Dictionary addDictionary = dictionaries.get(index);
                     for (Word word : addDictionary.asList()) {
-                        trainingDictionary.addDictionaryWord(word);
+                        trainingDictionary.addDefaultWord(word);
                     }
 
                     count++;
@@ -141,7 +141,7 @@ public class RepeatedCompletionTenFoldingTesting {
         Dictionary trainingDictionary = new Dictionary();
         for (Dictionary addDictionary : trainDictionaries) {
             for (Word word : addDictionary.asList()) {
-                trainingDictionary.addDictionaryWord(word);
+                trainingDictionary.addDefaultWord(word);
             }
         }
         int dictionarySize = trainingDictionary.getNumberOfWords();
@@ -172,61 +172,6 @@ public class RepeatedCompletionTenFoldingTesting {
                     int result = fillStatistics(statistics, word, w.getWeight(), prefix.length(), completedWords);
 
                     system.selectWord(word);
-                }
-            }
-
-            statistics.makeAverages();
-
-            System.out.println("making averages");
-
-            printWriter.println(statistics.printStatistics(false));
-            printWriter.flush();
-
-        }
-
-    }
-
-    public void testSystemWithoutUpdate() throws FileNotFoundException {
-
-        PrintWriter printWriter = new PrintWriter(allReportFile);
-
-        filesProcessor = new FilesProcessor(null, Properties.INPUT_FILES_DIRECTORY);
-        List<Dictionary> trainDictionaries = filesProcessor.createDictionariesFromFiles();
-
-        Dictionary trainingDictionary = new Dictionary();
-        for (Dictionary addDictionary : trainDictionaries) {
-            for (Word word : addDictionary.asList()) {
-                trainingDictionary.addDictionaryWord(word);
-            }
-        }
-        int dictionarySize = trainingDictionary.getNumberOfWords();
-
-        system.loadCustomDictionary(trainingDictionary);
-        system.constructSearchTree();
-
-        filesProcessor = new FilesProcessor(null, Properties.TEST_ROTATION_DIRECTORY);
-        List<Dictionary> testDictionaries = filesProcessor.createDictionariesFromFiles();
-
-
-        //for all sizes of training domain
-        for (Dictionary testDictionary : testDictionaries) {
-
-            System.out.println("testing " + testDictionary.getFileName());
-
-            Statistics statistics = new Statistics(testDictionary.getFileName(), 1, dictionarySize, 1);
-
-            for (Word w : testDictionary.asList()) {
-                String word = w.getWord().toLowerCase();
-                if (word.length() > Properties.AUTOCOMPLETION_THRESHOLD) {
-                    statistics.beginWordStatistics(word);
-                    system.startCompletion();
-                    String prefix = word.substring(0, Properties.AUTOCOMPLETION_THRESHOLD);
-
-                    List<String> completedWords = system.getCompletion(prefix);
-
-                    int result = fillStatistics(statistics, word, w.getWeight(), prefix.length(), completedWords);
-
-                    system.selectWordNotUpdating(word);
                 }
             }
 
