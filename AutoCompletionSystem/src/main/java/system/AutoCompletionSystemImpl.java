@@ -36,7 +36,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     @Override
     public void readDictionary() {
         FilesProcessor filesProcessor = new FilesProcessor(new DictionaryProcessor(dictionary));
-        filesProcessor.processInputFiles(-1);
+        filesProcessor.processInputFiles();
     }
 
     @Override

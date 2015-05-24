@@ -1,15 +1,15 @@
 package input;
 
 import dictionary.Dictionary;
+import dictionary.filters.CharacterFilter;
+import dictionary.filters.RomanianCharacterFilter;
 import system.Properties;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Catalin on 2/21/2015 .
@@ -21,12 +21,15 @@ public class FilesProcessor {
 
     private final DictionaryProcessor dictionary;
 
+    private final CharacterFilter filter;
+
     public FilesProcessor(DictionaryProcessor dictionary) {
         this(dictionary, Properties.INPUT_FILES_DIRECTORY);
     }
 
     public FilesProcessor(DictionaryProcessor dictionary, String inputDirectory) {
         this.dictionary = dictionary;
+        filter = new RomanianCharacterFilter();
         inputDir = new File(inputDirectory);
         if (!inputDir.exists() && !inputDir.isDirectory()) {
             System.out.println("input files directory does not exist: " + inputDir + ";");
@@ -38,7 +41,15 @@ public class FilesProcessor {
         return (listFileNames != null) ? listFileNames.length : 0;
     }
 
-    public void processInputFiles(int skip) {
+    public void processInputFiles(){
+        processInputFiles(-1,Properties.DIACRITICS);
+    }
+
+    public void processInputFiles(int skip){
+        processInputFiles(skip,Properties.DIACRITICS);
+    }
+
+    public void processInputFiles(int skip, boolean filt) {
         dictionary.readDictionary();
         File[] listFileNames = inputDir.listFiles();
 
@@ -62,7 +73,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.getDictionary().addDictionaryWord(word.toLowerCase());
+                        dictionary.getDictionary().addDictionaryWord(filter.filterCharacters(word.toLowerCase(), filt));
                     }
                     line = reader.readLine();
                 }
@@ -77,6 +88,10 @@ public class FilesProcessor {
     }
 
     public List<Dictionary> createDictionariesFromFiles() {
+        return createDictionariesFromFiles(Properties.DIACRITICS);
+    }
+
+    public List<Dictionary> createDictionariesFromFiles(boolean filt) {
         List<Dictionary> dictionaries = new ArrayList<>();
 
         File[] listFileNames = inputDir.listFiles();
@@ -98,7 +113,7 @@ public class FilesProcessor {
                 while (line != null) {
                     String[] words = line.split(WORD_SEPARATION_REGEX);
                     for (String word : words) {
-                        dictionary.addDictionaryWord(word.toLowerCase());
+                        dictionary.addDictionaryWord(filter.filterCharacters(word.toLowerCase(), filt));
                     }
                     line = reader.readLine();
                 }

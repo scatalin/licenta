@@ -112,6 +112,10 @@ public class PropertiesParser {
                     Properties.SEGMENT_SIZE = Properties.ALPHABET.length();
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.SYSTEM_DIACRITICS.getValue())) {
+                    Properties.DIACRITICS = Boolean.valueOf(tokens[1]);
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.SUCCESSFUL_THRESHOLD.getValue())) {
                     Properties.SUCCESS_THRESHOLD = Integer.parseInt(tokens[1]);
                     continue;

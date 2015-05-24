@@ -75,7 +75,7 @@ public class Main {
         String command = "";
 
         Window w = null;
-        while (!command.equals("exit")) {
+        while (!"exit".equals(command)) {
             System.out.println("enter command:");
             command = scanner.nextLine();
             if (command.equals(RESET)) {
@@ -112,7 +112,7 @@ public class Main {
             }
             if (command.equals(PROCESS_FILES)) {
                 FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
-                filesProcessor.processInputFiles(-1);
+                filesProcessor.processInputFiles();
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {

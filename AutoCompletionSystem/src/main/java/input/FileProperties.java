@@ -28,6 +28,7 @@ public enum FileProperties {
     FORCE_SUPPORT_OS("force.supported"),
     FORCE_SYSTEM_PATH_SEPARATOR("system.separator"),
     SYSTEM_ALPHABET("system.alphabet"),
+    SYSTEM_DIACRITICS("system.diacritics"),
     AUTOCOMPLETION_THRESHOLD("autocompletion.minimum.characters"),
     AUTOCOMPLETION_K_SIZE("autocompletion.suggestions.size"),
     USER_WEIGHT("user.weight"),

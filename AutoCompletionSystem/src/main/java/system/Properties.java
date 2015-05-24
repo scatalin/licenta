@@ -38,5 +38,6 @@ public class Properties {
     public static int USER_WEIGHT;
     public static int ACTUALITY_WEIGHT;
     public static int WEIGHT_CEILING;
+    public static boolean DIACRITICS;
 }
 
