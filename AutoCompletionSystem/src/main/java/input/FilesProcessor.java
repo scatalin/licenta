@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class FilesProcessor {
 
-    private static final String WORD_SEPARATION_REGEX = "[^a-zA-Z]";
+    private static final String WORD_SEPARATION_REGEX = "[^a-zA-ZăîâșțĂÎÂȘȚ]";
     private final File inputDir;
 
     private final DictionaryProcessor dictionary;

@@ -7,7 +7,7 @@ public class RomanianCharacterFilter implements CharacterFilter {
 
     @Override
     public String filterCharacters(String word, boolean change) {
-        if(!change){
+        if(change){
             return word;
         }
         String s = word;

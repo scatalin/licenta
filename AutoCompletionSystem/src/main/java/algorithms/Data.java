@@ -12,7 +12,7 @@ import java.util.Set;
 public class Data {
 
     private static final String ALPHABET = Properties.ALPHABET;
-    private final Map<String, Integer> data;
+    private final Map<Character, Integer> data;
 
     public Data() {
         data = new HashMap<>();
@@ -21,15 +21,15 @@ public class Data {
 
     public void parseInterval() {
         for (int i = 0; i < ALPHABET.length(); i++) {
-            data.put(String.valueOf(ALPHABET.charAt(i)), i);
+            data.put(ALPHABET.charAt(i), i);
         }
     }
 
     public int getPosition(String s) {
-        return data.get(s.substring(0,1));
+        return data.get(s.charAt(0));
     }
 
-    public Set<String> getAlphabet() {
+    public Set<Character> getAlphabet() {
         return data.keySet();
     }
 
