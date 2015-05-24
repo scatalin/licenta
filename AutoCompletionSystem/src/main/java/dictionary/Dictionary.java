@@ -43,16 +43,24 @@ public class Dictionary {
         changed = true;
     }
 
-    public int addDictionaryWord(String word, int weight) {
-        return integrateDictionaryWord(word, weight);
+    public int addDefaultWord(String word, int weight) {
+        return integrateDictionaryWord(word, weight, 0, 0);
     }
 
-    public int addDictionaryWord(String word) {
-        return addDictionaryWord(word, 1);
+    public int addDefaultWord(String word, int weight, int userW, int actW) {
+        return integrateDictionaryWord(word, weight, userW, actW);
     }
 
-    public int addDictionaryWord(Word word) {
-        return addDictionaryWord(word.getWord(), word.getWeight());
+    public int addDefaultWord(String word, int weight, int userW) {
+        return integrateDictionaryWord(word, weight, userW, 0);
+    }
+
+    public int addDefaultWord(String word) {
+        return addDefaultWord(word, 1);
+    }
+
+    public int addDefaultWord(Word word) {
+        return addDefaultWord(word.getWord(), word.getWeight());
     }
 
     public List<Word> getWordsSortedByWeight() {
@@ -100,7 +108,7 @@ public class Dictionary {
         return "d=" + asList().size() + " " + asList();
     }
 
-    private int integrateDictionaryWord(String word, int increment) {
+    private int integrateDictionaryWord(String word, int defaultW, int userW, int actW) {
         if (!validator.isValid(word)) {
             return -1;
         }
@@ -112,11 +120,11 @@ public class Dictionary {
 
         int index = items.lastIndexOf(checkWord);
         if (index == -1) {
-            words.get(position).insert(new Word(word, increment));
-            return increment;
+            words.get(position).insert(new Word(word, defaultW, userW, actW));
+            return defaultW;
         }
 
-        int toReturnWeight = updater.updateWeight(items.get(index), increment);
+        int toReturnWeight = updater.updateWeight(items.get(index), defaultW, userW, actW);
         words.get(position).shiftUp(index, updater.updateModel());
         return toReturnWeight;
     }
@@ -129,6 +137,35 @@ public class Dictionary {
         for (MaxHeap<Word> heap : words) {
             heap.clearHeap();
         }
+    }
+
+    public int getMaximumWeightForWord(String word) {
+        int position = data.getPosition(word);
+        return words.get(position).getItems().get(0).getWeight();
+    }
+
+    public void updateUserWord(String word, int userW) {
+        integrateDictionaryWord(word, 0, userW, 0);
+    }
+
+    public void updateUserWord(String word, int userW, int actW) {
+        integrateDictionaryWord(word, 0, userW, actW);
+    }
+
+    public Word getWord(String word) {
+        if (!validator.isValid(word)) {
+            return null;
+        }
+        Word checkWord = new Word(word);
+
+        int position = data.getPosition(word);
+        List<Word> items = words.get(position).getItems();
+
+        int index = items.lastIndexOf(checkWord);
+        if (index == -1) {
+            return null;
+        }
+        return items.get(index);
     }
 }
 

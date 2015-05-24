@@ -30,6 +30,10 @@ public class Word implements HeapNode {
         this(word, dictionaryFrequency, 0, 0);
     }
 
+    public Word(String word, int dictionaryFrequency, int userFrequency) {
+        this(word, dictionaryFrequency, userFrequency, 0);
+    }
+
     public Word(String word) {
         this(word, 1, 0, 0);
     }
@@ -103,7 +107,7 @@ public class Word implements HeapNode {
 
     @Override
     public String toString() {
-        return word + "=" + dictionaryFrequency;
+        return word + "=" + dictionaryFrequency + "=" + userFrequency + "=" + userActuality;
     }
 
     @Override
@@ -120,5 +124,21 @@ public class Word implements HeapNode {
     @Override
     public void setLevel(int level) {
         this.heapLevel = level;
+    }
+
+    public int getUserFrequency() {
+        return userFrequency;
+    }
+
+    public void setUserFrequency(int userFrequency) {
+        this.userFrequency = userFrequency;
+    }
+
+    public int getUserActuality() {
+        return userActuality;
+    }
+
+    public void setUserActuality(int userActuality) {
+        this.userActuality = userActuality;
     }
 }
