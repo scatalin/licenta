@@ -90,7 +90,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
 //    }
 
     public boolean search(String word) {
-        return recursiveSearch(root,word);
+        return recursiveSearch(root, word);
     }
 
     private boolean recursiveSearch(TstNode node, String s) {

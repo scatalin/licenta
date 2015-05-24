@@ -21,7 +21,7 @@ public class SegmentTreePrettyPrinter extends AbstractPrettyPrinter {
         this.stringBuilder = stringBuilder;
 
         for (Character character : data.getAlphabet()) {
-            stringBuilder.append(character).append(":").append(data.getPosition(character+""));
+            stringBuilder.append(character).append(":").append(data.getPosition(character + ""));
             addIndentation();
         }
         stringBuilder.append("\n");

@@ -45,7 +45,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
 
     @Override
     public void load(List<Word> words) {
-        load(words,false);
+        load(words, false);
     }
 
     @Override
