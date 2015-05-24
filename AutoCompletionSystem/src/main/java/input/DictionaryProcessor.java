@@ -2,6 +2,8 @@ package input;
 
 import dictionary.Dictionary;
 import dictionary.Word;
+import dictionary.filters.CharacterFilter;
+import dictionary.filters.RomanianCharacterFilter;
 import system.Properties;
 
 import java.io.*;
@@ -11,7 +13,7 @@ import java.io.*;
  */
 public class DictionaryProcessor {
     private final File dictionaryFile;
-
+    private final CharacterFilter filter;
     private Dictionary dictionary;
 
     public DictionaryProcessor() {
@@ -35,6 +37,7 @@ public class DictionaryProcessor {
             System.out.println("dictionary file does not exist " + dictionaryFile + ";");
         }
 
+        filter = new RomanianCharacterFilter();
     }
 
     public void readDictionary() {
@@ -44,7 +47,15 @@ public class DictionaryProcessor {
             String line = reader.readLine();
             while (line != null) {
                 String[] tokens = line.split("=");
-                dictionary.addDictionaryWord(tokens[0], Integer.parseInt(tokens[1]));
+                if (tokens.length == 2) {
+                    dictionary.addDefaultWord(filter.filterCharacters(tokens[0], Properties.DIACRITICS), Integer.parseInt(tokens[1]));
+                } else if (tokens.length == 3) {
+                    dictionary.addDefaultWord(filter.filterCharacters(tokens[0], Properties.DIACRITICS), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                } else if (tokens.length == 4) {
+                    dictionary.addDefaultWord(filter.filterCharacters(tokens[0], Properties.DIACRITICS), Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]));
+                } else {
+                    System.exit(1);
+                }
                 line = reader.readLine();
             }
         } catch (IOException e) {

@@ -27,15 +27,17 @@ public class Main {
     private static final String DRAW = "draw";
     private static final String DRAW_ALL = "draw all";
     private static final String PROCESS_FILES = "input";
+    private static final String PROCESS_FILES_SPECIAL = "input s";
     private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_ROTATION_IN_MEMORY = "test all m";
     private static final String TEST_SYSTEM_TEN_FOLD = "test ten fold";
     private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM = "test tfs";
     private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM_UPDATE = "test tfsu";
-    private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM_INSERTING = "test tfsi";
     private static final String TEST_SYSTEM_PERCENTAGES = "test p";
+    private static final String TEST_SYSTEM_FINAL = "test f";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
+    private static final String DICTIONARY_DISPLAY_SIZE = "dict s";
     private static final String DICTIONARY_DISPLAY_WEIGHTED = "dict dw";
     private static final String TST_BUILD = "tst b";
     private static final String TST_WEIGHTED_BUILD = "tst wb";
@@ -115,9 +117,19 @@ public class Main {
                 filesProcessor.processInputFiles();
                 continue;
             }
+            if (command.equals(PROCESS_FILES_SPECIAL)) {
+                FilesProcessor filesProcessor = new FilesProcessor(dictionaryProcessor);
+                filesProcessor.printSpecialCharacters();
+                continue;
+            }
             if (command.equals(DICTIONARY_DISPLAY)) {
                 System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
                 System.out.println(dictionary.asList());
+                continue;
+            }
+            if (command.equals(DICTIONARY_DISPLAY_SIZE)) {
+                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
+//                System.out.println(dictionary.asList());
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY_WEIGHTED)) {
@@ -218,19 +230,20 @@ public class Main {
                 }
                 continue;
             }
-            if (command.equals(TEST_SYSTEM_TEN_FOLD_SYSTEM_INSERTING)) {
-                RepeatedCompletionTenFoldingTesting tester = new RepeatedCompletionTenFoldingTesting();
+            if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
+                SystemTester tester = new SystemTester(tree);
                 try {
-                    tester.testSystemWithoutUpdate();
+                    tester.testSystem();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 continue;
             }
+
             if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
-                SystemTester tester = new SystemTester(tree);
+                SystemBigTester tester = new SystemBigTester();
                 try {
-                    tester.testSystem();
+                    tester.testSystem(dictionary);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -7,21 +7,21 @@ public class RomanianCharacterFilter implements CharacterFilter {
 
     @Override
     public String filterCharacters(String word, boolean change) {
-        if(change){
+        if (change) {
             return word;
         }
         String s = word;
         //todo: memorise this in a map, iterate word characters and replace if found
-        s = replaceCharacter(s,RomanianSpecialCharacters.aVarianta1,'a');
-        s = replaceCharacter(s,RomanianSpecialCharacters.aVarianta1Mare, 'A');
-        s = replaceCharacter(s,RomanianSpecialCharacters.aVarianta2, 'a');
-        s = replaceCharacter(s,RomanianSpecialCharacters.aVarianta2Mare, 'A');
-        s = replaceCharacter(s,RomanianSpecialCharacters.i,'i');
-        s = replaceCharacter(s,RomanianSpecialCharacters.iMare,'I');
-        s = replaceCharacter(s,RomanianSpecialCharacters.t,'t');
-        s = replaceCharacter(s,RomanianSpecialCharacters.tMare,'T');
-        s = replaceCharacter(s,RomanianSpecialCharacters.s,'s');
-        s = replaceCharacter(s,RomanianSpecialCharacters.sMare,'S');
+        s = replaceCharacter(s, RomanianSpecialCharacters.aVarianta1, 'a');
+        s = replaceCharacter(s, RomanianSpecialCharacters.aVarianta1Mare, 'A');
+        s = replaceCharacter(s, RomanianSpecialCharacters.aVarianta2, 'a');
+        s = replaceCharacter(s, RomanianSpecialCharacters.aVarianta2Mare, 'A');
+        s = replaceCharacter(s, RomanianSpecialCharacters.i, 'i');
+        s = replaceCharacter(s, RomanianSpecialCharacters.iMare, 'I');
+        s = replaceCharacter(s, RomanianSpecialCharacters.t, 't');
+        s = replaceCharacter(s, RomanianSpecialCharacters.tMare, 'T');
+        s = replaceCharacter(s, RomanianSpecialCharacters.s, 's');
+        s = replaceCharacter(s, RomanianSpecialCharacters.sMare, 'S');
 
         return s;
     }
@@ -42,7 +42,6 @@ public class RomanianCharacterFilter implements CharacterFilter {
         sMare(536),
         t(539),
         tMare(538);
-
 
 
         private final Integer ascii;
