@@ -23,6 +23,11 @@ public class MaxHeap<T extends HeapNode> {
         }
     }
 
+    private MaxHeap(List<T> items, CostCalculator cost) {
+        this.items = items;
+        this.cost = cost;
+    }
+
     public int shiftUp(int k, boolean update) {
         while (k > 0) {
             int p = parent(k);
@@ -145,5 +150,9 @@ public class MaxHeap<T extends HeapNode> {
 
     public List<T> duplicateItems() {
         return new ArrayList<>(items);
+    }
+
+    public MaxHeap<T> clone(){
+        return new MaxHeap<>(duplicateItems(),cost);
     }
 }

@@ -56,7 +56,7 @@ public class SystemBigTester {
 
     public void testSystem(Dictionary trainingDictionary) throws FileNotFoundException {
 
-        system.loadCustomDictionary(trainingDictionary);
+        system.loadCustomDictionary(trainingDictionary.clone());
         system.constructSearchTree();
 
         PrintWriter printWriter1 = new PrintWriter(reportFile1);
@@ -67,7 +67,7 @@ public class SystemBigTester {
         //for all test files
         for (int testFileIndex = 0; testFileIndex < numberOfFiles; testFileIndex++) {
 
-            newSystem.loadCustomDictionary(trainingDictionary);
+            newSystem.loadCustomDictionary(trainingDictionary.clone());
             newSystem.constructSearchTree();
 
             int dictionarySize = trainingDictionary.getNumberOfWords();

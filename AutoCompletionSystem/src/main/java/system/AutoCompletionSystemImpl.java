@@ -18,7 +18,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
 
     private SearchTree searchTree;
     private Dictionary dictionary;
-    private List<String> sugestions;
+    private List<String> suggestions;
     private String lastPrefix;
 
     public AutoCompletionSystemImpl() {
@@ -63,8 +63,8 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
         if (!prefix.startsWith(lastPrefix)) {
             startCompletion();
         }
-        sugestions = searchTree.getSuggestions(prefix);
-        return sugestions;
+        suggestions = searchTree.getSuggestions(prefix);
+        return suggestions;
     }
 
     @Override

@@ -43,6 +43,16 @@ public class Dictionary {
         changed = true;
     }
 
+    private Dictionary(List<MaxHeap<Word>> words, Data data, String fileName, Validator validator, WeightUpdate updater, List<Word> wordsList, boolean changed) {
+        this.words = words;
+        this.data = data;
+        this.fileName = fileName;
+        this.validator = validator;
+        this.updater = updater;
+        this.wordsList = wordsList;
+        this.changed = changed;
+    }
+
     public int addDefaultWord(String word, int weight) {
         return integrateDictionaryWord(word, weight, 0, 0);
     }
@@ -166,6 +176,14 @@ public class Dictionary {
             return null;
         }
         return items.get(index);
+    }
+
+    public Dictionary clone() {
+        List<MaxHeap<Word>> newHeap = new ArrayList<>();
+        for (MaxHeap<Word> heap : words) {
+            newHeap.add(heap.clone());
+        }
+        return new Dictionary(newHeap, data, fileName, validator, updater, new ArrayList<>(wordsList), changed);
     }
 }
 
