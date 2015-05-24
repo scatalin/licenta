@@ -43,14 +43,14 @@ public class Dictionary {
         changed = true;
     }
 
-    private Dictionary(List<MaxHeap<Word>> words, Data data, String fileName, Validator validator, WeightUpdate updater, List<Word> wordsList, boolean changed) {
+    private Dictionary(List<MaxHeap<Word>> words, Data data, String fileName, Validator validator, WeightUpdate updater) {
         this.words = words;
         this.data = data;
         this.fileName = fileName;
         this.validator = validator;
         this.updater = updater;
-        this.wordsList = wordsList;
-        this.changed = changed;
+        this.wordsList = null;
+        this.changed = true;
     }
 
     public int addDefaultWord(String word, int weight) {
@@ -183,7 +183,7 @@ public class Dictionary {
         for (MaxHeap<Word> heap : words) {
             newHeap.add(heap.clone());
         }
-        return new Dictionary(newHeap, data, fileName, validator, updater, new ArrayList<>(wordsList), changed);
+        return new Dictionary(newHeap, data, fileName, validator, updater);
     }
 }
 

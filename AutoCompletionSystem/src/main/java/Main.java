@@ -240,7 +240,7 @@ public class Main {
                 continue;
             }
 
-            if (command.equals(TEST_SYSTEM_PERCENTAGES)) {
+            if (command.equals(TEST_SYSTEM_FINAL)) {
                 SystemBigTester tester = new SystemBigTester();
                 try {
                     tester.testSystem(dictionary);
