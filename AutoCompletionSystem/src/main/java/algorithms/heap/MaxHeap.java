@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by gstan on 27.03.2015.
  */
-public class MaxHeap<T extends HeapNode> {
+public class MaxHeap<T extends HeapNode<T>> {
     //todo : modify levels in shiftUp and shiftDown
     private List<T> items;
     private CostCalculator cost;
@@ -149,10 +149,14 @@ public class MaxHeap<T extends HeapNode> {
     }
 
     public List<T> duplicateItems() {
-        return new ArrayList<>(items);
+        List<T> list = new ArrayList<>();
+        for (T item : items) {
+            list.add(item.clone());
+        }
+        return list;
     }
 
-    public MaxHeap<T> clone(){
-        return new MaxHeap<>(duplicateItems(),cost);
+    public MaxHeap<T> clone() {
+        return new MaxHeap<>(duplicateItems(), cost);
     }
 }

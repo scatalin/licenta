@@ -6,7 +6,7 @@ import system.Properties;
 /**
  * Created by Catalin on 3/9/2015 .
  */
-public class Word implements HeapNode {
+public class Word implements HeapNode<Word> {
 
     private final String word;
     private int heapLevel;
@@ -17,6 +17,15 @@ public class Word implements HeapNode {
     private double dictionaryFrequencyPercentage;
     private double userFrequencyPercentage;
     private double userActualityPercentage;
+
+    private Word(String word, int heapLevel, int totalWeight, int dictionaryFrequency, int userFrequency, int userActuality) {
+        this.word = word;
+        this.heapLevel = heapLevel;
+        this.totalWeight = totalWeight;
+        this.dictionaryFrequency = dictionaryFrequency;
+        this.userFrequency = userFrequency;
+        this.userActuality = userActuality;
+    }
 
     public Word(String word, int dictionaryFrequency, int userFrequency, int userActuality) {
         this.word = word;
@@ -63,9 +72,9 @@ public class Word implements HeapNode {
     }
 
     private void initPercentages() {
-        dictionaryFrequencyPercentage = Properties.WEIGHT_FREQUENCY;
-        userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER;
-        userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER;
+        dictionaryFrequencyPercentage = Properties.WEIGHT_FREQUENCY / Properties.WEIGHT_FREQUENCY;
+        userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER / Properties.WEIGHT_FREQUENCY;
+        userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER / Properties.WEIGHT_FREQUENCY;
     }
 
     private void normalizeUserFrequency() {
@@ -95,6 +104,11 @@ public class Word implements HeapNode {
 
         return !((word != null) ? !word.equals(word1.word) : (word1.word != null));
     }
+
+    public Word clone() {
+        return new Word(word, heapLevel, totalWeight, dictionaryFrequency, userFrequency, userActuality);
+    }
+
 
     @Override
     public int hashCode() {
