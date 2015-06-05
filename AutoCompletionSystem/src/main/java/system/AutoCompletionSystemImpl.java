@@ -3,6 +3,7 @@ package system;
 import algorithms.SearchTree;
 import algorithms.SearchTreeFactory;
 import algorithms.heap.MaxHeap;
+import algorithms.utils.FilePrinter;
 import dictionary.Dictionary;
 import dictionary.Word;
 import dictionary.inserting.UserWeightUpdate;
@@ -20,6 +21,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     private Dictionary dictionary;
     private List<String> suggestions;
     private String lastPrefix;
+    private Dictionary backup;
 
     public AutoCompletionSystemImpl() {
         searchTree = SearchTreeFactory.createCompletionTree();
@@ -71,10 +73,32 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     public void selectWord(String word) {
         //todo separate this in a job, search the word in dictionary, get weight and update it in the model
         dictionary.setUpdater(new UserWeightUpdate());
-        dictionary.updateUserWord(word, Properties.USER_WEIGHT);
         int ceilingWeight = dictionary.getMaximumWeightForWord(word);
-        dictionary.addDefaultWord(word, 1, 1, ceilingWeight / 3);
+        dictionary.updateUserWord(word, Properties.USER_WEIGHT,ceilingWeight / 10);
         Word w = dictionary.getWord(word);
         searchTree.update(word, w.getWeight());
+    }
+
+    @Override
+    public void print(){
+        FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, searchTree.print());
+    }
+
+    @Override
+    public void saveState() {
+        backup = dictionary.clone();
+    }
+
+    @Override
+    public void printDiff() {
+        List<Word> backupWords = backup.asList();
+        StringBuilder diff = new StringBuilder();
+        for(Word word : backupWords){
+            Word w =dictionary.getWord(word.getWord());
+            if(!w.toString().equals(word.toString())){
+                diff.append("before: ").append(word.toStringCustom()).append(" after: ").append(w.toStringCustom()).append("\n");
+            }
+        }
+        FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, diff.toString());
     }
 }

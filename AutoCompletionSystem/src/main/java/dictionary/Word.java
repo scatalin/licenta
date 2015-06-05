@@ -62,12 +62,12 @@ public class Word implements HeapNode<Word> {
 
     private void calculateTotalWeight() {
         initPercentages();
-        if (userFrequency <= 0) {
-            normalizeUserFrequency();
-        }
-        if (userActuality <= 0) {
-            normalizeUserActuality();
-        }
+//        if (userFrequency <= 0) {
+//            normalizeUserFrequency();
+//        }
+//        if (userActuality <= 0) {
+//            normalizeUserActuality();
+//        }
         totalWeight = (int) ((dictionaryFrequency * dictionaryFrequencyPercentage) + (userFrequency * userFrequencyPercentage) + (userActuality * userActualityPercentage));
     }
 
@@ -122,6 +122,10 @@ public class Word implements HeapNode<Word> {
     @Override
     public String toString() {
         return word + "=" + dictionaryFrequency + "=" + userFrequency + "=" + userActuality;
+    }
+
+    public String toStringCustom() {
+        return word + "=" + dictionaryFrequency + "=" + userFrequency + "=" + userActuality + "==" + getWeight();
     }
 
     @Override

@@ -9,7 +9,7 @@ public class TreeParser {
 
     public DimensionsInfo calculateDimensions(TstNode node) {
         if (node == null) {
-            return null;
+            return new DimensionsInfo();
         }
         DimensionsInfo leftInfo = calculateDimensions(node.getLeftChild());
         DimensionsInfo rightInfo = calculateDimensions(node.getRightChild());

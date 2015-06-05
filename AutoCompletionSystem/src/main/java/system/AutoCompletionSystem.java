@@ -22,4 +22,10 @@ public interface AutoCompletionSystem {
     List<String> getCompletion(String prefix);
 
     void selectWord(String word);
+
+    void print();
+
+    void saveState();
+
+    void printDiff();
 }

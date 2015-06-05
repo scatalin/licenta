@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class FilesProcessor {
 
-
     private final File inputDir;
 
     private final DictionaryProcessor dictionary;

@@ -45,6 +45,10 @@ public class Statistics {
         outOfRangeList = new ArrayList<>();
     }
 
+    public Statistics(int dictSize) {
+        this(null,0, dictSize,0);
+    }
+
     public void makeAverages() {
         total = statistics.size();
         successful = 0;
@@ -90,8 +94,10 @@ public class Statistics {
 
     public String printStatistics(boolean file) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("file ").append(fileName).append(" ");
-        stringBuilder.append("generated the following statistics").append("\n");
+        if (fileName != null) {
+            stringBuilder.append("file ").append(fileName).append(" ");
+            stringBuilder.append("generated the following statistics").append("\n");
+        }
         if (noTrainingFiles > 0) {
             stringBuilder.append("number of training files ")
                     .append(noTrainingFiles).append(" with ");

@@ -28,7 +28,6 @@ public class Main {
     private static final String DRAW_ALL = "draw all";
     private static final String PROCESS_FILES = "input";
     private static final String PROCESS_FILES_SPECIAL = "input s";
-    private static final String TEST_SYSTEM_ROTATION = "test all";
     private static final String TEST_SYSTEM_ROTATION_IN_MEMORY = "test all m";
     private static final String TEST_SYSTEM_TEN_FOLD = "test ten fold";
     private static final String TEST_SYSTEM_TEN_FOLD_SYSTEM = "test tfs";
@@ -183,15 +182,6 @@ public class Main {
             if (command.equals(TREE_PRINT)) {
                 PrettyPrinter printer = new NestedTstPrettyPrinter((SegmentTreeLinear) tree);
                 FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, printer.prettyPrint());
-                continue;
-            }
-            if (command.equals(TEST_SYSTEM_ROTATION)) {
-                SystemRotationTester rotationTester = new SystemRotationTester();
-                try {
-                    rotationTester.testSystemByRotation();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
                 continue;
             }
             if (command.equals(TEST_SYSTEM_ROTATION_IN_MEMORY)) {

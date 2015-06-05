@@ -85,6 +85,7 @@ public class Dictionary {
             for (MaxHeap<Word> heap : words) {
                 wordsList.addAll(heap.duplicateItems());
             }
+            changed = false;
         }
         return wordsList;
     }

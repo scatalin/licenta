@@ -3,7 +3,7 @@ package algorithms.segmenttree;
 import algorithms.Data;
 import algorithms.SearchTree;
 import algorithms.SearchTreeFactory;
-import algorithms.segmenttree.printing.SegmentTreePrettyPrinter;
+import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
 import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Word;
@@ -84,7 +84,7 @@ public class SegmentTreeLinear implements SearchTree {
 
     @Override
     public String print() {
-        PrettyPrinter printer = new SegmentTreePrettyPrinter();
+        PrettyPrinter printer = new NestedTstPrettyPrinter(this);
         return printer.prettyPrint();
     }
 
