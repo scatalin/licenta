@@ -152,11 +152,7 @@ public class Dictionary {
 
     public int getMaximumWeightForWord(String word) {
         int position = data.getPosition(word);
-        return words.get(position).getItems().get(0).getWeight();
-    }
-
-    public void updateUserWord(String word, int userW) {
-        integrateDictionaryWord(word, 0, userW, 0);
+        return (words.get(position).getItems().isEmpty() ? 10 : words.get(position).getItems().get(0).getWeight());
     }
 
     public void updateUserWord(String word, int userW, int actW) {
