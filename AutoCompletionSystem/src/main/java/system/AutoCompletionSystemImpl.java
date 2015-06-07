@@ -77,17 +77,14 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
         searchTree.update(word, w.getWeight());
     }
 
-    @Override
     public void print(){
         FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, searchTree.print());
     }
 
-    @Override
     public void saveState() {
         backup = dictionary.clone();
     }
 
-    @Override
     public void printDiff() {
         List<Word> backupWords = backup.asList();
         StringBuilder diff = new StringBuilder();
