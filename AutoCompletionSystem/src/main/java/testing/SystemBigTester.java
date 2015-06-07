@@ -11,6 +11,7 @@ import system.Properties;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +19,8 @@ import java.util.List;
  */
 public class SystemBigTester {
 
-    private final File reportFile1;
-    private final File reportFile2;
-
+    private File reportFile1;
+    private File reportFile2;
 
     private AutoCompletionSystem system;
     private AutoCompletionSystem newSystem;
@@ -31,6 +31,10 @@ public class SystemBigTester {
 
     public SystemBigTester() {
 
+        initSystem();
+    }
+
+    private void initSystem() {
         reportFile1 = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
         if (!reportFile1.exists() && !reportFile1.isFile()) {
             System.out.println("all report file does not exist " + reportFile1 + ";");
@@ -56,62 +60,132 @@ public class SystemBigTester {
 
     public void testSystem(Dictionary trainingDictionary) throws FileNotFoundException {
 
-        system.loadCustomDictionary(trainingDictionary.clone());
-        system.constructSearchTree();
+        String beforeMeasures = Properties.MEASURES_OUTPUT_FILE_NAME;
+        String beforeReport = Properties.REPORT_OUTPUT_FILE_NAME;
+
+        Dictionary referenceDictionary = trainingDictionary.clone();
+
+        List<Statistics> overall = new ArrayList<>();
+        List<Statistics> overallSecond = new ArrayList<>();
+        List<Statistics> overallNew = new ArrayList<>();
+
+        int size = 10;
+        for (int i = 1; i <= size; i++) {
+
+            int position = Properties.MEASURES_OUTPUT_FILE_NAME.lastIndexOf('-');
+            Properties.MEASURES_OUTPUT_FILE_NAME = Properties.MEASURES_OUTPUT_FILE_NAME.substring(0, position + 1) + i;
+
+            position = Properties.REPORT_OUTPUT_FILE_NAME.lastIndexOf('-');
+            Properties.REPORT_OUTPUT_FILE_NAME = Properties.REPORT_OUTPUT_FILE_NAME.substring(0, position + 1) + i;
+
+            position = Properties.TEST_FILES_DIRECTORY.lastIndexOf('-');
+            Properties.TEST_FILES_DIRECTORY = Properties.TEST_FILES_DIRECTORY.substring(0, position + 1) + i;
+
+            initSystem();
+
+            system.loadCustomDictionary(referenceDictionary.clone());
+            system.constructSearchTree();
+
+            PrintWriter printWriter1 = new PrintWriter(reportFile1);
+            PrintWriter printWriter2 = new PrintWriter(reportFile2);
+
+            List<Dictionary> dictionaries = filesProcessor.createDictionariesFromFiles();
+
+            //for all test files
+            for (int testFileIndex = 0; testFileIndex < numberOfFiles; testFileIndex++) {
+
+                newSystem.loadCustomDictionary(trainingDictionary.clone());
+                newSystem.constructSearchTree();
+
+                int dictionarySize = trainingDictionary.getNumberOfWords();
+
+                Dictionary testDictionary = dictionaries.get(testFileIndex);
+                System.out.println("testing " + testDictionary.getFileName());
+
+                Statistics statistics1 = new Statistics(testDictionary.getFileName(), 0, dictionarySize, 0);
+                Statistics statistics2 = new Statistics(testDictionary.getFileName(), 0, dictionarySize, 0);
+                Statistics statistics3 = new Statistics(testDictionary.getFileName(), 0, dictionarySize, 0);
+
+                for (Word w : testDictionary.asList()) {
+                    String word = w.getWord().toLowerCase();
+                    if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
+                        statistics1.beginWordStatistics(word);
+                        system.startCompletion();
+                        String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
+
+                        List<String> completedWords = system.getCompletion(prefix);
+
+                        fillStatistics(statistics1, word, w.getWeight(), prefix.length(), completedWords);
+
+                        system.selectWord(word);
+
+                        statistics2.beginWordStatistics(word);
+
+                        newSystem.startCompletion();
+                        prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
+
+                        completedWords = newSystem.getCompletion(prefix);
+
+                        fillStatistics(statistics2, word, w.getWeight(), prefix.length(), completedWords);
+
+                        newSystem.selectWord(word);
+                    }
+                }
+
+                for (Word w : testDictionary.asList()) {
+                    String word = w.getWord().toLowerCase();
+                    if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
+                        statistics3.beginWordStatistics(word);
+                        system.startCompletion();
+                        String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
+
+                        List<String> completedWords = system.getCompletion(prefix);
+
+                        fillStatistics(statistics3, word, w.getWeight(), prefix.length(), completedWords);
+
+                        system.selectWord(word);
+                    }
+                }
+
+                System.out.println("making average for file " + trainingDictionary.getFileName());
+                statistics1.makeAverages();
+                statistics2.makeAverages();
+                statistics3.makeAverages();
+                overall.add(statistics1);
+                overallSecond.add(statistics3);
+                overallNew.add(statistics2);
+                printWriter1.println(statistics1.printStatistics(true));
+                printWriter2.println(statistics2.printStatistics(true));
+                printWriter1.flush();
+                printWriter2.flush();
+            }
+            printWriter1.close();
+            printWriter2.close();
+        }
+        Statistics average1 = makeAverages(overall, trainingDictionary.getNumberOfWords());
+        Statistics average2 = makeAverages(overallNew, trainingDictionary.getNumberOfWords());
+        Statistics average3 = makeAverages(overallSecond, trainingDictionary.getNumberOfWords());
+
+        int position = Properties.MEASURES_OUTPUT_FILE_NAME.lastIndexOf('-');
+        Properties.MEASURES_OUTPUT_FILE_NAME = Properties.MEASURES_OUTPUT_FILE_NAME.substring(0, position + 1) + (size + 1);
+
+        position = Properties.REPORT_OUTPUT_FILE_NAME.lastIndexOf('-');
+        Properties.REPORT_OUTPUT_FILE_NAME = Properties.REPORT_OUTPUT_FILE_NAME.substring(0, position + 1) + (size + 1);
+
+        initSystem();
 
         PrintWriter printWriter1 = new PrintWriter(reportFile1);
         PrintWriter printWriter2 = new PrintWriter(reportFile2);
+        printWriter1.println(average1.printStatistics(false));
+        printWriter1.println(average3.printStatistics(false));
+        printWriter2.println(average2.printStatistics(false));
+        printWriter1.flush();
+        printWriter2.flush();
+        printWriter1.close();
+        printWriter2.close();
 
-        List<Dictionary> dictionaries = filesProcessor.createDictionariesFromFiles();
-
-        //for all test files
-        for (int testFileIndex = 0; testFileIndex < numberOfFiles; testFileIndex++) {
-
-            newSystem.loadCustomDictionary(trainingDictionary.clone());
-            newSystem.constructSearchTree();
-
-            int dictionarySize = trainingDictionary.getNumberOfWords();
-
-            Dictionary testDictionary = dictionaries.get(testFileIndex);
-            System.out.println("testing " + testDictionary.getFileName());
-
-            Statistics statistics1 = new Statistics(testDictionary.getFileName(), 0, dictionarySize, 0);
-            Statistics statistics2 = new Statistics(testDictionary.getFileName(), 0, dictionarySize, 0);
-
-            for (Word w : testDictionary.asList()) {
-                String word = w.getWord().toLowerCase();
-                if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
-                    statistics1.beginWordStatistics(word);
-                    system.startCompletion();
-                    String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
-
-                    List<String> completedWords = system.getCompletion(prefix);
-
-                    fillStatistics(statistics1, word, w.getWeight(), prefix.length(), completedWords);
-
-                    system.selectWord(word);
-
-                    statistics2.beginWordStatistics(word);
-
-                    newSystem.startCompletion();
-                    prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
-
-                    completedWords = newSystem.getCompletion(prefix);
-
-                    fillStatistics(statistics2, word, w.getWeight(), prefix.length(), completedWords);
-
-                    newSystem.selectWord(word);
-                }
-            }
-
-            System.out.println("making average for file " + trainingDictionary.getFileName());
-            statistics1.makeAverages();
-            statistics2.makeAverages();
-            printWriter1.println(statistics1.printStatistics(false));
-            printWriter2.println(statistics2.printStatistics(false));
-            printWriter1.flush();
-            printWriter2.flush();
-        }
+        Properties.MEASURES_OUTPUT_FILE_NAME = beforeMeasures;
+        Properties.REPORT_OUTPUT_FILE_NAME = beforeReport;
     }
 
     private int fillStatistics(Statistics statistics, String word, int weight, int prefixLength, List<String> completedWords) {
@@ -134,6 +208,39 @@ public class SystemBigTester {
             statistics.interrogationStatistic(prefixLength, -1, weight);
             return found - 1;
         }
+    }
+
+    private Statistics makeAverages(List<Statistics> statistics, int dictSize) {
+        Statistics averageStatistic = new Statistics(dictSize);
+        long totalTotal = 0;
+        long totalSuccessful = 0;
+        long totalOutRange = 0;
+        long totalNotInTree = 0;
+        long totalNotFound = 0;
+        long totalDictionarySize = 0;
+        double totalPrecision = 0.0;
+        double totalRecall = 0.0;
+        for (Statistics statistic : statistics) {
+            totalDictionarySize += statistic.getDictionarySize();
+            totalTotal += statistic.getTotal();
+            totalSuccessful += statistic.getSuccessful();
+            totalNotFound += statistic.getWordNotInTree();
+            totalNotInTree += statistic.getNoSuggestionsForPrefix();
+            totalOutRange += statistic.getOutRange();
+//            averageStatistic.addOutOfRange(statistic.getOutOfRange());
+            totalPrecision += statistic.getPrecision();
+            totalRecall += statistic.getRecall();
+        }
+        averageStatistic.setTotal(totalTotal / statistics.size());
+        averageStatistic.setDictionarySize(totalDictionarySize / statistics.size());
+        averageStatistic.setWordNotInTree(totalNotFound / statistics.size());
+        averageStatistic.setNoSuggestionsForPrefix(totalNotInTree / statistics.size());
+        averageStatistic.setOutRange(totalOutRange / statistics.size());
+        averageStatistic.setPrecision(totalPrecision / statistics.size());
+        averageStatistic.setSuccessful(totalSuccessful / statistics.size());
+        averageStatistic.setRecall(totalRecall / statistics.size());
+
+        return averageStatistic;
     }
 
 }
