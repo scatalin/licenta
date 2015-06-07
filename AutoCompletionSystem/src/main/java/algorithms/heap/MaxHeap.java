@@ -159,4 +159,8 @@ public class MaxHeap<T extends HeapNode<T>> {
     public MaxHeap<T> clone() {
         return new MaxHeap<>(duplicateItems(), cost);
     }
+
+    public long getModificationsMagnitude(){
+        return cost.getCost();
+    }
 }
