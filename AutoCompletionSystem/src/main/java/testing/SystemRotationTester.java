@@ -26,10 +26,6 @@ public class SystemRotationTester {
 
     private FilesProcessor filesProcessor;
 
-    private int numberOfRuns;
-
-    private DictionaryProcessor dictionaryProcessor;
-
     public SystemRotationTester() {
 
         allReportFile = new File(Properties.RESULT_DIRECTORY + Properties.SYSTEM_PATH_SEPARATOR + Properties.MEASURES_OUTPUT_FILE_NAME);
@@ -47,81 +43,9 @@ public class SystemRotationTester {
             statisticsList.add(new ArrayList<>());
         }
 
-        dictionaryProcessor = new DictionaryProcessor();
-        filesProcessor = new FilesProcessor(dictionaryProcessor, Properties.TEST_ROTATION_DIRECTORY);
-        numberOfRuns = filesProcessor.getNumberOfFiles();
+        filesProcessor = new FilesProcessor(new DictionaryProcessor(), Properties.TEST_ROTATION_DIRECTORY);
 
         tree = new SegmentTreeLinear();
-    }
-
-    public void testSystemByRotation() throws FileNotFoundException {
-
-        PrintWriter printWriter = new PrintWriter(allReportFile);
-
-        for (int run = 0; run < numberOfRuns; run++) {
-
-            int dictionarySize = initTree(run);
-
-            File[] listFileNames = rotationTestDir.listFiles();
-
-            if (listFileNames == null) {
-                System.out.println("an exception occurred while reading files from " + rotationTestDir);
-                return;
-            }
-
-
-            File toTestFile = listFileNames[run];
-
-            //todo read all input files and hand over to delegates, word processor and phrase processor
-
-            System.out.println("testing " + toTestFile.getName());
-            try {
-                for (int currentRun = Properties.TEST_WORD_START; currentRun <= Properties.TEST_WORD_DEPTH; currentRun++) {
-                    Dictionary dictionary = new Dictionary();
-                    Statistics statistics = new Statistics(toTestFile.getName(), currentRun, dictionarySize, 0);
-                    statisticsList.get(currentRun).add(statistics);
-
-                    BufferedReader reader = new BufferedReader(new FileReader(toTestFile));
-                    String line = reader.readLine();
-
-                    while (line != null) {
-                        String[] words = line.split(Properties.WORD_SEPARATION_REGEX);
-                        for (String word : words) {
-                            if (word.length() > 1) {
-                                dictionary.addDefaultWord(word);
-                            }
-                            word = word.toLowerCase();
-                            if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
-                                statistics.beginWordStatistics(word);
-                                tree.resetCompletion();
-                                String prefix = word.substring(0, Math.min(currentRun, word.length()));
-                                List<String> completedWords = tree.getSuggestions(prefix);
-                                fillStatistics(statistics, word, prefix.length(), completedWords);
-                            }
-                        }
-                        //for words
-                        line = reader.readLine();
-                    }
-                    //while line
-
-                    statistics.makeAverages();
-
-                    System.out.println("dictionary of the file " + toTestFile.getName() + dictionary);
-                    reader.close();
-                    System.out.println("file " + toTestFile.getName() + " was tested for threshold + " + currentRun);
-                }
-                // for threshold
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } // for all runs
-
-        makeAverages(printWriter);
-
-        printWriter.flush();
-        printWriter.close();
     }
 
     private void fillStatistics(Statistics statistics, String word, int prefixLength, List<String> completedWords) {
@@ -145,7 +69,6 @@ public class SystemRotationTester {
 
     private int initTree(int run) {
         Dictionary dictionary = new Dictionary();
-        dictionaryProcessor = new DictionaryProcessor(dictionary);
 
         filesProcessor.processInputFiles(run);
 
@@ -166,6 +89,7 @@ public class SystemRotationTester {
             System.out.println("dictionary for the file" + dictionary.getFileName() + " " + dictionary);
         }
 
+        int numberOfRuns = filesProcessor.getNumberOfFiles();
         for (int run = 0; run < numberOfRuns; run++) {
 
             Dictionary toTestDictionary = dictionaries.get(run);
