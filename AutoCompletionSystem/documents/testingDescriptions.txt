@@ -4,3 +4,25 @@ for each word
         characters typed so far
         position in the suggestions list
         characters saved from printing
+
+pentru cea studenteasca (19 iunie)
+obiectivul foarte bine pus la punct
+flow
+       diagrama cu procesele ce se intampla
+       descrierea principiala
+       experimentele
+
+cealalta (1 deadline)
+
+
+pastrez acelasi set de evaluare
+iau dictionarul small
+       il impart in 5.
+       fac testare pe fiecare fold
+       compar
+       fac media
+
+
+sa testez pe ochi (3-20), aka acelasi autor, sa variez default dictionary / user dictionary
+
+bring new ideeas
