@@ -58,36 +58,8 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
     public void update(String word, int weight) {
         this.toInsertWeight = weight;
         wasEndWord = false;
-        recursiveInsert(root, word);
+        root = recursiveInsert(root, word);
     }
-
-//    private void recursiveUpdate(TstNode node, String s) {
-//        if (s.isEmpty()) {
-//            wasEndWord = true;
-//            return;
-//        }
-//        if (node == null) {
-//            return;
-//        }
-//        if (toInsertWeight > node.getSubtreesWeight()) {
-//            node.setSubtreesWeight(toInsertWeight);
-//        }
-//        int comparisonResult = Character.valueOf(s.charAt(0)).compareTo(node.getCharacter());
-//        if (comparisonResult < 0) {
-//            recursiveUpdate(node.getLeftChild(), s);
-//        }
-//        if (comparisonResult > 0) {
-//            recursiveUpdate(node.getRightChild(), s);
-//        }
-//        if (comparisonResult == 0) {
-//            recursiveUpdate(node.getMiddleChild(), s.substring(1));
-//        }
-//        if (wasEndWord) {
-//            wasEndWord = false;
-//            node.setWordWeight(toInsertWeight);
-//            node.setEndWord();
-//        }
-//    }
 
     public boolean search(String word) {
         return recursiveSearch(root, word);
