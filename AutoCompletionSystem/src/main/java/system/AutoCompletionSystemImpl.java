@@ -19,7 +19,6 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
 
     private SearchTree searchTree;
     private Dictionary dictionary;
-    private List<String> suggestions;
     private String lastPrefix;
     private Dictionary backup;
 
@@ -65,8 +64,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
         if (!prefix.startsWith(lastPrefix)) {
             startCompletion();
         }
-        suggestions = searchTree.getSuggestions(prefix);
-        return suggestions;
+        return searchTree.getSuggestions(prefix);
     }
 
     @Override

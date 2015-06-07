@@ -23,6 +23,8 @@ public interface AutoCompletionSystem {
 
     void selectWord(String word);
 
+    //todo remove this
+
     void print();
 
     void saveState();
