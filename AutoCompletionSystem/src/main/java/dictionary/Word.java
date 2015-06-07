@@ -14,9 +14,6 @@ public class Word implements HeapNode<Word> {
     private int dictionaryFrequency;
     private int userFrequency;
     private int userActuality;
-    private double dictionaryFrequencyPercentage;
-    private double userFrequencyPercentage;
-    private double userActualityPercentage;
 
     private Word(String word, int heapLevel, int totalWeight, int dictionaryFrequency, int userFrequency, int userActuality) {
         this.word = word;
@@ -28,11 +25,7 @@ public class Word implements HeapNode<Word> {
     }
 
     public Word(String word, int dictionaryFrequency, int userFrequency, int userActuality) {
-        this.word = word;
-        this.dictionaryFrequency = dictionaryFrequency;
-        this.userFrequency = userFrequency;
-        this.userActuality = userActuality;
-        heapLevel = 0;
+        this(word, 0, 0, dictionaryFrequency, userFrequency, userActuality);
     }
 
     public Word(String word, int dictionaryFrequency) {
@@ -52,43 +45,21 @@ public class Word implements HeapNode<Word> {
     }
 
     public int getWeight() {
-        calculateTotalWeight();
-        return totalWeight;
+        return calculateTotalWeight();
     }
 
     public void setWeight(int dictionaryFrequency) {
         this.dictionaryFrequency = dictionaryFrequency;
     }
 
-    private void calculateTotalWeight() {
-        initPercentages();
-//        if (userFrequency <= 0) {
-//            normalizeUserFrequency();
-//        }
-//        if (userActuality <= 0) {
-//            normalizeUserActuality();
-//        }
-        totalWeight = (int) ((dictionaryFrequency * dictionaryFrequencyPercentage) + (userFrequency * userFrequencyPercentage) + (userActuality * userActualityPercentage));
-    }
-
-    private void initPercentages() {
-        dictionaryFrequencyPercentage = Properties.WEIGHT_FREQUENCY / Properties.WEIGHT_FREQUENCY;
-        userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER / Properties.WEIGHT_FREQUENCY;
-        userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER / Properties.WEIGHT_FREQUENCY;
-    }
-
-    private void normalizeUserFrequency() {
-        double normalizeDivision = dictionaryFrequencyPercentage + userActualityPercentage;
-        dictionaryFrequencyPercentage += userFrequencyPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
-        userActualityPercentage += userFrequencyPercentage * (userActualityPercentage / normalizeDivision);
-        userFrequencyPercentage = 0;
-    }
-
-    private void normalizeUserActuality() {
-        double normalizeDivision = dictionaryFrequencyPercentage + userFrequencyPercentage;
-        dictionaryFrequencyPercentage += userActualityPercentage * (dictionaryFrequencyPercentage / normalizeDivision);
-        userFrequencyPercentage += userActualityPercentage * (userFrequencyPercentage / normalizeDivision);
-        userActualityPercentage = 0;
+    private int calculateTotalWeight() {
+        double dictionaryFrequencyPercentage = Properties.WEIGHT_FREQUENCY / Properties.WEIGHT_FREQUENCY;
+        double userFrequencyPercentage = Properties.WEIGHT_FREQUENCY_USER / Properties.WEIGHT_FREQUENCY;
+        double userActualityPercentage = Properties.WEIGHT_ACTUALITY_USER / Properties.WEIGHT_FREQUENCY;
+        totalWeight = (int) ((dictionaryFrequency * dictionaryFrequencyPercentage)
+                + (userFrequency * userFrequencyPercentage)
+                + (userActuality * userActualityPercentage));
+        return totalWeight;
     }
 
     @Override
