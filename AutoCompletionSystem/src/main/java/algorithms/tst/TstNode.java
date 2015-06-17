@@ -1,4 +1,4 @@
-package algorithms.tst.intern;
+package algorithms.tst;
 
 /**
  * Created by Catalin on 2/21/2015.

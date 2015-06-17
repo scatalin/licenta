@@ -1,6 +1,6 @@
 package algorithms.tst.parsing;
 
-import algorithms.tst.intern.TstNode;
+import algorithms.tst.TstNode;
 
 /**
  * Created by gstan on 10.03.2015.

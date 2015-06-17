@@ -1,9 +1,7 @@
 package algorithms.tst;
 
 import algorithms.SearchTree;
-import algorithms.heap.HeapTreeNode;
 import algorithms.heap.MaxHeap;
-import algorithms.tst.intern.TstNode;
 import algorithms.tst.printing.TstPrettyPrinter;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Word;

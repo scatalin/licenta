@@ -1,6 +1,5 @@
 package algorithms.tst;
 
-import algorithms.tst.intern.TstNode;
 import dictionary.Word;
 
 /**
@@ -59,6 +58,7 @@ public class TernarySearchTreeRecursive extends AbstractTernarySearchTree {
         this.toInsertWeight = weight;
         wasEndWord = false;
         root = recursiveInsert(root, word);
+        //todo update-ul se poate face la revenirea in sus pe arbore dupa ce ai facut update la word
     }
 
     public boolean search(String word) {

@@ -1,11 +1,11 @@
-package algorithms.heap;
+package algorithms.tst;
 
-import algorithms.tst.intern.TstNode;
+import algorithms.heap.HeapNode;
 
 /**
  * Created by Catalin on 3/28/2015 .
  */
-public class HeapTreeNode implements HeapNode<HeapTreeNode> {
+public class HeapTreeNode implements HeapNode {
     protected TstNode node;
     private String builtWord;
 
