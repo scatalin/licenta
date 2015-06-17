@@ -59,7 +59,7 @@ public class SystemTenFoldingTesting {
         }
     }
 
-    public void testSystem(Dictionary dictionary,boolean loadDefault) throws FileNotFoundException {
+    public void testSystem(Dictionary dictionary, boolean loadDefault) throws FileNotFoundException {
 
 
         List<Dictionary> dictionaries = filesProcessor.createDictionariesFromFiles();
@@ -95,7 +95,7 @@ public class SystemTenFoldingTesting {
 
                 //build train dictionary
                 Dictionary trainingDictionary = buildTrainingDictionary(dictionaries, noTrainingFiles, testFileIndex);
-                if(loadDefault){
+                if (loadDefault) {
                     for (Word word : dictionary.asList()) {
                         trainingDictionary.addDefaultWord(word);
                     }
@@ -118,71 +118,79 @@ public class SystemTenFoldingTesting {
                 Statistics statistics = testSystemWithDictionary(testDictionary, false, system);
 
                 stat0.add(statistics);
-                printWriter1.println(statistics.printStatistics(true));
-                printWriter1.flush();
+//                printWriter1.println("run0");
+//                printWriter1.println(statistics.printStatistics(true));
+//                printWriter1.flush();
 
                 statistics = testSystemWithDictionary(testDictionary, false, systemNew);
 
                 statNew0.add(statistics);
-                printWriter2.println(statistics.printStatistics(true));
-                printWriter2.flush();
+//                printWriter2.println("run0");
+//                printWriter2.println(statistics.printStatistics(true));
+//                printWriter2.flush();
 
                 ////////////////////////////////////////////////// 1
                 statistics = testSystemWithDictionary(testDictionary, true, system);
 
                 stat1.add(statistics);
-                printWriter1.println(statistics.printStatistics(true));
-                printWriter1.flush();
+//                printWriter1.println("run1");
+//                printWriter1.println(statistics.printStatistics(true));
+//                printWriter1.flush();
 
                 statistics = testSystemWithDictionary(testDictionary, true, systemNew);
 
                 statNew1.add(statistics);
-                printWriter2.println(statistics.printStatistics(true));
-                printWriter2.flush();
+//                printWriter2.println("run1");
+//                printWriter2.println(statistics.printStatistics(true));
+//                printWriter2.flush();
 
                 ////////////////////////////////////////////////// 2
                 statistics = testSystemWithDictionary(testDictionary, true, system);
 
                 stat2.add(statistics);
-                printWriter1.println(statistics.printStatistics(true));
-                printWriter1.flush();
+//                printWriter1.println("run2");
+//                printWriter1.println(statistics.printStatistics(true));
+//                printWriter1.flush();
 
                 statistics = testSystemWithDictionary(testDictionary, false, systemNew);
 
                 statNew2.add(statistics);
-                printWriter2.println(statistics.printStatistics(true));
-                printWriter2.flush();
+//                printWriter2.println("run2");
+//                printWriter2.println(statistics.printStatistics(true));
+//                printWriter2.flush();
 
                 ////////////////////////////////////////////////// 3
                 statistics = testSystemWithDictionary(testDictionary, false, system);
 
                 stat3.add(statistics);
-                printWriter1.println(statistics.printStatistics(true));
-                printWriter1.flush();
+//                printWriter1.println("run3");
+//                printWriter1.println(statistics.printStatistics(true));
+//                printWriter1.flush();
 
                 statistics = testSystemWithDictionary(testDictionary, false, systemNew);
 
                 statNew3.add(statistics);
-                printWriter2.println(statistics.printStatistics(true));
-                printWriter2.flush();
+//                printWriter2.println("run3");
+//                printWriter2.println(statistics.printStatistics(true));
+//                printWriter2.flush();
 
             }
 
-            printAverageForList(printWriter1, stat0);
+            printAverageForList(printWriter1, stat0, "0");
 
-            printAverageForList(printWriter1, stat1);
+            printAverageForList(printWriter1, stat1, "1");
 
-            printAverageForList(printWriter1, stat2);
+            printAverageForList(printWriter1, stat2, "2");
 
-            printAverageForList(printWriter1, stat3);
+            printAverageForList(printWriter1, stat3, "3");
 
-            printAverageForList(printWriter2, statNew0);
+            printAverageForList(printWriter2, statNew0, "0");
 
-            printAverageForList(printWriter2, statNew1);
+            printAverageForList(printWriter2, statNew1, "1");
 
-            printAverageForList(printWriter2, statNew2);
+            printAverageForList(printWriter2, statNew2, "2");
 
-            printAverageForList(printWriter2, statNew3);
+            printAverageForList(printWriter2, statNew3, "3");
 
             printWriter1.close();
             printWriter2.close();
@@ -233,7 +241,8 @@ public class SystemTenFoldingTesting {
         return statistics;
     }
 
-    private void printAverageForList(PrintWriter printWriter, List<Statistics> stat) {
+    private void printAverageForList(PrintWriter printWriter, List<Statistics> stat, String run) {
+        printWriter.println("run " + run);
         System.out.println("making average for training size " + noTrainingFiles);
         Statistics averageStatistic = makeAverages(stat, 0, noTrainingFiles);
         printWriter.println(averageStatistic.printStatistics(false));
