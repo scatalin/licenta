@@ -3,6 +3,7 @@ import algorithms.SearchTreeFactory;
 import algorithms.segmenttree.SegmentTreeLinear;
 import algorithms.segmenttree.build.SegmentTstTreeBuilder;
 import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
+import algorithms.tst.build.TernarySearchTreeFactory;
 import algorithms.utils.FilePrinter;
 import algorithms.utils.PrettyPrinter;
 import dictionary.Dictionary;
@@ -37,6 +38,7 @@ public class Main {
     private static final String TREE_BUILD = "tree b";
     private static final String TREE_WEIGHTED_BUILD = "tree wb";
     private static final String TREE_PRINT = "tree p";
+    private static final String TST_BUILD = "tst bp";
 
     public static void main(String[] args) {
         try {
@@ -99,6 +101,11 @@ public class Main {
             if (command.equals(DICTIONARY_DISPLAY_WEIGHTED)) {
                 System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
                 System.out.println(dictionary.getWordsSortedByWeight());
+                continue;
+            }
+            if (command.equals(TST_BUILD)) {
+                SearchTree tst = TernarySearchTreeFactory.buildTst(dictionary.asList());
+                FilePrinter.printTstToFile(FilePrinter.TST_FILE, tst.print());
                 continue;
             }
             if (command.equals(TREE_BUILD)) {
