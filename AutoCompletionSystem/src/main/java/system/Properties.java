@@ -40,5 +40,6 @@ public class Properties {
     public static int ACTUALITY_WEIGHT;
     public static int WEIGHT_CEILING;
     public static boolean DIACRITICS;
+    public static int N_GRAM_DEPTH;
 }
 

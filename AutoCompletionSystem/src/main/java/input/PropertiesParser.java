@@ -160,6 +160,10 @@ public class PropertiesParser {
                     Properties.WEIGHT_CEILING = Integer.parseInt(tokens[1]);
                     continue;
                 }
+                if (tokens[0].equals(FileProperties.N_GRAM_DEPTH.getValue())) {
+                    Properties.N_GRAM_DEPTH = Integer.parseInt(tokens[1]);
+                    continue;
+                }
                 if (tokens[0].equals(FileProperties.COMPLETION_TREE_OUTPUT_FILE_NAME.getValue())) {
                     Properties.COMPLETION_TREE_OUTPUT_FILE_NAME = tokens[1];
                     continue;

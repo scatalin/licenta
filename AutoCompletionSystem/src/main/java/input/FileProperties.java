@@ -34,6 +34,7 @@ public enum FileProperties {
     USER_WEIGHT("user.weight"),
     ACTUALITY_WEIGHT("actuality.weight"),
     WEIGHT_CEILING("weight.ceiling"),
+    N_GRAM_DEPTH("nGram.depth"),
     COMPLETION_TREE_OUTPUT_FILE_NAME("completion.tree.file.output.name"),
     WEIGHT_FREQUENCY("weight.frequency.rate"),
     WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),
