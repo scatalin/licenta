@@ -1,0 +1,29 @@
+@startuml
+
+package dictionary{}
+package filtering{}
+
+interface Rule {
+applyRule(Integer weight)
+}
+
+filtering -> Updater
+Updater -> dictionary
+
+Updater --> Rule
+
+RuleFactory -> Rule
+
+Rule <|-- UserWordRule
+Rule <|-- ActualityRule
+
+
+class RuleFactory{
+createRule(String mode) : Rule
+}
+
+class Updater{
+updateWord(String word)
+}
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+interface WeightUpdate {
+updateWeight(Integer[] weights)
+}
+
+Word <|-- DefaultWord
+Word <|-- UserWord
+
+WeightUpdate <|-- UserWeightUpdate
+WeightUpdate <|-- DefaultWeightUpdate
+WeightUpdateBuilder <- WeightUpdate
+
+Dictionary --> Word
+
+Word ---> WeightUpdate
+
+abstract class Word {
+WeightUpdate
+getWeight() : Integer
+updateWeight(Integer[] weights)
+}
+
+class DefaultWord {
+int weight
+}
+
+class WeightUpdateBuilder{
+createWeightUpdater(String mode) : WeightUpdate
+}
+
+class UserWord {
+int userWeight
+int actuality
+}
+
+class Dictionary{
+List<MaxHeap<Word>> forest
+addWord(String word, Integer[] weights)
+updateWord(String word, Integer[] weightsDelta)
+getWord(String word)
+iterator()
+}
+
+
+@enduml

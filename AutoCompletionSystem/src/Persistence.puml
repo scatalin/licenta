@@ -1,0 +1,29 @@
+@startuml
+
+
+CharacterFilter <-- DictionaryProcessor
+CharacterFilter <-- FilesProcessor
+DictionaryProcessor <- FilesProcessor
+
+RomanianCharacterFilter --|> CharacterFilter
+
+class CharacterFilter{
+filterCharacters(String word) : String
+}
+
+class DictionaryProcessor{
+filter : CharacterFilter
+dictionaryFile : String
+dictionaryDirectory : String
+readDictionary(String file) : Dictionary
+saveDictionary(Dictionary)
+}
+
+class FilesProcessor{
+filter : CharacterFilter
+dictionaryProcessor
+inputFilesDirectory : String
+processInputFiles(Dictionary)
+}
+
+@enduml

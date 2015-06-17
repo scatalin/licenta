@@ -1,0 +1,50 @@
+@startuml
+
+abstract AbstractTernarySearchTree
+interface HeapNode
+interface SearchTree{
+insert(Word word)
+getSuggestions(String prefix) : List<String>
+update(String word, int newWeight)
+}
+
+SearchTree <|-- SegmentTree
+SearchTree <-- SegmentTree
+SearchTree <|-- AbstractTernarySearchTree
+AbstractTernarySearchTree <|-- TernarySearchTreeRecursive
+
+Data <- SegmentTree
+AbstractTernarySearchTree <- MaxHeap
+MaxHeap <- HeapNode
+HeapNode <|-- HeapTreeNode
+
+AbstractTernarySearchTree --> TstNode
+TernarySearchTreeRecursive --> TstNode
+HeapTreeNode --> TstNode
+
+class SegmentTree{
+List<SearchTree>
+Data
+}
+
+class Data{
+alphabet : String
+getPosition(String s) : int
+}
+
+class SearchTreeFactory{
+createTst()
+createForest()
+}
+
+class AbstractTernarySearchTree {
+MaxHeap
+root : TstNode
+}
+
+class MaxHeap{
+insert(HeapNode)
+delete() : HeapNode
+}
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+
+package filterWords{}
+package dictionary{
+class Dictionary{
+Integer queryNumber
+}
+
+class Word{
+Integer lastUpdate
+}
+}
+
+interface DecayFunction{
+calculateValue(Integer lastValue, Integer time, Integer steps) : Integer
+}
+
+abstract AbstractExponentialFunction {
+Double exponent
+Double base
+}
+
+DecayFunction <|-- AbstractExponentialFunction
+
+AbstractExponentialFunction <|-- EulerDecay
+
+class EulerDecay{
+Double alpha
+}
+
+Dictionary --> Word
+Degrador ----> Dictionary
+Degrador --> DecayFunction
+
+filterWords -> Degrador
+
+class Degrador {
+List<DecayFunction> functions
+}
+
+@enduml

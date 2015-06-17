@@ -1,0 +1,13 @@
+@startuml
+
+PhraseQuery --> DirectedGraph
+
+class DirectedGraph {
+getSuggestions(String prefix) : List<String>
+}
+
+class PhraseQuery {
+getSuggestions(String prefix) : List<String>
+}
+
+@enduml

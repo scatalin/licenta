@@ -1,0 +1,40 @@
+@startuml
+
+package graph{}
+
+interface Separator {
+isCorrectSeparator()
+}
+
+CharacterFilter <|-- RomanianCharacterFilter
+
+Controller -> FrazeFilter
+ FrazeFilter  -> graph
+
+FrazeFilter --> CharacterFilter
+FrazeFilter --> Separator
+
+SeparatorFactory -> Separator
+
+Separator <|-- StopFrazeSeparator
+Separator <|-- LengthSeparator
+
+abstract class CharacterFilter{
+filterCharacters(String word) : String
+}
+
+class SeparatorFactory{
+createSeparator(String mode) : Separator
+}
+
+class FrazeFilter{
+List<String> sequence
+receiveCharacter(Character character)
+}
+
+class Controller{
+FrazeFilter
+handleCharacter(Character charater)
+}
+
+@enduml

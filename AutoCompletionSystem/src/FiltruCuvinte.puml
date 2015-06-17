@@ -1,0 +1,40 @@
+@startuml
+
+package updater{}
+
+interface Filter {
+filterWord()
+}
+
+CharacterFilter <|-- RomanianCharacterFilter
+
+WordsFilter <- Controller
+ Controller -> updater
+
+WordsFilter --> CharacterFilter
+WordsFilter --> Filter
+
+FilterFactory -> Filter
+
+Filter <|-- StopWordsFilter
+Filter <|-- LengthFilter
+
+abstract class CharacterFilter{
+filterCharacters(String word) : String
+}
+
+class FilterFactory{
+createFilter(String mode) : Filter
+}
+
+class WordsFilter{
+List<Filter> filters
+filterWord(String word)
+}
+
+class Controller{
+WordsFilter
+handleWord(String word)
+}
+
+@enduml

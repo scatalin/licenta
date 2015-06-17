@@ -1,0 +1,18 @@
+@startuml
+
+package dictionary{}
+
+package searchdata{}
+
+TreeBuilder -> searchdata
+
+dictionary <- TreeBuilder
+
+class TreeBuilder{
+Dictionary
+SearchTreeFactory
+constructSearchModel(Dictionary) : SearchTree
+reconstructTree(Character startTree)
+}
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+
+class Observable{
+Vector<Observer> obs
+addObserver(Observer o)
+notify(Observable o, Object arg)
+}
+
+interface Observer{
+update(Object arg)
+}
+
+package searchdata{}
+
+TreeBuilder -> searchdata
+
+Dictionary <- TreeBuilder
+
+Dictionary ---> MaxHeap
+
+Observable <|--MaxHeap
+Observable -> Observer
+Observer <|-- CostCalculator
+MaxHeap <- CostCalculator
+
+TreeBuilder <--- CostCalculator
+
+class TreeBuilder{
+}
+
+class Dictionary{
+List<MaxHeap> forest
+}
+
+class CostCalculator{
+}
+
+
+
+@enduml

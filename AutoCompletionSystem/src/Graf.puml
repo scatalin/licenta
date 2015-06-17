@@ -1,0 +1,50 @@
+@startuml
+
+interface HeapNode
+
+DirectedGraph ---> WordNode
+DirectedGraph --> Queue
+DirectedGraph --> MaxHeap
+
+WordNode -> ConnectionNode
+ConnectionNode -> WordNode
+
+HeapGraphNode -> WordNode
+HeapNode <- Queue
+HeapNode <|-- HeapGraphNode
+MaxHeap -> HeapNode
+
+
+class DirectedGraph {
+List<WordNode> nodes
+addNGram(List<Word> nGram)
+getSuggestions(String word) : List<String>
+}
+
+class HeapGraphNode{
+List<Integer> parentsWeight
+nGram String
+}
+
+class WordNode {
+List<ConnectionNode> adjacencyList
+}
+
+class MaxHeap{
+insert(HeapNode)
+delete() : HeapNode
+}
+
+class Queue{
+enqueue(HeapNode)
+deque() : HeapNode
+}
+
+
+class ConnectionNode{
+weight int
+WordNode
+}
+
+
+@enduml

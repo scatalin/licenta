@@ -1,0 +1,13 @@
+@startuml
+
+WordQuery --> SearchTree
+
+class SearchTree {
+getSuggestions(String prefix) : List<String>
+}
+
+class WordQuery {
+getSuggestions(String prefix) : List<String>
+}
+
+@enduml
