@@ -41,5 +41,7 @@ public class Properties {
     public static int WEIGHT_CEILING;
     public static boolean DIACRITICS;
     public static int N_GRAM_DEPTH;
+    public static String STOP_WORDS_FILE;
+    public static String GRAPH_FILE;
 }
 

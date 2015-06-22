@@ -1,12 +1,11 @@
 package system;
 
-import algorithms.SearchTree;
-import algorithms.SearchTreeFactory;
-import algorithms.heap.MaxHeap;
-import algorithms.utils.FilePrinter;
+import controller.FrazeController;
+import controller.FrazeQuery;
+import controller.WordQuery;
+import controller.WordsController;
 import dictionary.Dictionary;
 import dictionary.Word;
-import dictionary.inserting.UserWeightUpdate;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 
@@ -17,83 +16,101 @@ import java.util.List;
  */
 public class AutoCompletionSystemImpl implements AutoCompletionSystem {
 
-    private SearchTree searchTree;
-    private Dictionary dictionary;
-    private String lastPrefix;
+    private WordQuery wordQuery;
+    private WordsController wordsController;
+
     private Dictionary backup;
+    private String currentDictionaryName;
+    private FrazeQuery frazeQuery;
+    private FrazeController frazeController;
 
     public AutoCompletionSystemImpl() {
-        searchTree = SearchTreeFactory.createCompletionTree();
-        dictionary = new Dictionary();
-        lastPrefix = "";
+        wordQuery = new WordQuery();
+        frazeController = new FrazeController();
+        wordsController = new WordsController();
+        frazeQuery = new FrazeQuery();
     }
 
-    @Override
-    public void loadDictionary() {
-        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
+    public void readDictionary() {
+        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(ServiceLocator.getDictionary());
         dictionaryProcessor.readDictionary();
     }
 
+    public void loadCustomDictionary(Dictionary dictionary) {
+        ServiceLocator.setDictionary(dictionary);
+    }
+
+
     @Override
-    public void readDictionary() {
-        FilesProcessor filesProcessor = new FilesProcessor(new DictionaryProcessor(dictionary));
+    public List<String> getWordCompletion(String prefix) {
+        return wordQuery.getSuggestions(prefix);
+    }
+
+    @Override
+    public void selectCompletionWord(String word) {
+        wordsController.handleWord(word);
+    }
+
+    @Override
+    public List<String> getFrazeCompletion(String word) {
+        return frazeQuery.getSuggestions(word);
+    }
+
+    @Override
+    public void inputCharacter(Character character) {
+        frazeController.handleCharacter(character);
+    }
+
+    @Override
+    public void loadTextFilesInDictionary() {
+        saveDictionary();
+        FilesProcessor filesProcessor = new FilesProcessor(new DictionaryProcessor(ServiceLocator.getDictionary()));
         filesProcessor.processInputFiles();
     }
 
     @Override
-    public void loadCustomDictionary(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public void saveDictionary() {
+        new DictionaryProcessor(ServiceLocator.getDictionary(), currentDictionaryName).saveDictionary();
     }
 
     @Override
-    public void constructSearchTree() {
-        searchTree.reset();
-        for (MaxHeap<Word> heap : dictionary.getData()) {
-            searchTree.load(heap.getItems(), false);
-        }
-        searchTree.setNumberOfSuggestions(Properties.AUTOCOMPLETION_SUGGESTION_SIZE);
+    public void readDictionary(String dictionaryName) {
+        saveDictionary();
+        ServiceLocator.createDictionary(dictionaryName);
+        FilesProcessor filesProcessor = new FilesProcessor(new DictionaryProcessor(ServiceLocator.getDictionary(), dictionaryName));
+        filesProcessor.processInputFiles();
     }
 
     @Override
-    public void startCompletion() {
-        searchTree.resetCompletion();
+    public void start() {
+
+        currentDictionaryName = Properties.DICTIONARY_FILE_NAME;
+        ServiceLocator.createDictionary(currentDictionaryName);
+        new DictionaryProcessor(ServiceLocator.getDictionary(), currentDictionaryName).readDictionary();
+        ServiceLocator.getModelConstructor().constructModel();
+        ServiceLocator.constructModelChangeChecker();
     }
 
     @Override
-    public List<String> getCompletion(String prefix) {
-        if (!prefix.startsWith(lastPrefix)) {
-            startCompletion();
-        }
-        return searchTree.getSuggestions(prefix);
+    public void stop() {
+        wordQuery = null;
+        new DictionaryProcessor(ServiceLocator.getDictionary()).saveDictionary();
     }
 
-    @Override
-    public void selectWord(String word) {
-        //todo separate this in a job, search the word in dictionary, get weight and update it in the model
-        dictionary.setUpdater(new UserWeightUpdate());
-        int ceilingWeight = dictionary.getMaximumWeightForWord(word);
-        dictionary.updateUserWord(word, Properties.USER_WEIGHT,ceilingWeight / 10);
-        Word w = dictionary.getWord(word);
-        searchTree.update(word, w.getWeight());
-    }
-
-    public void print(){
-        FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, searchTree.print());
-    }
 
     public void saveState() {
-        backup = dictionary.clone();
+        backup = ServiceLocator.getDictionary().clone();
     }
 
     public void printDiff() {
         List<Word> backupWords = backup.asList();
         StringBuilder diff = new StringBuilder();
-        for(Word word : backupWords){
-            Word w =dictionary.getWord(word.getWord());
-            if(!w.toString().equals(word.toString())){
+        for (Word word : backupWords) {
+            Word w = ServiceLocator.getDictionary().getWord(word.getWord());
+            if (!w.toString().equals(word.toString())) {
                 diff.append("before: ").append(word.toStringCustom()).append(" after: ").append(w.toStringCustom()).append("\n");
             }
         }
-        FilePrinter.printTstToFile(FilePrinter.COMPLETION_TREE_FILE, diff.toString());
+        System.out.println(diff);
     }
 }

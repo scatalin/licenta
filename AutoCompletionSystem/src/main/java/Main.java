@@ -1,5 +1,4 @@
 import algorithms.SearchTree;
-import algorithms.SearchTreeFactory;
 import algorithms.segmenttree.SegmentTreeLinear;
 import algorithms.segmenttree.build.SegmentTstTreeBuilder;
 import algorithms.segmenttree.printing.NestedTstPrettyPrinter;
@@ -10,12 +9,16 @@ import dictionary.Dictionary;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 import input.PropertiesParser;
+import system.AutoCompletionSystem;
+import system.AutoCompletionSystemImpl;
 import system.Properties;
+import system.ServiceLocator;
 import testing.SystemBigTester;
 import testing.SystemTenFoldingTesting;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.String;
 import java.util.Scanner;
 
 /**
@@ -40,6 +43,13 @@ public class Main {
     private static final String TREE_PRINT = "tree p";
     private static final String TST_BUILD = "tst bp";
 
+    private static final String GET_SUGGESTION ="p";
+    private static final String GET_SUGGESTION_FRAZE ="fp";
+    private static final String SELECT_SUGGESTION="s";
+    private static final String SELECT_SUGGESTION_FRAZE ="fs";
+    private static final String SHOW_DIFF="diff";
+    private static final String SAVE_STATE="hold";
+
     public static void main(String[] args) {
         try {
             PropertiesParser.validateOS();
@@ -54,10 +64,13 @@ public class Main {
     }
 
     void start() {
-        SearchTree tree = SearchTreeFactory.createCompletionTree();
-        Dictionary dictionary = new Dictionary();
+        SearchTree tree = ServiceLocator.getCompletionTree();
+        Dictionary dictionary = ServiceLocator.getDictionary();
         DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
         dictionaryProcessor.readDictionary();
+
+        AutoCompletionSystem system = new AutoCompletionSystemImpl();
+        system.start();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -69,10 +82,11 @@ public class Main {
             if (command.equals(RESET)) {
                 try {
                     PropertiesParser.propertiesFileRead();
-                    tree = SearchTreeFactory.createCompletionTree();
-                    dictionary = new Dictionary();
+                    tree = ServiceLocator.getCompletionTree();
                     dictionaryProcessor = new DictionaryProcessor(dictionary);
                     dictionaryProcessor.readDictionary();
+                    system = new AutoCompletionSystemImpl();
+                    system.start();
                 } catch (IOException e) {
                     System.out.println("System cannot restart");
                     e.printStackTrace();
@@ -171,6 +185,34 @@ public class Main {
                 System.out.println(tree.getSuggestions(word));
                 continue;
             }
+
+            if (command.startsWith(GET_SUGGESTION)) {
+                String word = command.replace(GET_SUGGESTION+ " ", "");
+                System.out.println(system.getWordCompletion(word));
+                continue;
+            }
+
+            if (command.startsWith(GET_SUGGESTION_FRAZE)) {
+                String word = command.replace(GET_SUGGESTION_FRAZE+ " ", "");
+                System.out.println(system.getFrazeCompletion(word));
+                continue;
+            }
+
+            if (command.startsWith(SELECT_SUGGESTION)) {
+                String word = command.replace(SELECT_SUGGESTION+ " ", "");
+                system.selectCompletionWord(word);
+                continue;
+            }
+            if (command.startsWith(SAVE_STATE)) {
+                system.saveState();
+                continue;
+            }
+            if (command.startsWith(SHOW_DIFF)) {
+                system.printDiff();
+                continue;
+            }
+
+
             System.out.println("wrong use:");
         }
         System.out.println("bye bye");

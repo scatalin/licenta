@@ -1,4 +1,4 @@
-package printing;
+package testing;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Catalin on 5/9/2015 .
+ * Created by Catalin on 6/22/2015 .
  */
 public class Window extends JFrame {
+
 
     DrawingJPanel panel;
 
@@ -146,3 +147,4 @@ public class Window extends JFrame {
         }
     }
 }
+

@@ -13,13 +13,13 @@ import java.util.List;
 public class SegmentTstTreeBuilder {
 
     public static SearchTree buildWeightedSegmentTst(Dictionary dictionary) {
-        SearchTree tree = SearchTreeFactory.createCompletionTree();
+        SearchTree tree = SearchTreeFactory.getCompletionTree();
         fillTreeWithWords(dictionary.getWordsSortedByWeight(), tree);
         return tree;
     }
 
     public static SearchTree buildSegmentTst(Dictionary dictionary) {
-        SearchTree tree = SearchTreeFactory.createCompletionTree();
+        SearchTree tree = SearchTreeFactory.getCompletionTree();
         fillTreeWithWords(dictionary.asList(), tree);
         return tree;
     }

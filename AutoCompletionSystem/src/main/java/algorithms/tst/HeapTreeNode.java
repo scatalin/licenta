@@ -5,7 +5,7 @@ import algorithms.heap.HeapNode;
 /**
  * Created by Catalin on 3/28/2015 .
  */
-public class HeapTreeNode implements HeapNode {
+public class HeapTreeNode implements HeapNode<HeapTreeNode> {
     protected TstNode node;
     private String builtWord;
 

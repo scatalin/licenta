@@ -34,9 +34,12 @@ public class DirectedGraph {
     }
 
     public List<String> getSuggestions(String word){
+        if(nodes.get(word)==null){
+            return Collections.emptyList();
+        }
         queue.clear();
         heap.clearHeap();
-        queue.offer(new HeapGraphNode(nodes.get(word)));
+        queue.offer(new HeapGraphNode(nodes.get(word),""));
 
         int step = 1;
         while(step < Properties.N_GRAM_DEPTH){
@@ -69,5 +72,13 @@ public class DirectedGraph {
         }
 
         return suggestions;
+    }
+
+    public void clear() {
+        nodes.clear();
+    }
+
+    public Map<String, WordNode> getNodes() {
+        return nodes;
     }
 }

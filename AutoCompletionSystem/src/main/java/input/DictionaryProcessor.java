@@ -5,6 +5,7 @@ import dictionary.Word;
 import dictionary.filters.CharacterFilter;
 import dictionary.filters.RomanianCharacterFilter;
 import system.Properties;
+import system.ServiceLocator;
 
 import java.io.*;
 
@@ -17,12 +18,17 @@ public class DictionaryProcessor {
     private Dictionary dictionary;
 
     public DictionaryProcessor() {
-        this(new Dictionary(), Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
+        this(ServiceLocator.getNewInstanceDictionary(), Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
 
     public DictionaryProcessor(Dictionary dictionary) {
         this(dictionary, Properties.DICTIONARY_FILE_NAME, Properties.DICTIONARY_DIRECTORY);
     }
+
+    public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName) {
+        this(dictionary, dictionaryFileName, Properties.DICTIONARY_DIRECTORY);
+    }
+
 
     public DictionaryProcessor(Dictionary dictionary, String dictionaryFileName, String dictionaryDirectory) {
         this.dictionary = dictionary;

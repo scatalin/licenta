@@ -7,19 +7,33 @@ import java.util.List;
 /**
  * Created by Catalin on 5/16/2015 .
  */
+
 public interface AutoCompletionSystem {
 
-    void loadDictionary();
+    List<String> getWordCompletion(String prefix);
 
-    void readDictionary();
+    void selectCompletionWord(String word);
+
+    List<String> getFrazeCompletion(String word);
+
+    void inputCharacter(Character character);
+
+    void loadTextFilesInDictionary();
+
+    void saveDictionary();
+
+    void readDictionary(String dictionaryName);
 
     void loadCustomDictionary(Dictionary dictionary);
 
-    void constructSearchTree();
+    void start();
 
-    void startCompletion();
+    void stop();
 
-    List<String> getCompletion(String prefix);
+    public void saveState();
 
-    void selectWord(String word);
+    public void printDiff();
 }
+
+
+

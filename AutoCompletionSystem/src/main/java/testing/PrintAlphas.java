@@ -1,7 +1,6 @@
 package testing;
 
 import function.EulerDecay;
-import printing.Window;
 import system.Properties;
 
 import java.awt.*;

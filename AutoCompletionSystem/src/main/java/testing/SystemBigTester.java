@@ -84,7 +84,6 @@ public class SystemBigTester {
             initSystem();
 
             system.loadCustomDictionary(referenceDictionary.clone());
-            system.constructSearchTree();
 
             PrintWriter printWriter1 = new PrintWriter(reportFile1);
             PrintWriter printWriter2 = new PrintWriter(reportFile2);
@@ -95,7 +94,6 @@ public class SystemBigTester {
             for (int testFileIndex = 0; testFileIndex < numberOfFiles; testFileIndex++) {
 
                 newSystem.loadCustomDictionary(trainingDictionary.clone());
-                newSystem.constructSearchTree();
 
                 int dictionarySize = trainingDictionary.getNumberOfWords();
 
@@ -110,25 +108,23 @@ public class SystemBigTester {
                     String word = w.getWord().toLowerCase();
                     if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                         statistics1.beginWordStatistics(word);
-                        system.startCompletion();
                         String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
 
-                        List<String> completedWords = system.getCompletion(prefix);
+                        List<String> completedWords = system.getWordCompletion(prefix);
 
                         fillStatistics(statistics1, word, w.getWeight(), prefix.length(), completedWords);
 
-                        system.selectWord(word);
+                        system.selectCompletionWord(word);
 
                         statistics2.beginWordStatistics(word);
 
-                        newSystem.startCompletion();
                         prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
 
-                        completedWords = newSystem.getCompletion(prefix);
+                        completedWords = newSystem.getWordCompletion(prefix);
 
                         fillStatistics(statistics2, word, w.getWeight(), prefix.length(), completedWords);
 
-                        newSystem.selectWord(word);
+                        newSystem.selectCompletionWord(word);
                     }
                 }
 
@@ -136,14 +132,13 @@ public class SystemBigTester {
                     String word = w.getWord().toLowerCase();
                     if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                         statistics3.beginWordStatistics(word);
-                        system.startCompletion();
                         String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
 
-                        List<String> completedWords = system.getCompletion(prefix);
+                        List<String> completedWords = system.getWordCompletion(prefix);
 
                         fillStatistics(statistics3, word, w.getWeight(), prefix.length(), completedWords);
 
-                        system.selectWord(word);
+                        system.selectCompletionWord(word);
                     }
                 }
 

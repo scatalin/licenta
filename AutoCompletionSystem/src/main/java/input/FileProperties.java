@@ -41,7 +41,9 @@ public enum FileProperties {
     WEIGHT_ACTUALITY_USER("weight.actuality.user.rate"),
     DECAY_ALPHA("decay.alpha"),
     DECAY_FILE_OUTPUT_NAME("decay.file.output.name"),
-    DECAY_SUBDIRECTORY_OUTPUT_NAME("decay.subdirectory.output.name");
+    DECAY_SUBDIRECTORY_OUTPUT_NAME("decay.subdirectory.output.name"),
+    STOP_WORDS_FILE("stop.words.name"),
+    GRAPH_FILE("graph.name");
 
 
     private final String value;

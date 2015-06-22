@@ -8,14 +8,16 @@ import algorithms.tst.TernarySearchTreeRecursive;
  */
 public class SearchTreeFactory {
 
+    private static final SearchTree globalSearchTree = new SegmentTreeLinear();
+
     private static Data data;
 
     public static SearchTree createTst() {
         return new TernarySearchTreeRecursive();
     }
 
-    public static SearchTree createCompletionTree() {
-        return new SegmentTreeLinear();
+    public static SearchTree getCompletionTree() {
+        return globalSearchTree;
     }
 
     public static Data createData() {

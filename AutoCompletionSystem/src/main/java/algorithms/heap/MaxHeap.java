@@ -3,11 +3,12 @@ package algorithms.heap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by gstan on 27.03.2015.
  */
-public class MaxHeap<T extends HeapNode<T>> {
+public class MaxHeap<T extends HeapNode<T>> extends Observable {
     //todo : modify levels in shiftUp and shiftDown
     private List<T> items;
     private CostCalculator cost;

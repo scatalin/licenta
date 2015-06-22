@@ -7,6 +7,7 @@ import dictionary.Word;
 import input.DictionaryProcessor;
 import input.FilesProcessor;
 import system.Properties;
+import system.ServiceLocator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class SystemRotationTester {
     }
 
     private int initTree(int run) {
-        Dictionary dictionary = new Dictionary();
+        Dictionary dictionary = ServiceLocator.getNewInstanceDictionary();
 
         filesProcessor.processInputFiles(run);
 

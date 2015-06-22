@@ -17,17 +17,6 @@ public class PropertiesParser {
     private static final String LINUX = "LINUX";
 
     public static void propertiesFileRead() throws IOException {
-//        File file = new File("Main.class");
-//        System.out.println(file.exists());
-//        System.out.println(file.getAbsoluteFile());
-//        System.out.println(file.getAbsolutePath());
-//        System.out.println(file.getAbsoluteFile().getParentFile());
-//        file = file.getAbsoluteFile().getParentFile();
-//        String[] listFileNames = file.list();
-//        for (String fileName : listFileNames) {
-//            System.out.println(fileName);
-//        }
-
         File propertiesFile = new File(AUTO_COMPLETION_SYSTEM_PROPERTIES_LOCATION);
         FileReader fReader = new FileReader(propertiesFile);
         BufferedReader reader = new BufferedReader(fReader);
@@ -38,6 +27,9 @@ public class PropertiesParser {
                 break;
             }
             String[] tokens = line.split("=");
+            if(tokens[0].startsWith("#")){
+                continue;
+            }
             if (tokens.length == 2) {
                 if (tokens[0].equals(FileProperties.INPUT_FILES_DIRECTORY_WINDOWS.getValue()) && Properties.SYSTEM.equals(WINDOWS)) {
                     Properties.INPUT_FILES_DIRECTORY = tokens[1];
@@ -81,6 +73,14 @@ public class PropertiesParser {
                 }
                 if (tokens[0].equals(FileProperties.DICTIONARY_FILE_NAME.getValue())) {
                     Properties.DICTIONARY_FILE_NAME = tokens[1];
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.STOP_WORDS_FILE.getValue())) {
+                    Properties.STOP_WORDS_FILE = tokens[1];
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.GRAPH_FILE.getValue())) {
+                    Properties.GRAPH_FILE= tokens[1];
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.DICTIONARY_TEST_FILE_NAME.getValue())) {

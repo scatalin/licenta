@@ -5,8 +5,6 @@ import algorithms.SearchTreeFactory;
 import algorithms.heap.MaxHeap;
 import dictionary.inserting.DefaultDictionaryWeightUpdate;
 import dictionary.inserting.WeightUpdate;
-import dictionary.validators.LengthLessThanThresholdValidator;
-import dictionary.validators.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +20,6 @@ public class Dictionary {
     private List<MaxHeap<Word>> words;
     private Data data;
     private String fileName;
-    private Validator validator;
     private WeightUpdate updater;
     private List<Word> wordsList;
     private boolean changed;
@@ -33,21 +30,14 @@ public class Dictionary {
 
     public Dictionary(String fileName) {
         this.fileName = fileName;
-        data = SearchTreeFactory.createData();
-        words = new ArrayList<>(data.getSize());
-        for (int i = 0; i < data.getSize(); i++) {
-            words.add(new MaxHeap<>(true));
-        }
-        validator = new LengthLessThanThresholdValidator();
         updater = new DefaultDictionaryWeightUpdate();
         changed = true;
     }
 
-    private Dictionary(List<MaxHeap<Word>> words, Data data, String fileName, Validator validator, WeightUpdate updater) {
+    private Dictionary(List<MaxHeap<Word>> words, Data data, String fileName, WeightUpdate updater) {
         this.words = words;
         this.data = data;
         this.fileName = fileName;
-        this.validator = validator;
         this.updater = updater;
         this.wordsList = null;
         this.changed = true;
@@ -82,7 +72,7 @@ public class Dictionary {
     public List<Word> asList() {
         if (changed) {
             wordsList = new ArrayList<>();
-            for (MaxHeap<Word> heap : words) {
+            for (MaxHeap<Word> heap : getHeaps()) {
                 wordsList.addAll(heap.duplicateItems());
             }
             changed = false;
@@ -104,7 +94,7 @@ public class Dictionary {
     }
 
     public List<MaxHeap<Word>> getData() {
-        return words;
+        return getHeaps();
     }
 
     public int getNumberOfWords() {
@@ -120,23 +110,20 @@ public class Dictionary {
     }
 
     private int integrateDictionaryWord(String word, int defaultW, int userW, int actW) {
-        if (!validator.isValid(word)) {
-            return -1;
-        }
         changed = true;
         Word checkWord = new Word(word);
 
-        int position = data.getPosition(word);
-        List<Word> items = words.get(position).getItems();
+        int position = getInnerData().getPosition(word);
+        List<Word> items = getHeaps().get(position).getItems();
 
         int index = items.lastIndexOf(checkWord);
         if (index == -1) {
-            words.get(position).insert(new Word(word, defaultW, userW, actW));
+            getHeaps().get(position).insert(new Word(word, defaultW, userW, actW));
             return defaultW;
         }
 
         int toReturnWeight = updater.updateWeight(items.get(index), defaultW, userW, actW);
-        words.get(position).shiftUp(index, updater.updateModel());
+        getHeaps().get(position).shiftUp(index, updater.updateModel());
         return toReturnWeight;
     }
 
@@ -145,14 +132,14 @@ public class Dictionary {
     }
 
     public void clear() {
-        for (MaxHeap<Word> heap : words) {
+        for (MaxHeap<Word> heap : getHeaps()) {
             heap.clearHeap();
         }
     }
 
     public int getMaximumWeightForWord(String word) {
-        int position = data.getPosition(word);
-        return (words.get(position).getItems().isEmpty() ? 10 : words.get(position).getItems().get(0).getWeight());
+        int position = getInnerData().getPosition(word);
+        return (getHeaps().get(position).getItems().isEmpty() ? 10 : getHeaps().get(position).getItems().get(0).getWeight());
     }
 
     public void updateUserWord(String word, int userW, int actW) {
@@ -160,13 +147,10 @@ public class Dictionary {
     }
 
     public Word getWord(String word) {
-        if (!validator.isValid(word)) {
-            return null;
-        }
         Word checkWord = new Word(word);
 
-        int position = data.getPosition(word);
-        List<Word> items = words.get(position).getItems();
+        int position = getInnerData().getPosition(word);
+        List<Word> items = getHeaps().get(position).getItems();
 
         int index = items.lastIndexOf(checkWord);
         if (index == -1) {
@@ -177,10 +161,27 @@ public class Dictionary {
 
     public Dictionary clone() {
         List<MaxHeap<Word>> newHeap = new ArrayList<>();
-        for (MaxHeap<Word> heap : words) {
+        for (MaxHeap<Word> heap : getHeaps()) {
             newHeap.add(heap.clone());
         }
-        return new Dictionary(newHeap, data, fileName, validator, updater);
+        return new Dictionary(newHeap, data, fileName, updater);
+    }
+
+    private Data getInnerData(){
+        if(data == null){
+            data = SearchTreeFactory.createData();
+        }
+        return data;
+    }
+
+    private List<MaxHeap<Word>> getHeaps(){
+        if(words == null){
+            words = new ArrayList<>(getInnerData().getSize());
+            for (int i = 0; i < getInnerData().getSize(); i++) {
+                words.add(new MaxHeap<>(true));
+            }
+        }
+        return words;
     }
 }
 

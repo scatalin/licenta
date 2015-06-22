@@ -28,7 +28,7 @@ public abstract class AbstractTernarySearchTree implements SearchTree {
         heap = new MaxHeap<>();
         foundSmallWeightWords = new ArrayList<>();
         foundWords = new ArrayList<>();
-        k = 5;
+        k = 10;
     }
 
     @Override

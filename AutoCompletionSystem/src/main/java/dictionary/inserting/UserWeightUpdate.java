@@ -7,6 +7,8 @@ import dictionary.Word;
  */
 public class UserWeightUpdate implements WeightUpdate {
 
+    private static WeightUpdate userWeightUpdate = new UserWeightUpdate();
+
     @Override
     public int updateWeight(Word word, int weight, int userW, int actW) {
         int initialWeight = word.getWeight();
@@ -26,5 +28,9 @@ public class UserWeightUpdate implements WeightUpdate {
     @Override
     public boolean updateModel() {
         return true;
+    }
+
+    public static WeightUpdate instance() {
+        return userWeightUpdate;
     }
 }

@@ -13,18 +13,18 @@ public class HeapGraphNode implements HeapNode<HeapGraphNode> {
     private List<Integer> parentsWeight;
     private int level;
     private Integer nGramWeight;
-    private String nGram;
+    private String nGram="";
     private WordNode wordNode;
 
-    public HeapGraphNode(WordNode wordNode) {
+    public HeapGraphNode(WordNode wordNode, String nGram) {
         this.wordNode = wordNode;
-        nGram = wordNode.getWord();
+        this.nGram = nGram;
         this.parentsWeight = new ArrayList<>();
     }
 
     public HeapGraphNode(HeapGraphNode node, WordNode wordNode, Integer newWeight) {
         this.wordNode = wordNode;
-        nGram += wordNode.getWord();
+        nGram = node.getNGram() + " " + wordNode.getWord();
         parentsWeight = node.getParentsWeight();
         parentsWeight.add(newWeight);
     }
@@ -57,7 +57,7 @@ public class HeapGraphNode implements HeapNode<HeapGraphNode> {
 
     @Override
     public HeapGraphNode clone() {
-        HeapGraphNode newH = new HeapGraphNode(wordNode);
+        HeapGraphNode newH = new HeapGraphNode(wordNode,nGram);
         newH.setLevel(level);
         newH.setNGram(nGram);
         newH.setNGramWeight(nGramWeight);

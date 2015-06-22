@@ -7,6 +7,7 @@ import input.FilesProcessor;
 import system.AutoCompletionSystem;
 import system.AutoCompletionSystemImpl;
 import system.Properties;
+import system.ServiceLocator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,7 +68,7 @@ public class RepeatedCompletionTenFoldingTesting {
             for (int testFileIndex = 0; testFileIndex < numberOfFiles; testFileIndex++) {
 
                 //build train dictionary
-                Dictionary trainingDictionary = new Dictionary();
+                Dictionary trainingDictionary = ServiceLocator.getNewInstanceDictionary();
 
                 //iterate all files
                 int count = 0;
@@ -90,7 +91,6 @@ public class RepeatedCompletionTenFoldingTesting {
                 //construct the system with the training Dictionary
 
                 system.loadCustomDictionary(trainingDictionary);
-                system.constructSearchTree();
                 int dictionarySize = trainingDictionary.getNumberOfWords();
 
                 Dictionary testDictionary = dictionaries.get(testFileIndex);
@@ -105,14 +105,13 @@ public class RepeatedCompletionTenFoldingTesting {
                         String word = w.getWord().toLowerCase();
                         if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                             statistics.beginWordStatistics(word);
-                            system.startCompletion();
                             String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
 
-                            List<String> completedWords = system.getCompletion(prefix);
+                            List<String> completedWords = system.getWordCompletion(prefix);
 
                             int result = fillStatistics(statistics, word, w.getWeight(), prefix.length(), completedWords);
 
-                            system.selectWord(word);
+                            system.selectCompletionWord(word);
                         }
                     }
 
@@ -138,7 +137,7 @@ public class RepeatedCompletionTenFoldingTesting {
         filesProcessor = new FilesProcessor(null, Properties.INPUT_FILES_DIRECTORY);
         List<Dictionary> trainDictionaries = filesProcessor.createDictionariesFromFiles();
 
-        Dictionary trainingDictionary = new Dictionary();
+        Dictionary trainingDictionary = ServiceLocator.getNewInstanceDictionary();
         for (Dictionary addDictionary : trainDictionaries) {
             for (Word word : addDictionary.asList()) {
                 trainingDictionary.addDefaultWord(word);
@@ -147,7 +146,6 @@ public class RepeatedCompletionTenFoldingTesting {
         int dictionarySize = trainingDictionary.getNumberOfWords();
 
         system.loadCustomDictionary(trainingDictionary);
-        system.constructSearchTree();
 
         filesProcessor = new FilesProcessor(null, Properties.TEST_ROTATION_DIRECTORY);
         List<Dictionary> testDictionaries = filesProcessor.createDictionariesFromFiles();
@@ -164,14 +162,13 @@ public class RepeatedCompletionTenFoldingTesting {
                 String word = w.getWord().toLowerCase();
                 if (word.length() >= Properties.AUTOCOMPLETION_THRESHOLD) {
                     statistics.beginWordStatistics(word);
-                    system.startCompletion();
                     String prefix = word.substring(0, Math.min(Properties.AUTOCOMPLETION_THRESHOLD, word.length()));
 
-                    List<String> completedWords = system.getCompletion(prefix);
+                    List<String> completedWords = system.getWordCompletion(prefix);
 
                     int result = fillStatistics(statistics, word, w.getWeight(), prefix.length(), completedWords);
 
-                    system.selectWord(word);
+                    system.selectCompletionWord(word);
                 }
             }
 

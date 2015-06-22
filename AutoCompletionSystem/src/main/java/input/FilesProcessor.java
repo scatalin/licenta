@@ -4,6 +4,7 @@ import dictionary.Dictionary;
 import dictionary.filters.CharacterFilter;
 import dictionary.filters.RomanianCharacterFilter;
 import system.Properties;
+import system.ServiceLocator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -102,7 +103,7 @@ public class FilesProcessor {
 
         //todo read all input files and hand over to delegates, word processor and phrase processor
         for (File file : listFileNames) {
-            Dictionary dictionary = new Dictionary(file.getName());
+            Dictionary dictionary = ServiceLocator.getNewInstanceDictionary(file.getName());
 
             System.out.println("read and process file " + file.getName());
             try {
