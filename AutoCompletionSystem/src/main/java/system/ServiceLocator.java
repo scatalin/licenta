@@ -1,5 +1,6 @@
 package system;
 
+import function.Degrador;
 import algorithms.GraphFactory;
 import algorithms.SearchTree;
 import algorithms.SearchTreeFactory;
@@ -19,6 +20,7 @@ public class ServiceLocator {
 
     private static Dictionary dictionary;
     private static ModelConstructor modelConstructor;
+    private static Degrador degrador;
 
 
     public static Dictionary getDictionary(){
@@ -64,5 +66,12 @@ public class ServiceLocator {
 
     public static void setDictionary(Dictionary dict) {
         dictionary = dict;
+    }
+
+    public static Degrador getDegrador() {
+        if(degrador == null){
+            degrador = new Degrador();
+        }
+        return degrador;
     }
 }

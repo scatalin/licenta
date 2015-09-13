@@ -47,6 +47,9 @@ public class DirectedGraph {
             while(count > 0) {
                 HeapGraphNode heapNode = queue.poll();
                 WordNode wordNode = heapNode.getWordNode();
+                if(wordNode.getAdjacencyList().isEmpty()){
+                    queue.offer(heapNode);
+                }
                 for (ConnectionNode conNode : wordNode.getAdjacencyList()) {
                     queue.offer(new HeapGraphNode(heapNode, conNode.getWordNode(), conNode.getWeight()));
                 }

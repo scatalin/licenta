@@ -13,7 +13,7 @@ import java.util.List;
 public class FrazeController {
     private FrazeFilter filter;
     private List<String> sequence;
-    private String currentWord;
+    private String currentWord = "";
     private DirectedGraph graph;
 
     public FrazeController() {
@@ -30,12 +30,11 @@ public class FrazeController {
                 if (sequence.size() >= 2) {
                     graph.addNGram(sequence);
                 }
-                String lastWord = (!sequence.isEmpty() ? "" : sequence.get(sequence.size() - 1));
+                String lastWord = (sequence.isEmpty() ? "" : sequence.get(sequence.size() - 1));
                 sequence.clear();
                 if (!lastWord.equals("")) {
                     sequence.add(lastWord);
                 }
-                sequence.add(currentWord);
                 currentWord = "";
             }
         } else if ((character < 'a') || (character > 'z')) {

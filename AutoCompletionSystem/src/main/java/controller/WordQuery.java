@@ -18,14 +18,17 @@ public class WordQuery {
         lastPrefix = "";
     }
 
-    public List<String> getSuggestions(String prefix){
-        if(searchTree == null){
+    public List<String> getSuggestions(String prefix) {
+        if (searchTree == null) {
             searchTree = ServiceLocator.getCompletionTree();
         }
-        if (!prefix.startsWith(lastPrefix) || lastPrefix.isEmpty()) {
+        if (!prefix.substring(0, prefix.length() - 1).startsWith(lastPrefix) || lastPrefix.isEmpty()) {
             searchTree.resetCompletion();
         }
         lastPrefix = prefix;
-        return searchTree.getSuggestions(prefix);
+        long start = System.currentTimeMillis();
+        List<String> results = searchTree.getSuggestions(prefix);
+        System.out.println("durata:" + (System.currentTimeMillis() - start));
+        return results;
     }
 }

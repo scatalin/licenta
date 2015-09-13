@@ -32,7 +32,6 @@ public class Properties {
     public static double TEST_DECAY_ALPHA_BEGIN;
     public static double TEST_DECAY_ALPHA_END;
     public static double TEST_DECAY_T_MAXIMUM;
-    public static double DECAY_ALPHA;
     public static String DECAY_FILE_OUTPUT_NAME;
     public static String DECAY_SUBDIRECTORY_OUTPUT_NAME;
     public static String ALPHABET;
@@ -43,5 +42,9 @@ public class Properties {
     public static int N_GRAM_DEPTH;
     public static String STOP_WORDS_FILE;
     public static String GRAPH_FILE;
+    public static double DECAY_ALPHA_ACTUALITY;
+    public static double DECAY_ALPHA_USER;
+    public static double DECAY_QUERIES_ACTUALITY;
+    public static double DECAY_QUERIES_USER;
 }
 

@@ -23,6 +23,7 @@ public class WordsController {
         if(filter.filterWord(word)){
             int newWeight = updater.update(word);
             tree.update(word, newWeight);
+            ServiceLocator.getDictionary().degradeWords(word);
         }
     }
 }

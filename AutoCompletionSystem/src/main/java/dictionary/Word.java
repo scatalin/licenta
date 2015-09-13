@@ -2,6 +2,7 @@ package dictionary;
 
 import algorithms.heap.HeapNode;
 import system.Properties;
+import system.ServiceLocator;
 
 /**
  * Created by Catalin on 3/9/2015 .
@@ -14,30 +15,36 @@ public class Word implements HeapNode<Word> {
     private int dictionaryFrequency;
     private int userFrequency;
     private int userActuality;
+    private long queryUpdated;
+    private int initUserActuality;
+    private int initUserFrequency;
 
-    private Word(String word, int heapLevel, int totalWeight, int dictionaryFrequency, int userFrequency, int userActuality) {
+    private Word(String word, int heapLevel, int totalWeight, int dictionaryFrequency, int userFrequency, int userActuality, long queryUpdated) {
         this.word = word;
         this.heapLevel = heapLevel;
         this.totalWeight = totalWeight;
         this.dictionaryFrequency = dictionaryFrequency;
         this.userFrequency = userFrequency;
         this.userActuality = userActuality;
+        this.initUserActuality = userActuality;
+        this.initUserFrequency = userFrequency;
+        this.queryUpdated = queryUpdated;
     }
 
-    public Word(String word, int dictionaryFrequency, int userFrequency, int userActuality) {
-        this(word, 0, 0, dictionaryFrequency, userFrequency, userActuality);
+    public Word(String word, int dictionaryFrequency, int userFrequency, int userActuality, long queryUpdated) {
+        this(word, 0, 0, dictionaryFrequency, userFrequency, userActuality, queryUpdated);
     }
 
     public Word(String word, int dictionaryFrequency) {
-        this(word, dictionaryFrequency, 0, 0);
+        this(word, dictionaryFrequency, 0, 0, 0);
     }
 
     public Word(String word, int dictionaryFrequency, int userFrequency) {
-        this(word, dictionaryFrequency, userFrequency, 0);
+        this(word, dictionaryFrequency, userFrequency, 0, 0);
     }
 
     public Word(String word) {
-        this(word, 1, 0, 0);
+        this(word, 1, 0, 0, 0);
     }
 
     public String getWord() {
@@ -77,7 +84,7 @@ public class Word implements HeapNode<Word> {
     }
 
     public Word clone() {
-        return new Word(word, heapLevel, totalWeight, dictionaryFrequency, userFrequency, userActuality);
+        return new Word(word, heapLevel, totalWeight, dictionaryFrequency, userFrequency, userActuality, queryUpdated);
     }
 
 
@@ -130,4 +137,23 @@ public class Word implements HeapNode<Word> {
     public void setUserActuality(int userActuality) {
         this.userActuality = userActuality;
     }
+
+    public long getQueryUpdated() {
+        return queryUpdated;
+    }
+
+    public void setQueryUpdated(long queryUpdated) {
+        this.queryUpdated = queryUpdated;
+        initUserFrequency = userFrequency;
+        initUserActuality = userActuality;
+    }
+
+    public void degrade(long query) {
+        userActuality = ServiceLocator.getDegrador().degradeActuality(initUserActuality, query, queryUpdated);
+        userFrequency = ServiceLocator.getDegrador().degradeUser(initUserFrequency, query, queryUpdated);
+        if (((initUserActuality - userActuality) > 0) || ((initUserActuality - userFrequency) > 0)) {
+            System.out.println("degrading word:" + word + " by " + (initUserActuality - userActuality) + " and " + (initUserFrequency - userFrequency));
+        }
+    }
 }
+

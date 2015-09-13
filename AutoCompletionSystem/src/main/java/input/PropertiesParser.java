@@ -180,8 +180,20 @@ public class PropertiesParser {
                     Properties.WEIGHT_ACTUALITY_USER = Double.parseDouble(tokens[1]);
                     continue;
                 }
-                if (tokens[0].equals(FileProperties.DECAY_ALPHA.getValue())) {
-                    Properties.DECAY_ALPHA = Double.parseDouble(tokens[1]);
+                if (tokens[0].equals(FileProperties.DECAY_ALPHA_ACTUALITY.getValue())) {
+                    Properties.DECAY_ALPHA_ACTUALITY = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_ALPHA_USER.getValue())) {
+                    Properties.DECAY_ALPHA_USER = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_QUERIES_ACTUALITY.getValue())) {
+                    Properties.DECAY_QUERIES_ACTUALITY = Double.parseDouble(tokens[1]);
+                    continue;
+                }
+                if (tokens[0].equals(FileProperties.DECAY_QUERIES_USER.getValue())) {
+                    Properties.DECAY_QUERIES_USER = Double.parseDouble(tokens[1]);
                     continue;
                 }
                 if (tokens[0].equals(FileProperties.DECAY_FILE_OUTPUT_NAME.getValue())) {

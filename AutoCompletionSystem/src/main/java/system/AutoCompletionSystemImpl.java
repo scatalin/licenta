@@ -49,6 +49,7 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     @Override
     public void selectCompletionWord(String word) {
         wordsController.handleWord(word);
+        ServiceLocator.getModelConstructor().constructModel();
     }
 
     @Override
@@ -77,8 +78,8 @@ public class AutoCompletionSystemImpl implements AutoCompletionSystem {
     public void readDictionary(String dictionaryName) {
         saveDictionary();
         ServiceLocator.createDictionary(dictionaryName);
-        FilesProcessor filesProcessor = new FilesProcessor(new DictionaryProcessor(ServiceLocator.getDictionary(), dictionaryName));
-        filesProcessor.processInputFiles();
+        new DictionaryProcessor(ServiceLocator.getDictionary(), dictionaryName).readDictionary();
+        ServiceLocator.getModelConstructor().constructModel();
     }
 
     @Override

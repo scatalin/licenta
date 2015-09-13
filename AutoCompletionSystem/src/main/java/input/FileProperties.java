@@ -39,12 +39,14 @@ public enum FileProperties {
     WEIGHT_FREQUENCY("weight.frequency.rate"),
     WEIGHT_FREQUENCY_USER("weight.frequency.user.rate"),
     WEIGHT_ACTUALITY_USER("weight.actuality.user.rate"),
-    DECAY_ALPHA("decay.alpha"),
     DECAY_FILE_OUTPUT_NAME("decay.file.output.name"),
     DECAY_SUBDIRECTORY_OUTPUT_NAME("decay.subdirectory.output.name"),
     STOP_WORDS_FILE("stop.words.name"),
-    GRAPH_FILE("graph.name");
-
+    GRAPH_FILE("graph.name"),
+    DECAY_ALPHA_ACTUALITY("decay.alpha.actuality"),
+    DECAY_ALPHA_USER("decay.alpha.user"),
+    DECAY_QUERIES_ACTUALITY("decay.queries.actuality"),
+    DECAY_QUERIES_USER("decay.queries.user");
 
     private final String value;
 

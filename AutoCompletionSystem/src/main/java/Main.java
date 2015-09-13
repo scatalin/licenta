@@ -30,7 +30,7 @@ public class Main {
     private static final String PROCESS_FILES = "input";
     private static final String TEST_SYSTEM_TEN_FOLD_DEFAULT = "test ten fold t";
     private static final String TEST_SYSTEM_TEN_FOLD = "test ten fold f";
-    private static final String TEST_SYSTEM_FINAL = "test f";
+    private static final String TEST_SYSTEM_FINAL = "test";
     private static final String DICTIONARY_IMPORT = "dict i";
     private static final String DICTIONARY_DISPLAY = "dict d";
     private static final String DICTIONARY_DISPLAY_SIZE = "dict s";
@@ -49,6 +49,8 @@ public class Main {
     private static final String SELECT_SUGGESTION_FRAZE ="fs";
     private static final String SHOW_DIFF="diff";
     private static final String SAVE_STATE="hold";
+    private static final String CHANGE_DICTIONARY="dchg";
+    private static final String SELECT_FRAZE="fraze";
 
     public static void main(String[] args) {
         try {
@@ -66,7 +68,7 @@ public class Main {
     void start() {
         SearchTree tree = ServiceLocator.getCompletionTree();
         Dictionary dictionary = ServiceLocator.getDictionary();
-        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(dictionary);
+        DictionaryProcessor dictionaryProcessor = new DictionaryProcessor(ServiceLocator.getDictionary());
         dictionaryProcessor.readDictionary();
 
         AutoCompletionSystem system = new AutoCompletionSystemImpl();
@@ -83,7 +85,7 @@ public class Main {
                 try {
                     PropertiesParser.propertiesFileRead();
                     tree = ServiceLocator.getCompletionTree();
-                    dictionaryProcessor = new DictionaryProcessor(dictionary);
+                    dictionaryProcessor = new DictionaryProcessor(ServiceLocator.getDictionary());
                     dictionaryProcessor.readDictionary();
                     system = new AutoCompletionSystemImpl();
                     system.start();
@@ -104,30 +106,30 @@ public class Main {
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY)) {
-                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
-                System.out.println(dictionary.asList());
+                System.out.println("dictionarul are " + ServiceLocator.getDictionary().asList().size() + " cuvinte");
+                System.out.println(ServiceLocator.getDictionary().asList());
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY_SIZE)) {
-                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
+                System.out.println("dictionarul are " + ServiceLocator.getDictionary().asList().size() + " cuvinte");
                 continue;
             }
             if (command.equals(DICTIONARY_DISPLAY_WEIGHTED)) {
-                System.out.println("dictionarul are " + dictionary.asList().size() + " cuvinte");
-                System.out.println(dictionary.getWordsSortedByWeight());
+                System.out.println("dictionarul are " + ServiceLocator.getDictionary().asList().size() + " cuvinte");
+                System.out.println(ServiceLocator.getDictionary().getWordsSortedByWeight());
                 continue;
             }
             if (command.equals(TST_BUILD)) {
-                SearchTree tst = TernarySearchTreeFactory.buildTst(dictionary.asList());
+                SearchTree tst = TernarySearchTreeFactory.buildTst(ServiceLocator.getDictionary().asList());
                 FilePrinter.printTstToFile(FilePrinter.TST_FILE, tst.print());
                 continue;
             }
             if (command.equals(TREE_BUILD)) {
-                tree = SegmentTstTreeBuilder.buildSegmentTst(dictionary);
+                tree = SegmentTstTreeBuilder.buildSegmentTst(ServiceLocator.getDictionary());
                 continue;
             }
             if (command.equals(TREE_WEIGHTED_BUILD)) {
-                tree = SegmentTstTreeBuilder.buildWeightedSegmentTst(dictionary);
+                tree = SegmentTstTreeBuilder.buildWeightedSegmentTst(ServiceLocator.getDictionary());
                 tree.setNumberOfSuggestions(Properties.AUTOCOMPLETION_SUGGESTION_SIZE);
                 continue;
             }
@@ -139,7 +141,7 @@ public class Main {
             if (command.equals(TEST_SYSTEM_TEN_FOLD_DEFAULT)) {
                 SystemTenFoldingTesting tester = new SystemTenFoldingTesting();
                 try {
-                    tester.testSystem(dictionary,true);
+                    tester.testSystem(ServiceLocator.getDictionary(),true);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -148,7 +150,7 @@ public class Main {
             if (command.equals(TEST_SYSTEM_TEN_FOLD)) {
                 SystemTenFoldingTesting tester = new SystemTenFoldingTesting();
                 try {
-                    tester.testSystem(dictionary,false);
+                    tester.testSystem(ServiceLocator.getDictionary(),false);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -157,7 +159,7 @@ public class Main {
             if (command.equals(TEST_SYSTEM_FINAL)) {
                 SystemBigTester tester = new SystemBigTester();
                 try {
-                    tester.testSystem(dictionary);
+                    tester.testSystem(ServiceLocator.getDictionary());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -198,6 +200,15 @@ public class Main {
                 continue;
             }
 
+            if (command.startsWith(SELECT_FRAZE)) {
+                String word = command.replace(SELECT_FRAZE+ " ", "");
+                for(int i = 0; i<word.length(); i++){
+                    system.inputCharacter(word.charAt(i));
+                }
+                continue;
+            }
+
+
             if (command.startsWith(SELECT_SUGGESTION)) {
                 String word = command.replace(SELECT_SUGGESTION+ " ", "");
                 system.selectCompletionWord(word);
@@ -211,7 +222,11 @@ public class Main {
                 system.printDiff();
                 continue;
             }
-
+            if (command.startsWith(CHANGE_DICTIONARY)) {
+                String word = command.replace(CHANGE_DICTIONARY+ " ", "");
+                system.readDictionary(word);
+                continue;
+            }
 
             System.out.println("wrong use:");
         }

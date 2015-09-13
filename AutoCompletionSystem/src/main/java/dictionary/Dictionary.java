@@ -23,6 +23,7 @@ public class Dictionary {
     private WeightUpdate updater;
     private List<Word> wordsList;
     private boolean changed;
+    private long query;
 
     public Dictionary() {
         this("");
@@ -118,11 +119,12 @@ public class Dictionary {
 
         int index = items.lastIndexOf(checkWord);
         if (index == -1) {
-            getHeaps().get(position).insert(new Word(word, defaultW, userW, actW));
+            getHeaps().get(position).insert(new Word(word, defaultW, userW, actW, query));
             return defaultW;
         }
 
         int toReturnWeight = updater.updateWeight(items.get(index), defaultW, userW, actW);
+        items.get(index).setQueryUpdated(query);
         getHeaps().get(position).shiftUp(index, updater.updateModel());
         return toReturnWeight;
     }
@@ -167,21 +169,30 @@ public class Dictionary {
         return new Dictionary(newHeap, data, fileName, updater);
     }
 
-    private Data getInnerData(){
-        if(data == null){
+    private Data getInnerData() {
+        if (data == null) {
             data = SearchTreeFactory.createData();
         }
         return data;
     }
 
-    private List<MaxHeap<Word>> getHeaps(){
-        if(words == null){
+    private List<MaxHeap<Word>> getHeaps() {
+        if (words == null) {
             words = new ArrayList<>(getInnerData().getSize());
             for (int i = 0; i < getInnerData().getSize(); i++) {
                 words.add(new MaxHeap<>(true));
             }
         }
         return words;
+    }
+
+    public void degradeWords(String word) {
+        int position = getInnerData().getPosition(word);
+        List<Word> items = getHeaps().get(position).getItems();
+        for (Word w : items) {
+            w.degrade(query);
+        }
+        query++;
     }
 }
 
